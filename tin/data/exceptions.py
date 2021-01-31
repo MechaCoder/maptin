@@ -1,0 +1,2 @@
+
+class DataLength(TypeError): pass
