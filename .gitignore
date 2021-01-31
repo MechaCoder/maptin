@@ -1,0 +1,4 @@
+node_modules
+static/dist/bundle.js
+.vscode/settings.json
+ds.json
