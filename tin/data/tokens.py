@@ -1,4 +1,4 @@
-from tinydb_base.getSet import GetSet
+from tinydb_base.getSet import GetSet, Factory, Query, futureTimeStamp
 from .commons import mkHex
 
 class Tokens(GetSet):
@@ -7,6 +7,25 @@ class Tokens(GetSet):
         super().__init__(file=file, table=table)
 
     def addKey(self, uname:str):
-        key = mkHex(128)
-        self.set(uname, 128)
+        key = ''
+        while True: # loop ontill broken
+            key = mkHex(128)
+            if self.keyExsists(key) == False: #if the key dose not exist
+                break
+
+        self.set(uname, key)
         return key
+
+    def keyExsists(self, key:str):
+        db = Factory(self.fileName, self.tableName)
+        e = db.tbl.contains(Query().val == key)
+        db.close()
+
+        return e
+
+    def getRowByKey(self, key):
+        db = Factory(self.fileName, self.tableName)
+        row = db.tbl.get(Query().val == key)
+        db.close()
+
+        return row

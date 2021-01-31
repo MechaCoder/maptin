@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import processLogin from './component/commons.jsx';
-
 export default class Userlogin extends Component {
     constructor() {
         super();
@@ -20,17 +18,29 @@ export default class Userlogin extends Component {
 
     componentDidMount(){
         var usr_token = localStorage.getItem('usr_token');
+        
         if (usr_token == null ){
-            // alert('your not logged in');
             return
         }
 
-        if(usr_token.length === 128){
-            this.setState({
-                'logged-in': true
-            })
+        if(usr_token.length != 128){
             return
         }
+
+        fetch('/ajax/user/key', {
+            'method': 'POST',
+            'headers': {
+                'Content-Type': 'application/json'
+            },
+            'body': JSON.stringify({
+                'key': usr_token
+            })
+            .then(data => data.json())
+            .then((json) => {
+                alert(json)
+            })
+        })
+
     }
 
     testUser(event){
@@ -52,6 +62,8 @@ export default class Userlogin extends Component {
                 localStorage.setItem('usr_token', json.key);
                 this.setState({'logged-in': true})
                 this.forceUpdate()
+            }else{
+                alert(json.error)
             }
 
         })
@@ -78,6 +90,8 @@ export default class Userlogin extends Component {
                     'logged-in': true,
                 })
                 this.forceUpdate()
+            }else{
+                alert(json.error)
             }
             
         })

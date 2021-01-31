@@ -23,6 +23,10 @@ def ajaxuser():
         )
         return dumps(resp)
 
+@app.route('/ajax/user/key', methods=['POST'])
+def ajaxTestKey():
+    key = request.get_json()
+    
 
 @app.route('/')
 def index():
