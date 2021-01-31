@@ -17,6 +17,7 @@ export default class Userlogin extends Component {
     }
 
     componentDidMount(){
+
         var usr_token = localStorage.getItem('usr_token');
         
         if (usr_token == null ){
@@ -33,12 +34,16 @@ export default class Userlogin extends Component {
                 'Content-Type': 'application/json'
             },
             'body': JSON.stringify({
-                'key': usr_token
+                'key': usr_token,
             })
-            .then(data => data.json())
-            .then((json) => {
-                alert(json)
-            })
+        })
+        .then(data => data.json())
+        .then((json) => {
+            console.log(json)
+            if(json.succs){
+                this.setState({'logged-in': true})
+            }
+            
         })
 
     }

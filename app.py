@@ -6,6 +6,7 @@ from flask import request
 
 from tin import authUser
 from tin import createUser
+from tin import keyExists
 
 app = Flask(__name__)
 
@@ -26,6 +27,8 @@ def ajaxuser():
 @app.route('/ajax/user/key', methods=['POST'])
 def ajaxTestKey():
     key = request.get_json()
+    key = key['key']
+    return keyExists(key=key)
     
 
 @app.route('/')
