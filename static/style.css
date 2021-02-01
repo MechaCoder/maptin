@@ -29,3 +29,15 @@ body {
     padding: 1px
 
 }
+
+.mapSingle .tools{
+    background-color: grey;
+    border: hotpink solid 1px;
+    width: 250px;
+    padding: 5px
+}
+
+.mapSingle .tools input {
+    background-color: darkslategray;
+    color: wheat;
+}

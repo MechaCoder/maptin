@@ -4,6 +4,12 @@ import ReactDOM from "react-dom";
 export default class MapSingle extends Component {
     constructor() {
         super();
+        this.state = {
+            'hex': '',
+            'title': '',
+            'map': '',
+            'soundtrack': ''
+        }
     }
 
     componentDidMount(){
@@ -32,17 +38,31 @@ export default class MapSingle extends Component {
         .then(data => data.json())
         .then((json) => {
             console.log(json)
-            // alert('new map has been created')
-            // TODO: script out reading maps
+            if(json.succs){
+                this.setState({
+                    'hex': json.data.hex,
+                    'title': json.data.title,
+                    'map': json.data.map_source,
+                    'soundtrack': json.data.map_soundtrack
+                })
+            }
+
         })
-
-
 
     }
 
     render() {
         return (
-            <div>client</div>
+            <div className="mapSingle" data-map={JSON.stringify(this.state)}>
+                <div className="tools">
+                    <div className="mapTitle" >
+                        <label htmlFor='mapTitle' >
+                            Title: <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value})}} />
+                        </label>
+                    </div>
+                </div>
+                <div className="maps"></div>
+            </div>
         )
     }
 }
