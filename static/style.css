@@ -1,0 +1,31 @@
+body {
+    background-color: black;
+}
+
+.maps_diolog{
+    background-color: darkgrey; 
+
+}
+.maps_diolog .maps_row {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly
+}
+
+.maps_diolog .maps_row div {
+    width: 200px;
+}
+
+.maps_diolog .maps_row #newMap{
+    text-align: center;
+    padding-top: 4%;
+    border: 1px solid darkslategrey;
+    cursor: pointer;
+}
+
+.maps_diolog .maps_row .MapListItem {
+    /* border: 1px solid red; */
+    text-align: center;
+    padding: 1px
+
+}

@@ -20,9 +20,11 @@ export default class MapsList extends Component {
     getMaps(){
         var usr_token = localStorage.getItem('usr_token')
         if(usr_token == null){
+            this.setState({'hide': true})
             return;
         }
         if(usr_token.length != 128){
+            this.setState({'hide': true})
             return;
         }
         fetch('/ajax/maps', {
@@ -41,8 +43,6 @@ export default class MapsList extends Component {
 
         })
     }
-
-    
 
     createMap(event){
 
@@ -71,21 +71,28 @@ export default class MapsList extends Component {
     }
 
     render() {
+
+        if(this.state.hide){
+            return(<div>maps</div>)
+        }
         
         var items = []
         for(var i = 0; i < this.state.maps.length; i++){
             var el = this.state.maps[i];
-            items.push(<MapListItem key={i} hex={el.hex} title={el.title} map={el.map_source} soundtrack={el.map_soundtrack} />)
+            items.push(<MapListItem 
+                key={i} 
+                hex={el.hex} 
+                title={el.title} 
+                map={el.map_source} 
+                soundtrack={el.map_soundtrack} 
+            />)
 
         }
 
-        return (
+        return (    
             <div className="maps_diolog">
-                {this.state.maps.length}
-                <div className="tools">
-                    <button onClick={this.createMap}>Create Map</button>
-                </div>
-                <div>
+                <div className='maps_row'>
+                    <div id='newMap' onClick={this.createMap}>Create Map</div>
                     {items}
                 </div>
             </div>

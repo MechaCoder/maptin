@@ -12,7 +12,6 @@ export default class MapListItem extends Component {
                 <a href="/">
                     <div> <img src={this.props.map} width='200px' /></div>
                     <div>{this.props.title}</div>
-
                 </a>
             </div>
         )
