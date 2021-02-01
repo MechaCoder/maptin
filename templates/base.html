@@ -1,9 +1,9 @@
 <html>
     <head>
         <title>WEB SITE TITLE</title>
-        <link rel="stylesheet" href="static/style.css" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     </head>
     <body id="App">
     </body>
-    <script src="{{ url_for('static', filename="dist/bundle.js") }}" ></script>
+    <script src="{{ url_for('static', filename='dist/bundle.js') }}" ></script>
 </html>

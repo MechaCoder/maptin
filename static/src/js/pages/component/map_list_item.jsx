@@ -43,10 +43,9 @@ export default class MapListItem extends Component {
 
         return (
             <div className="MapListItem" data-hex={this.props.hex}>
-                <a href={link} onClick={(e) => {e.preventDefault()}} ><div> <img src={this.props.map} width='200px' /></div></a>
+                <a href={link} ><div> <img src={this.props.map} width='200px' /></div></a>
                     <div>{this.props.title} <button onClick={this.deleteSelf}>delete</button> </div>
-                
-            </div>
+            </div> 
         )
     }
 }

@@ -44,12 +44,19 @@ def maps():
         mapHex = request.get_json()
         return dumps(deleteMap(hex=mapHex['map'], key=key))
         
+@app.route('/ajax/map')
+def map_single():
+    key = request.headers.get('Userkey')
+    hex = request.headers.get('map')
+    return dumps({'foo': 'bar'})
+
 @app.route('/')
 def index():
     return render_template('base.html')
 
-@app.route('/map/')
-def map_page():
+@app.route('/map/<hex>')
+def map_page(hex):
+    print(hex)
     return render_template('base.html')
 
 if __name__ == '__main__':

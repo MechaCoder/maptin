@@ -37,7 +37,7 @@ def listMaps(key:str):
         for key in map.keys():
             row[key] = map[key]
         if isfile(row['map_source'] == False) or row['map_source'] == '':
-            row['map_source'] = 'static/world-map.gif'
+            row['map_source'] = '/static/world-map.gif'
         maps.append(row)
     return maps
 
