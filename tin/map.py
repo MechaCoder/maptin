@@ -41,6 +41,29 @@ def listMaps(key:str):
         maps.append(row)
     return maps
 
+def deleteMap(hex:str, key:str):
+    tobj = Tokens()
+    mobj = Maps()
+
+    if tobj.keyExsists(key) == False:
+        return {
+            'succs': False,
+            'error': 'invalid key',
+        }
+    userRow = tobj.getRowByKey(key=key)
+    if mobj.exists('hex', hex) == False:
+        return {
+            'succs': False,
+            'error': 'invalid hex',
+        }
+    if mobj.deleteByHex(hex=hex):
+        return {
+            'succs': True,
+            'error': 'map has been deleted',
+        }
+    return {
+        'succs': False,
+        'error': 'map could not be deleted'
+    }
 
 
-    

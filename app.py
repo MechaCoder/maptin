@@ -9,6 +9,7 @@ from tin import authUser
 from tin import createUser
 from tin import keyExists
 from tin import listMaps
+from tin import deleteMap
 
 app = Flask(__name__)
 
@@ -32,15 +33,23 @@ def ajaxTestKey():
     key = key['key']
     return dumps(keyExists(key=key))
 
-@app.route('/ajax/maps', methods=['GET', 'POST'])
+@app.route('/ajax/maps', methods=['GET', 'POST', 'DELETE'])
 def maps():
     key = request.headers.get('Userkey')
     if request.method == 'GET': # get all maps that a user key has
         return dumps(listMaps(key))
-    if request.method == 'POST':
+    if request.method == 'POST': # create a blank map
         return dumps(createMap(key))
+    if request.method == 'DELETE': # delete a map
+        mapHex = request.get_json()
+        return dumps(deleteMap(hex=mapHex['map'], key=key))
+        
 @app.route('/')
 def index():
+    return render_template('base.html')
+
+@app.route('/map/')
+def map_page():
     return render_template('base.html')
 
 if __name__ == '__main__':

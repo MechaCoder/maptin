@@ -22,5 +22,15 @@ class Maps(DataCommons):
         db.close()
 
         return rows
+
+    def deleteByHex(self, hex: str):
+        db = self.createObj()
+        ids = db.tbl.remove(Query().hex == hex)
+        db.close()
+
+        if ids != []:
+            return True
+        return False
+
     
 
