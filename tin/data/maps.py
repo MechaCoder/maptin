@@ -23,6 +23,12 @@ class Maps(DataCommons):
 
         return rows
 
+    def readByHex(self, hex:str):
+        db = self.createObj()
+        row = db.tbl.get(Query().hex == hex)
+        db.close()
+        return row
+
     def deleteByHex(self, hex: str):
         db = self.createObj()
         ids = db.tbl.remove(Query().hex == hex)

@@ -10,6 +10,7 @@ from tin import createUser
 from tin import keyExists
 from tin import listMaps
 from tin import deleteMap
+from tin import getByHex
 
 app = Flask(__name__)
 
@@ -46,9 +47,8 @@ def maps():
         
 @app.route('/ajax/map')
 def map_single():
-    key = request.headers.get('Userkey')
     hex = request.headers.get('map')
-    return dumps({'foo': 'bar'})
+    return dumps(getByHex(hex))
 
 @app.route('/')
 def index():
@@ -56,7 +56,6 @@ def index():
 
 @app.route('/map/<hex>')
 def map_page(hex):
-    print(hex)
     return render_template('base.html')
 
 if __name__ == '__main__':

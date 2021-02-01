@@ -41,6 +41,24 @@ def listMaps(key:str):
         maps.append(row)
     return maps
 
+def getByHex(hex:str):
+    obj = Maps()
+    if obj.exists('hex', hex) == False:
+        return {
+            'succs': False,
+            'error': 'invalid hex',
+        }
+
+    mapRow =  obj.readByHex(hex)
+    returnObj = {}
+    for k in mapRow.keys():
+        returnObj[k] = mapRow[k]
+    
+    return {
+            'succs': True,
+            'data': returnObj,
+        }
+
 def deleteMap(hex:str, key:str):
     tobj = Tokens()
     mobj = Maps()
