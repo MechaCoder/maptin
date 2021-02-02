@@ -66,32 +66,23 @@ def updateByHex(hex:str, title:str, map:str, sound:str):
     
     map = map.strip()
     sound = sound.strip()
-    try:
-        if url(map) == False: 
-            return {
-                'succs': False,
-                'error': 'map url is invalid'
-            }
-    except:
+    
+    if vaildUrl(map, 'pinimg') == False:
         return {
-                'succs': False,
-                'error': 'map url is invalid'
-            }
-    try:
-        if url(sound) == False: 
-            return {
-                'succs': False,
-                'error': 'map url is invalid'
-            }
-    except:
+            'succs': False,
+            'error': 'map url is invalid',
+        }
+    
+    if vaildUrl(sound, 'youtube') == False:
         return {
-                'succs': False,
-                'error': 'map url is invalid'
-            }
+            'succs': False,
+            'error': 'sound url is invalid',
+        }
     
     if Maps().updateByHex(hex=hex, title=title, map=map, sound=sound):
         return {
             'succs': True,
+            'x': __name__
         }
     return {
         'succs': False,

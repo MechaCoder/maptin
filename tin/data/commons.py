@@ -1,6 +1,7 @@
 from string import hexdigits
 from random import choices
-from re import search, fullmatch, compile, match, IGNORECASE
+from re import search, fullmatch
+from validators import url, ValidationFailure
 
 from tinydb_base import DatabaseBase
 
@@ -53,25 +54,21 @@ def mkHex(l:int = 8):
     s1 = choices(hexdigits, k=l)
     return ''.join(s1)
 
-def vaildUrl(url:str):
+def vaildUrl(addr:str, _domain:str = ''):
 
-    regex = compile(
-        r'^(?:http|ftp)s?://' # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
-        r'localhost|' #localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
-        r'(?::\d+)?' # optional port
-        r'(?:/?|[/?]\S+)$',
-        IGNORECASE
-    )
+    try:
+        url(addr)
+        add_domain = addr.split('.')[1]
+        if _domain is '':
+            return True
+        
+        if _domain == add_domain:
+            return True
+        return False
+        
 
-    # addr = url.split('.')[-1]
-    # vaildFormats = ['gif', 'jpeg', 'jpg' 'png', 'webp']
-    # if addr not in vaildFormats:
-    #     return False
-    
-
-    return match(regex, url) is not None
+    except ValidationFailure:
+        return False
 
 
 
