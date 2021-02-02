@@ -1,6 +1,7 @@
 from string import hexdigits
 from random import choices
 from re import search, fullmatch
+from validators import url, ValidationFailure
 
 from tinydb_base import DatabaseBase
 
@@ -52,6 +53,24 @@ def password_check(password):
 def mkHex(l:int = 8):
     s1 = choices(hexdigits, k=l)
     return ''.join(s1)
+
+def vaildUrl(addr:str, _domain:str = ''):
+
+    try:
+        url(addr)
+        add_domain = addr.split('.')[1]
+        if _domain is '':
+            return True
+        
+        if _domain == add_domain:
+            return True
+        return False
+        
+
+    except ValidationFailure:
+        return False
+
+
 
 class DataCommons(DatabaseBase):
 

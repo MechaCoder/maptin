@@ -1,0 +1,67 @@
+body {
+    background-color: black;
+}
+
+.maps_diolog{
+    background-color: darkgrey; 
+
+}
+.maps_diolog .maps_row {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly
+}
+
+.maps_diolog .maps_row div {
+    width: 200px;
+}
+
+.maps_diolog .maps_row #newMap{
+    text-align: center;
+    padding-top: 4%;
+    border: 1px solid darkslategrey;
+    cursor: pointer;
+}
+
+.maps_diolog .maps_row .MapListItem {
+    /* border: 1px solid red; */
+    text-align: center;
+    padding: 1px
+
+}
+
+.mapSingle .tools{
+    background-color: grey;
+    border: hotpink solid 1px;
+    width: 250px;
+    padding: 5px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    opacity: 25%;
+}
+.mapSingle .tools:hover{
+    opacity: 100%;
+}
+
+.mapSingle .tools input {
+    background-color: darkslategray;
+    color: wheat;
+}
+
+.mapSingle img {
+    width: 100%;
+}
+
+.audio {
+    border: 1px solid hotpink;
+    background-color: darkslategray;
+    width: 250px;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    opacity: 40%;
+}
+.audio:hover {
+    opacity: 100%;
+}
