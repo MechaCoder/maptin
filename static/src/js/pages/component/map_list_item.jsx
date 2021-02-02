@@ -30,7 +30,6 @@ export default class MapListItem extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            console.log(json)
             alert('A map has been deleted')
             // TODO: script out reading maps
             location.reload()

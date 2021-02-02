@@ -36,7 +36,6 @@ export default class MapsList extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            console.log(json)
             this.setState({
                 'maps': json
             })
@@ -62,7 +61,6 @@ export default class MapsList extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            console.log(json)
             alert('new map has been created')
             // TODO: script out reading maps
             this.getMaps()

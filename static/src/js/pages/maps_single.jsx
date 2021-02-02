@@ -15,8 +15,6 @@ export default class MapSingle extends Component {
     }
 
     componentDidUpdate(){
-        console.log('componentDidUpdate')
-        console.log(this.state)
         this.updateServer()
     }
 
@@ -42,7 +40,6 @@ export default class MapSingle extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            console.log(json)
             if(json.succs){
                 this.setState({
                     'hex': json.data.hex,
@@ -57,7 +54,6 @@ export default class MapSingle extends Component {
     }
 
     updateServer(){
-        console.log(this.state.soundtrack)
         fetch('/ajax/map', {
             method: 'PUT',
             headers: {

@@ -39,7 +39,6 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            console.log(json)
             if(json.succs){
                 this.setState({'logged-in': true})
             }
