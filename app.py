@@ -52,8 +52,13 @@ def map_single():
         return dumps(getByHex(hex))
     if request.method == 'PUT':
         json = request.get_json()
-        print(json)
-        return dumps(updateByHex(hex=json['hex'], title=json['title'], map=json['map'], sound=json['soundtrack']))
+        obj = dumps(updateByHex(
+            hex=json['hex'],
+            title=json['title'], 
+            map=json['map'],
+            sound=json['soundtrack']
+        ))
+        return obj
 
 
 @app.route('/')

@@ -64,16 +64,30 @@ def getByHex(hex:str):
 
 def updateByHex(hex:str, title:str, map:str, sound:str):
     
-    if url(map) == False: 
+    map = map.strip()
+    sound = sound.strip()
+    try:
+        if url(map) == False: 
+            return {
+                'succs': False,
+                'error': 'map url is invalid'
+            }
+    except:
         return {
-            'succs': False,
-            'error': 'map url is invalid'
-        }
-    if url(sound) == False:
+                'succs': False,
+                'error': 'map url is invalid'
+            }
+    try:
+        if url(sound) == False: 
+            return {
+                'succs': False,
+                'error': 'map url is invalid'
+            }
+    except:
         return {
-            'succs': False,
-            'error': 'sound url is invalid'
-        }
+                'succs': False,
+                'error': 'map url is invalid'
+            }
     
     if Maps().updateByHex(hex=hex, title=title, map=map, sound=sound):
         return {

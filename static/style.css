@@ -38,9 +38,30 @@ body {
     position: fixed;
     top: 0px;
     left: 0px;
+    opacity: 25%;
+}
+.mapSingle .tools:hover{
+    opacity: 100%;
 }
 
 .mapSingle .tools input {
     background-color: darkslategray;
     color: wheat;
+}
+
+.mapSingle img {
+    width: 100%;
+}
+
+.audio {
+    border: 1px solid hotpink;
+    background-color: darkslategray;
+    width: 250px;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    opacity: 40%;
+}
+.audio:hover {
+    opacity: 100%;
 }
