@@ -7,8 +7,14 @@ class Maps(DataCommons):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
     def create(self, owner_id:int, title:str, mapsource:str, soundtrack:str):
+        hex = ''
+        while True:
+            hex = mkHex(16)
+            if self.exists('hex', hex) == False:
+                break
+
         row = {
-            'hex': mkHex(16),
+            'hex': hex,
             'owner_id': owner_id,
             'title': title,
             'map_source': mapsource,
@@ -28,6 +34,16 @@ class Maps(DataCommons):
         row = db.tbl.get(Query().hex == hex)
         db.close()
         return row
+
+    def updateByHex(self, hex: str, title: str, map: str, sound: str):
+        db = self.createObj()
+        db.tbl.update({
+            'title': title,
+            'map_source': map,
+            'map_soundtrack': sound
+        }, Query().hex == hex)
+        db.close()
+        return True
 
     def deleteByHex(self, hex: str):
         db = self.createObj()

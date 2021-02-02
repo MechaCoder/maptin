@@ -1,6 +1,6 @@
 from string import hexdigits
 from random import choices
-from re import search, fullmatch
+from re import search, fullmatch, compile, match, IGNORECASE
 
 from tinydb_base import DatabaseBase
 
@@ -52,6 +52,28 @@ def password_check(password):
 def mkHex(l:int = 8):
     s1 = choices(hexdigits, k=l)
     return ''.join(s1)
+
+def vaildUrl(url:str):
+
+    regex = compile(
+        r'^(?:http|ftp)s?://' # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
+        r'localhost|' #localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+        r'(?::\d+)?' # optional port
+        r'(?:/?|[/?]\S+)$',
+        IGNORECASE
+    )
+
+    # addr = url.split('.')[-1]
+    # vaildFormats = ['gif', 'jpeg', 'jpg' 'png', 'webp']
+    # if addr not in vaildFormats:
+    #     return False
+    
+
+    return match(regex, url) is not None
+
+
 
 class DataCommons(DatabaseBase):
 

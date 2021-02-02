@@ -1,5 +1,8 @@
 from os.path import isfile
 
+from validators import url
+
+from .data.commons import vaildUrl
 from .data.maps import Maps
 from .data.tokens import Tokens
 
@@ -59,6 +62,28 @@ def getByHex(hex:str):
             'data': returnObj,
         }
 
+def updateByHex(hex:str, title:str, map:str, sound:str):
+    
+    if url(map) == False: 
+        return {
+            'succs': False,
+            'error': 'map url is invalid'
+        }
+    if url(sound) == False:
+        return {
+            'succs': False,
+            'error': 'sound url is invalid'
+        }
+    
+    if Maps().updateByHex(hex=hex, title=title, map=map, sound=sound):
+        return {
+            'succs': True,
+        }
+    return {
+        'succs': False,
+        'error': 'there has been an error'
+    }
+             
 def deleteMap(hex:str, key:str):
     tobj = Tokens()
     mobj = Maps()

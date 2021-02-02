@@ -10,14 +10,13 @@ export default class MapSingle extends Component {
             'map': '',
             'soundtrack': ''
         }
+        this.updateServer = this.updateServer.bind(this);
     }
 
     componentDidMount(){
         var l = window.location.href;
         l = l.split('/');
         var hex = l[l.length - 1]
-        
-        console.log(hex);
 
         var usr_token = localStorage.getItem('usr_token')
         if(usr_token == null){
@@ -26,7 +25,6 @@ export default class MapSingle extends Component {
         if(usr_token.length != 128){
             return;
         }
-
         
         fetch('/ajax/map', {
             headers: {
@@ -51,17 +49,38 @@ export default class MapSingle extends Component {
 
     }
 
+    updateServer(){
+        fetch('/ajax/map', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'hex': this.state.hex,
+                'title': this.state.title,
+                'map': this.state.map,
+                'soundtrack': this.state.soundtrack
+            })
+        })
+    }
+
     render() {
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
-                <div className="tools">
-                    <div className="mapTitle" >
-                        <label htmlFor='mapTitle' >
-                            Title: <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value})}} />
-                        </label>
-                    </div>
+                <div className="maps">
+                    <img src={this.state.map} />
                 </div>
-                <div className="maps"></div>
+                <div className="tools">
+                        <label htmlFor='mapTitle' >
+                            <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value}); this.updateServer() }}  />
+                        </label>
+                        <label htmlFor='mapMap'>
+                            <div>Map:</div> <input name='mapMap' value={this.state.map} onChange={(event) => {this.setState({'map': event.target.value}); this.updateServer() }} />
+                        </label>
+                        <label htmlFor='mapSoundtrack'>
+                            <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value}); this.updateServer() }} />
+                        </label>
+                </div>
             </div>
         )
     }

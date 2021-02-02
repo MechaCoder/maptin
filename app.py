@@ -1,5 +1,5 @@
 from json import dumps
-from tin.map import createMap
+from tin.map import createMap, updateByHex
 
 from flask import Flask
 from flask import render_template
@@ -45,10 +45,16 @@ def maps():
         mapHex = request.get_json()
         return dumps(deleteMap(hex=mapHex['map'], key=key))
         
-@app.route('/ajax/map')
+@app.route('/ajax/map', methods=['GET', 'PUT'])
 def map_single():
-    hex = request.headers.get('map')
-    return dumps(getByHex(hex))
+    if request.method == 'GET':
+        hex = request.headers.get('map')
+        return dumps(getByHex(hex))
+    if request.method == 'PUT':
+        json = request.get_json()
+        print(json)
+        return dumps(updateByHex(hex=json['hex'], title=json['title'], map=json['map'], sound=json['soundtrack']))
+
 
 @app.route('/')
 def index():

@@ -34,7 +34,10 @@ body {
     background-color: grey;
     border: hotpink solid 1px;
     width: 250px;
-    padding: 5px
+    padding: 5px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
 }
 
 .mapSingle .tools input {
