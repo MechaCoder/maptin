@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 export default class Userlogin extends Component {
     constructor() {
+        console.log('Userlogin')
         super();
         this.state = {
             'uname': 'test@anno.com',
@@ -16,6 +17,12 @@ export default class Userlogin extends Component {
         this.logout = this.logout.bind(this)
     }
 
+    componentDidUpdate(){
+        if(this.state['logged-in']){
+            window.location.href = '/dashboard/'
+        }
+    }
+
     componentDidMount(){
 
         var usr_token = localStorage.getItem('usr_token');
@@ -24,7 +31,7 @@ export default class Userlogin extends Component {
             return
         }
 
-        if(usr_token.length != 128){
+        if(usr_token.length != 128){MapsList
             return
         }
 
@@ -108,16 +115,9 @@ export default class Userlogin extends Component {
     }
 
     render() {
-        if(this.state["logged-in"]){
-            return(
-                <div className="userlogin" className="loggedin">
-                    <button onClick={this.logout}> logout </button>
-                </div>
-            )
-        }
 
         return (
-            <div className="userlogin" className="loggedout" >
+            <div className="userlogin">
                 <div>
                     <label htmlFor='uname' >username</label>
                     <input name="uname" type='text' value={this.state.uname} onChange={(event) => {this.setState({'uname': event.target.value})}} />

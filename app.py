@@ -50,18 +50,21 @@ def map_single():
     if request.method == 'GET':
         hex = request.headers.get('map')
         return dumps(getByHex(hex))
-    if request.method == 'PUT':
+    if request.method == 'PUT': # needs to be confimed by userkey
+        key = request.headers.get('Userkey')
         json = request.get_json()
         obj = dumps(updateByHex(
             hex=json['hex'],
             title=json['title'], 
             map=json['map'],
-            sound=json['soundtrack']
+            sound=json['soundtrack'],
+            usrKey=key
         ))
         return obj
 
 
 @app.route('/')
+@app.route('/dashboard/')
 def index():
     return render_template('base.html')
 

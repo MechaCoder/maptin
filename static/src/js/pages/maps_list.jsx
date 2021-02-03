@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import MapListItem from "./component/map_list_item.jsx";
+import {getUserId} from './component/commons.jsx'
 
 export default class MapsList extends Component {
     constructor() {
+        console.log('MapsList')
         super();
         this.state = {
             'hide': false,
@@ -18,15 +20,8 @@ export default class MapsList extends Component {
     }
 
     getMaps(){
-        var usr_token = localStorage.getItem('usr_token')
-        if(usr_token == null){
-            this.setState({'hide': true})
-            return;
-        }
-        if(usr_token.length != 128){
-            this.setState({'hide': true})
-            return;
-        }
+        var usr_token = getUserId();
+        
         fetch('/ajax/maps', {
             method: 'GET',
             headers: {

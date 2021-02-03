@@ -1,7 +1,9 @@
 from os.path import isfile
+from tin import user
 
 from validators import url
 
+from .data import checkOwnerByHexAndUsrKey
 from .data.commons import vaildUrl
 from .data.maps import Maps
 from .data.tokens import Tokens
@@ -62,10 +64,12 @@ def getByHex(hex:str):
             'data': returnObj,
         }
 
-def updateByHex(hex:str, title:str, map:str, sound:str):
+def updateByHex(hex:str, title:str, map:str, sound:str, usrKey):
     
     map = map.strip()
     sound = sound.strip()
+    tokensObj = Tokens()
+    mapsObj = Maps()
     
     if vaildUrl(map, 'pinimg') == False:
         return {
@@ -78,11 +82,28 @@ def updateByHex(hex:str, title:str, map:str, sound:str):
             'succs': False,
             'error': 'sound url is invalid',
         }
-    
-    if Maps().updateByHex(hex=hex, title=title, map=map, sound=sound):
+
+    keyRow = tokensObj.getRowByKey(key=usrKey)
+    if keyRow == None:
+        return {
+            'succs': False,
+            'error': 'user key is invalid',
+        }
+    row = mapsObj.readByHex(hex=hex)
+    if row == None:
+        return {
+            'succs': False,
+            'error': 'hex is invalid',
+        }
+    if checkOwnerByHexAndUsrKey(hex=hex, key=usrKey) == False:
+        return {
+            'succs': False,
+            'error': 'the user key is not the owner',
+        }
+
+    if mapsObj.updateByHex(hex=hex, title=title, map=map, sound=sound):
         return {
             'succs': True,
-            'x': __name__
         }
     return {
         'succs': False,

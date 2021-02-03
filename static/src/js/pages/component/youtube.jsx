@@ -11,7 +11,13 @@ export default class Youtube extends Component {
     render() {
         var ytv = youtubeEmbed(this.props.url);
         return (
-            <iframe width="250" height="250" src={ytv} frameBorder="0"></iframe>
+            <iframe 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                width="250" 
+                height="250" 
+                src={ytv} 
+                frameBorder="0"
+            ></iframe>
         )
     }
 }

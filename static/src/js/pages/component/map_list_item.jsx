@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import {getUserId} from './commons.jsx'
 
 export default class MapListItem extends Component {
     constructor() {
@@ -13,13 +14,7 @@ export default class MapListItem extends Component {
             return;
         }
 
-        var usr_token = localStorage.getItem('usr_token')
-        if(usr_token == null){
-            return;
-        }
-        if(usr_token.length != 128){
-            return;
-        }
+        var usr_token = getUserId();
         fetch('/ajax/maps', {
             method: 'DELETE',
             body: JSON.stringify({'map': this.props.hex}),

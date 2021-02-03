@@ -2,6 +2,38 @@ body {
     background-color: black;
 }
 
+header {
+    position: fixed;
+    display: flex;
+    background: firebrick;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 58px;
+    color: white;
+    
+}
+header .links {
+    position: relative;
+    float: right;
+}
+header .siteTitle {
+    width: 80%;
+}
+
+header .links div{
+    background-color: darkgrey;
+    width: 200px;
+    height: 18px;
+    text-align: center;
+    padding-top: auto;
+    padding-bottom: auto;
+    margin: auto;
+    padding: 20px;
+}
+header .links div:hover {
+    background-color: slategray;
+}
 .maps_diolog{
     background-color: darkgrey; 
 
@@ -31,18 +63,20 @@ body {
 }
 
 .mapSingle .tools{
-    background-color: grey;
-    border: hotpink solid 1px;
+    background-color: firebrick;
+    border: firebrick solid 1px;
+    border-top: none;
+    border-left: none;
     width: 250px;
     padding: 5px;
     position: fixed;
-    top: 0px;
+    top: 58px;
     left: 0px;
-    opacity: 25%;
+    /* opacity: 40%; */
 }
-.mapSingle .tools:hover{
+/* .mapSingle .tools:hover{
     opacity: 100%;
-}
+} */
 
 .mapSingle .tools input {
     background-color: darkslategray;
@@ -51,15 +85,18 @@ body {
 
 .mapSingle img {
     width: 100%;
+    margin: 60px;
 }
 
 .audio {
-    border: 1px solid hotpink;
+    border: 1px solid firebrick;
+    border-top: none;
+    border-right: none;
     background-color: darkslategray;
-    width: 250px;
+    width: 255px;
     position: fixed;
     right: 0px;
-    top: 0px;
+    top: 58px;
     opacity: 40%;
 }
 .audio:hover {
