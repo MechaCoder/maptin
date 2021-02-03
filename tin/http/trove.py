@@ -10,8 +10,8 @@ from requests.api import get
 from .base import getObject
 from tin.data.commons import mkHex
 
-def getTokens():
-    url = "https://thetrove.is/Assets/By%20Artist%20or%20Source/5eTools/currated/Token/"
+def getTokens(addr: str):
+    url = addr
     obj = getObject(url=url)
 
     css = '#index-holder__container table#list tbody tr td:first-child a'
@@ -24,7 +24,7 @@ def getTokens():
             )
     return tokens_onSite
 
-def downloader(img_addr:str):
+def downloader(img_addr:str, subFolder:str = 'tokens'):
 
     fname = img_addr.split("/")[-1]
     req = get(img_addr, stream=True)
@@ -33,20 +33,20 @@ def downloader(img_addr:str):
     if isdir('static/a') == False:
         mkdir('static/a')
     
-    if isdir('static/a/tokens') == False:
-        mkdir('static/a/tokens')
+    if isdir(f'static/a/{subFolder}') == False:
+        mkdir(f'static/a/{subFolder}')
 
-    if isfile(f'static/a/tokens/{fname}'):
-        return f'static/a/tokens/{fname}'
+    if isfile(f'static/a/{subFolder}/{fname}'):
+        return f'static/a/{subFolder}/{fname}'
     
-    with open(f'static/a/tokens/{fname}', 'wb') as fileObj:
+    with open(f'static/a/{subFolder}/{fname}', 'wb') as fileObj:
         copyfileobj(
             req.raw,
             fileObj
         )
-    return f'static/a/tokens/{fname}'
+    return f'static/a/{subFolder}/{fname}'
 
-def runner(l:list):
+def runner(l:list, sub:str = 'tokens'):
 
     newImgs = []
     for addr in l:
@@ -55,17 +55,23 @@ def runner(l:list):
             sleep(5)
 
         newImgs.append(
-            downloader(addr)
+            downloader(addr, sub)
         )
     return newImgs
 
 def trove():
 
-    tokens = getTokens()
+    tokens = getTokens("https://thetrove.is/Assets/By%20Artist%20or%20Source/5eTools/currated/Token/")
     segmentsSize = round( len(tokens) / 2 )
 
     l1 = tokens[0: segmentsSize]
     l2 = tokens[segmentsSize + 1:]
+
+    maps = getTokens('https://thetrove.is/Assets/By%20Artist%20or%20Source/Skyrim/')
+
+    segmentsSize = round( len(maps) / 2 )
+    l3 = maps[0: segmentsSize]
+    l4 = maps[segmentsSize + 1:]
 
     t1 = Thread(
         target=runner,
@@ -73,13 +79,31 @@ def trove():
     )
     t2 = Thread(
         target=runner, 
-        args=(l2,)
+        args=(l2, )
     )
 
     t1.start()
     t2.start()
-    print('trove has finished')
+
     t1.join()
     t2.join()
+    print('cooldown ten seconds')
+    sleep(10)
+
+    t3 = Thread(
+        target=runner, 
+        args=(l3, 'maps')
+    )
+    t4 = Thread(
+        target=runner, 
+        args=(l4, 'maps')
+    )
+    t3.start()
+    t4.start()
+
+    t3.join()
+    t4.join()
+
+    print('trove has finished')
     return True
 

@@ -11,6 +11,7 @@ from tin import keyExists
 from tin import listMaps
 from tin import deleteMap
 from tin import getByHex
+from tin.http import trove
 
 app = Flask(__name__)
 
@@ -71,6 +72,13 @@ def index():
 @app.route('/map/<hex>')
 def map_page(hex):
     return render_template('base.html')
+
+@app.route('/sys/<action>')
+def sys(action):
+    rObj = {}
+    if action == 'downloadassets':
+        rObj['downloadassets'] = trove()
+    return dumps(rObj)
 
 if __name__ == '__main__':
     app.run(debug=True)
