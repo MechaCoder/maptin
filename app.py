@@ -11,7 +11,7 @@ from tin import keyExists
 from tin import listMaps
 from tin import deleteMap
 from tin import getByHex
-from tin.http import trove
+from tin import tokensList, mapsList
 
 app = Flask(__name__)
 
@@ -62,6 +62,15 @@ def map_single():
             usrKey=key
         ))
         return obj
+
+@app.route('/ajax/assets/<sub_path>')
+def ajaxAssets(sub_path):
+    if sub_path == 'tokens':
+        return dumps(tokensList())
+    if sub_path == 'maps':
+        return dumps(mapsList())
+
+    return dumps({'succs': False})
 
 
 @app.route('/')
