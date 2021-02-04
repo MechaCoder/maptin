@@ -12,14 +12,14 @@ export default class MapSingle extends Component {
             'hex': '',
             'title': '',
             'map': '',
-            'soundtrack': ''
+            'soundtrack': '',
+            'tokens': []
         }
         // this.updateServer = this.updateServer.bind(this);
     }
 
     componentDidUpdate(){
         this.updateServer()
-        // console.log('componentDidUpdate')
     }
 
     componentDidMount(){
@@ -38,11 +38,15 @@ export default class MapSingle extends Component {
         .then(data => data.json())
         .then((json) => {
             if(json.succs){
+
+                console.log(json.data)
+
                 this.setState({
                     'hex': json.data.hex,
                     'title': json.data.title,
                     'map': json.data.map_source,
-                    'soundtrack': json.data.map_soundtrack
+                    'soundtrack': json.data.map_soundtrack,
+                    'tokens': json.data.tokens
                 })
             }
 
@@ -74,6 +78,7 @@ export default class MapSingle extends Component {
     }
 
     render() {
+
         var dms_els = []
         if(userIdExists()){
             dms_els.push(
@@ -94,6 +99,7 @@ export default class MapSingle extends Component {
         dms_els.push(
             <AssertToken subpath='tokens' />
         )
+        console.log(this.state.tokens)
 
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
@@ -104,6 +110,9 @@ export default class MapSingle extends Component {
                     <Youtube url={this.state.soundtrack} />
                 </div>
                 {dms_els}
+                <div className="drag tokens">
+
+                </div>
             </div>
         )
     }

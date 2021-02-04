@@ -11,7 +11,9 @@ from tin import keyExists
 from tin import listMaps
 from tin import deleteMap
 from tin import getByHex
-from tin import tokensList, mapsList
+from tin import tokensList
+from tin import mapsList
+from tin import createToken
 
 app = Flask(__name__)
 
@@ -47,7 +49,7 @@ def maps():
         return dumps(deleteMap(hex=mapHex['map'], key=key))
         
 @app.route('/ajax/map', methods=['GET', 'PUT'])
-def map_single():
+def mapSingle():
     if request.method == 'GET':
         hex = request.headers.get('map')
         return dumps(getByHex(hex))
@@ -72,6 +74,18 @@ def ajaxAssets(sub_path):
 
     return dumps({'succs': False})
 
+@app.route('/ajax/tokens', methods=['POST'])
+def ajaxTokens():
+    if request.method == 'POST':
+        json = request.get_json()
+        return dumps(
+            createToken(
+                json['hex'],
+                json['src'],
+                0,
+                0,
+            )
+        )
 
 @app.route('/')
 @app.route('/dashboard/')

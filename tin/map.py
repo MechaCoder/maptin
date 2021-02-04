@@ -7,6 +7,7 @@ from .data import checkOwnerByHexAndUsrKey
 from .data.commons import vaildUrl
 from .data.maps import Maps
 from .data.tokens import Tokens
+from .data.vTokens import vTokenData as Vtoken
 
 def createMap(key):
     tobj = Tokens()
@@ -47,6 +48,7 @@ def listMaps(key:str):
     return maps
 
 def getByHex(hex:str):
+
     obj = Maps()
     if obj.exists('hex', hex) == False:
         return {
@@ -58,6 +60,8 @@ def getByHex(hex:str):
     returnObj = {}
     for k in mapRow.keys():
         returnObj[k] = mapRow[k]
+
+    returnObj['tokens'] = Vtoken().readByMapHex(hex)
     
     return {
             'succs': True,

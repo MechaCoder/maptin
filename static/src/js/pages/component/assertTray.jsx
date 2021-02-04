@@ -2,7 +2,36 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
 function imgEl(src){
-    return(<span className='asset' style={{backgroundImage: 'url(' + src + ')'}} ></span>)
+
+    var eventHandler = (e)=>{
+        var l = window.location.href;
+        l = l.split('/');
+        var hex = l[l.length - 1]
+
+        fetch('/ajax/tokens', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'hex': hex,
+                'src': src,
+            })
+        })
+        .then(data => data.json())
+        .then((json) => {
+            alert(json)
+        })
+    }
+
+    return(
+        <span 
+            className='asset'
+            style={{backgroundImage: 'url(' + src + ')'}}
+            onClick={eventHandler}
+        >
+        </span>
+    );
 }   
 
 export default class AssertToken extends Component {
