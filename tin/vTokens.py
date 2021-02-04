@@ -5,7 +5,7 @@ def tokensList():
     data = []
     for f in listdir(path):
         data.append(
-            path + '/'  + f
+            '/' + path + '/'  + f
         )
 
     return {
@@ -19,7 +19,7 @@ def mapsList():
     data = []
     for f in listdir(path):
         data.append(
-            path + '/'  + f
+            '/' + path + '/'  + f
         )
 
     return {

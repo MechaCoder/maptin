@@ -85,7 +85,6 @@ header .links div:hover {
 
 .mapSingle img {
     width: 100%;
-    margin: 60px;
 }
 
 .audio {
@@ -101,4 +100,49 @@ header .links div:hover {
 }
 .audio:hover {
     opacity: 100%;
+}
+
+.AssertToken{
+    background-color: firebrick;
+    width: 100pt;
+    padding: 5px;
+    overflow: auto;
+    position: fixed;
+    top: 73%;
+    left: 0;
+}
+.AssertToken:hover{
+    width: 500pt;
+}
+
+.AssertToken:hover .asset{
+    display: inline;
+}
+
+.AssertToken .title {
+    color: wheat;
+    font-size: larger;
+    padding: 5px;
+}
+
+.AssertToken .tray {
+    background-color: darkred;
+    display: flex;
+    height: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.AssertToken .asset {
+    margin: 1px;
+    border: solid white 1px;
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: darkorchid;
+    display: none;
 }

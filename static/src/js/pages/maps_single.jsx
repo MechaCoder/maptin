@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Youtube from './component/youtube.jsx';
 import {getUserId, userIdExists} from './component/commons.jsx'
+import AssertToken from './component/assertTray.jsx';
 
 export default class MapSingle extends Component {
     constructor() {
@@ -89,6 +90,10 @@ export default class MapSingle extends Component {
                 </div>
             )
         }
+
+        dms_els.push(
+            <AssertToken subpath='tokens' />
+        )
 
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
