@@ -54,3 +54,13 @@ def createToken(mapHex:str, srcImg:str, x:float, y:float):
     )
 
     return success({'id': vid})
+
+def updateLocation(hex:str, x:int, y:int):
+
+    updated = Vtoken().updateByHex(
+        hex=hex,
+        x=x,
+        y=y
+    )
+
+    return success({'data': updated})

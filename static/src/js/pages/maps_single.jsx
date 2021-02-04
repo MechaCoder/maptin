@@ -4,6 +4,61 @@ import Youtube from './component/youtube.jsx';
 import {getUserId, userIdExists} from './component/commons.jsx'
 import AssertToken from './component/assertTray.jsx';
 
+import Draggable from 'react-draggable';
+
+function updateLocation(hex, x, y){
+    fetch(
+        '/ajax/token',
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'hex': hex,
+                'x': x,
+                'y': y
+            })
+        }
+    )
+    .then(data => data.json())
+    .then((json) => {
+        console.log(json)
+        if(json.succs){
+            console.log('finish')
+        }
+    })
+}
+
+function draggableToken(obj){
+
+    var onStartEvent = (e, data)=>{
+        updateLocation(obj.hex, data.x, data.y)
+    }
+    // var onDragEvent = (e, data)=>{
+    // }
+    var onStopEvent = (e, data)=>{
+        updateLocation(obj.hex, data.x, data.y)
+    }
+
+    return(
+        <Draggable
+            onStart={onStartEvent}
+            // onDrag={onDragEvent}
+            onStop={onStopEvent}
+            defaultPosition={{
+                x: obj.x,
+                y: obj.y
+            }}
+        >  
+            <div className='daggabletoken'>
+                <img src={obj.source} width='15px' />
+            </div>
+        </Draggable>
+    )
+
+}
+
 export default class MapSingle extends Component {
     constructor() {
         console.log('MapSingle')
@@ -80,7 +135,9 @@ export default class MapSingle extends Component {
     render() {
 
         var dms_els = []
-        if(userIdExists()){
+        var userExists = userIdExists()
+        userExists = false
+        if(userExists){
             dms_els.push(
                 <div className="tools">
                     <label htmlFor='mapTitle' >
@@ -100,9 +157,19 @@ export default class MapSingle extends Component {
             <AssertToken subpath='tokens' />
         )
         console.log(this.state.tokens)
+        var el_draggable = []
+        
+        for(var i = 0; i < this.state.tokens.length; i++){
+            el_draggable.push(
+                draggableToken(this.state.tokens[i])
+            )
+        }
 
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
+                <div className="row_tokens">
+                    {el_draggable}
+                </div>
                 <div className="maps">
                     <img src={this.state.map} />
                 </div>
@@ -110,9 +177,6 @@ export default class MapSingle extends Component {
                     <Youtube url={this.state.soundtrack} />
                 </div>
                 {dms_els}
-                <div className="drag tokens">
-
-                </div>
             </div>
         )
     }

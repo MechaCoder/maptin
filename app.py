@@ -14,6 +14,7 @@ from tin import getByHex
 from tin import tokensList
 from tin import mapsList
 from tin import createToken
+from tin import updateLocation
 
 app = Flask(__name__)
 
@@ -83,9 +84,15 @@ def ajaxTokens():
                 json['hex'],
                 json['src'],
                 0,
-                0,
+                100,
             )
         )
+
+@app.route('/ajax/token', methods=['PUT'])
+def ajaxToken():
+    if request.method == 'PUT':
+        json = request.get_json()
+        return dumps(updateLocation(json['hex'], json['x'], json['y']))
 
 @app.route('/')
 @app.route('/dashboard/')

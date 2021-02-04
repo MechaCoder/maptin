@@ -146,3 +146,10 @@ header .links div:hover {
     background-color: darkorchid;
     display: none;
 }
+
+.daggabletoken{
+    height: 0px;
+}
+.daggabletoken img{
+    width: 75px;
+}

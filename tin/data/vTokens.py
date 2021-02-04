@@ -36,4 +36,13 @@ class vTokenData(DataCommons):
         db.close()
         return rows
 
+    def updateByHex(self, hex:str, x:int, y:int):
+        db = self.createObj()
+        rows_updated = db.tbl.update(
+            {'x': x, 'y': y},
+            Query().hex == hex
+        )
+        db.close()
+        return rows_updated
+
     
