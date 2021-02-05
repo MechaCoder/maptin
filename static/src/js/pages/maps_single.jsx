@@ -94,7 +94,7 @@ export default class MapSingle extends Component {
         userExists = false
         if(userExists){
             dms_els.push(
-                <div className="tools">
+                <div className="tools" key={1} >
                     <label htmlFor='mapTitle' >
                         <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value});}}  />
                     </label>
@@ -109,14 +109,15 @@ export default class MapSingle extends Component {
         }
 
         dms_els.push(
-            <AssertToken subpath='tokens' />
+            <AssertToken key={2} subpath='tokens' />
         )
         
         var el_draggable = []
         
         for(var i = 0; i < this.state.tokens.length; i++){ 
             el_draggable.push(
-                <Vtoken 
+                <Vtoken
+                    key={i}
                     hex={this.state.tokens[i].hex}
                     pic={this.state.tokens[i].source}
                     x={this.state.tokens[i].x}

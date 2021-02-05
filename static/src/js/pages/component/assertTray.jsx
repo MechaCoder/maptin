@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import { io } from "socket.io-client";
 
-function imgEl(src){
+function imgEl(src, key){
 
     var eventHandler = (e)=>{
         var l = window.location.href;
@@ -31,6 +31,7 @@ function imgEl(src){
 
     return(
         <span 
+            key={key}
             className='asset'
             style={{backgroundImage: 'url(' + src + ')'}}
             onClick={eventHandler}
@@ -66,7 +67,8 @@ export default class AssertToken extends Component {
         
         var els = []
         for(var i = 0; i<this.state.tokens.length; i++){
-            els.push( imgEl(this.state.tokens[i]) )      
+            // this.state.tokens[i].key = i
+            els.push( imgEl(this.state.tokens[i], i) )      
         }
 
         var tray_width = (this.state.tokens.length * 100)
