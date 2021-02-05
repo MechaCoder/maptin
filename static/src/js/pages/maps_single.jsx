@@ -63,6 +63,7 @@ export default class MapSingle extends Component {
             // this.forceUpdate()
             this.getMapData()
         })
+        this.getMapData()
     }
 
     updateServer(){
@@ -125,6 +126,8 @@ export default class MapSingle extends Component {
                 />
             )
         }
+
+        console.log(this.state.map.length)
 
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
