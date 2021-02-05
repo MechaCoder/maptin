@@ -64,3 +64,8 @@ def updateLocation(hex:str, x:int, y:int):
     )
 
     return success({'data': updated})
+
+def removeVtoken(hex:str):
+    if Vtoken().deleteByHex(hex):
+        return success()
+    return fail()

@@ -45,4 +45,14 @@ class vTokenData(DataCommons):
         db.close()
         return rows_updated
 
+    def deleteByHex(self, hex:str):
+
+        if self.exists('hex', hex) == False:
+            return False
+
+        db = self.createObj()
+        db.tbl.remove(Query().hex == hex)
+        db.close()
+        return True
+
     

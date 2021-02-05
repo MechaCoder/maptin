@@ -14,13 +14,13 @@ export default class Vtoken extends Component {
             'y': 100
         }
         this.updateLocation = this.updateLocation.bind(this);
+        this.deleteMe = this.deleteMe.bind(this)
     }
 
     componentDidMount(){
         this.socket = io();
 
         this.socket.on('connect', ()=>{
-            // this.socket.join(this.props.hex)
 
             this.setState({
                 'opacity': '100%',
@@ -29,12 +29,9 @@ export default class Vtoken extends Component {
         })
 
         this.socket.on('message', (_data)=>{
-            // console.log(this.props.hex != _data.hex)1
             var json = JSON.parse(_data);
-            console.log(json)
 
             if(this.props.hex != json.hex){
-                console.log('not this one')
                 return;
             }
             // return;
@@ -71,6 +68,29 @@ export default class Vtoken extends Component {
         })
     }
 
+    deleteMe(e){    
+
+        var obj = confirm('are you sure you what to delete?')
+        if(!obj){
+            return;
+        }
+
+        fetch('/ajax/token', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'hex': this.props.hex
+            }
+        })
+        .then(data => data.json())
+        .then((json)=>{
+            if(json.succ){
+                this.socket.emit('flash')
+            }
+        })
+
+    }
+
     render() {
         return (
             <Draggable 
@@ -82,7 +102,7 @@ export default class Vtoken extends Component {
                 <div className='daggabletoken' style={{opacity: this.state.opacity}}>
                     <img src={this.props.pic} width='15px' />
                     <div className="tools">
-                        <a href='/' onClick={(e)=>{e.preventDefault()  }}>x</a>  
+                        <a href='/' onClick={(e)=>{e.preventDefault(); this.deleteMe(e)}}>x</a>  
                     </div>
                 </div>
             </Draggable>

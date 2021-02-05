@@ -23,8 +23,6 @@ function imgEl(src){
         .then(data => data.json())
         .then((json) => {
             if(json.succ){
-                // window.location.reload()
-                console.log('xxx')
                 var soc = io();
                 soc.emit('flash')
             }
@@ -56,7 +54,6 @@ export default class AssertToken extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            console.log(json)
             if(json.succs){
                 this.setState({'tokens': json.data})
             }

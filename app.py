@@ -19,6 +19,7 @@ from tin import tokensList
 from tin import mapsList
 from tin import createToken
 from tin import updateLocation
+from tin import removeVtoken
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = Settings().get('socketKey')
@@ -94,11 +95,14 @@ def ajaxTokens():
             )
         )
 
-@app.route('/ajax/token', methods=['PUT'])
+@app.route('/ajax/token', methods=['PUT', 'DELETE'])
 def ajaxToken():
     if request.method == 'PUT':
         json = request.get_json()
         return dumps(updateLocation(json['hex'], json['x'], json['y']))
+    if request.method == 'DELETE':
+        hex = request.headers.get('hex')
+        return dumps(removeVtoken(hex))
 
 @app.route('/')
 @app.route('/dashboard/')

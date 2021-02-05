@@ -60,14 +60,9 @@ export default class MapSingle extends Component {
         this.socket = io();
 
         this.socket.on('flash', ()=>{
-            
-            console.log('flash recived client')
             // this.forceUpdate()
             this.getMapData()
         })
-
-
-
     }
 
     updateServer(){
