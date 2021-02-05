@@ -1,67 +1,14 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import Vtoken from './component/vtoken.jsx';
+
 import Youtube from './component/youtube.jsx';
 import {getUserId, userIdExists} from './component/commons.jsx'
 import AssertToken from './component/assertTray.jsx';
 
-import Draggable from 'react-draggable';
-
-function updateLocation(hex, x, y){
-    fetch(
-        '/ajax/token',
-        {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'hex': hex,
-                'x': x,
-                'y': y
-            })
-        }
-    )
-    .then(data => data.json())
-    .then((json) => {
-        console.log(json)
-        if(json.succs){
-            console.log('finish')
-        }
-    })
-}
-
-function draggableToken(obj){
-
-    var onStartEvent = (e, data)=>{
-        updateLocation(obj.hex, data.x, data.y)
-    }
-    // var onDragEvent = (e, data)=>{
-    // }
-    var onStopEvent = (e, data)=>{
-        updateLocation(obj.hex, data.x, data.y)
-    }
-
-    return(
-        <Draggable
-            onStart={onStartEvent}
-            // onDrag={onDragEvent}
-            onStop={onStopEvent}
-            defaultPosition={{
-                x: obj.x,
-                y: obj.y
-            }}
-        >  
-            <div className='daggabletoken'>
-                <img src={obj.source} width='15px' />
-            </div>
-        </Draggable>
-    )
-
-}
 
 export default class MapSingle extends Component {
     constructor() {
-        console.log('MapSingle')
         super();
         this.state = {
             'hex': '',
@@ -70,7 +17,6 @@ export default class MapSingle extends Component {
             'soundtrack': '',
             'tokens': []
         }
-        // this.updateServer = this.updateServer.bind(this);
     }
 
     componentDidUpdate(){
@@ -94,8 +40,6 @@ export default class MapSingle extends Component {
         .then((json) => {
             if(json.succs){
 
-                console.log(json.data)
-
                 this.setState({
                     'hex': json.data.hex,
                     'title': json.data.title,
@@ -110,7 +54,6 @@ export default class MapSingle extends Component {
     }
 
     updateServer(){
-        console.log('update server')
         if(userIdExists() === false){
             return;
         }
@@ -156,12 +99,17 @@ export default class MapSingle extends Component {
         dms_els.push(
             <AssertToken subpath='tokens' />
         )
-        console.log(this.state.tokens)
+        
         var el_draggable = []
         
-        for(var i = 0; i < this.state.tokens.length; i++){
+        for(var i = 0; i < this.state.tokens.length; i++){ 
             el_draggable.push(
-                draggableToken(this.state.tokens[i])
+                <Vtoken 
+                    hex={this.state.tokens[i].hex}
+                    pic={this.state.tokens[i].source}
+                    x={this.state.tokens[i].x}
+                    y={this.state.tokens[i].y}
+                />
             )
         }
 

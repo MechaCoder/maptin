@@ -1,9 +1,13 @@
-from json import dumps
+from json import dumps, loads
+
+from werkzeug import debug
+from tin.data.settings import Settings
 from tin.map import createMap, updateByHex
 
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask_socketio import SocketIO, emit, send
 
 from tin import authUser
 from tin import createUser
@@ -17,6 +21,8 @@ from tin import createToken
 from tin import updateLocation
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = Settings().get('socketKey')
+socket_app = SocketIO(app)
 
 @app.route('/ajax/user', methods=['POST'])
 def ajaxuser():
@@ -110,5 +116,32 @@ def sys(action):
         rObj['downloadassets'] = trove()
     return dumps(rObj)
 
+@socket_app.on('connect')
+def connect():
+    emit('new client.')
+    print('NEW CLient')
+
+@socket_app.on('message')
+def message(_data = {}):
+    obj = loads(_data)
+    k = updateLocation(
+        hex=obj['hex'],
+        x=obj['x'],
+        y=obj['y']
+    )
+    if k['succ']:
+        emit('message', dumps({
+                'hex': obj['hex'],
+                'x': obj['x'],
+                'y': obj['y']
+
+            }), broadcast=True)
+        print('Updated')
+
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    socket_app.run(
+        app=app,
+        debug=True
+    )

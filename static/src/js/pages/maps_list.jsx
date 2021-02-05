@@ -5,7 +5,6 @@ import {getUserId} from './component/commons.jsx'
 
 export default class MapsList extends Component {
     constructor() {
-        console.log('MapsList')
         super();
         this.state = {
             'hide': false,

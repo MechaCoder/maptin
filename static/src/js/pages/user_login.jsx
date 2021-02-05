@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 
 export default class Userlogin extends Component {
     constructor() {
-        console.log('Userlogin')
         super();
         this.state = {
             'uname': 'test@anno.com',

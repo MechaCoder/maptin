@@ -51,7 +51,6 @@ export default class AssertToken extends Component {
         .then((json) => {
             console.log(json)
             if(json.succs){
-                // console.log(json.data)
                 this.setState({'tokens': json.data})
             }
         })
@@ -61,7 +60,6 @@ export default class AssertToken extends Component {
         
         var els = []
         for(var i = 0; i<this.state.tokens.length; i++){
-            // console.log(this.state.tokens[i])
             els.push( imgEl(this.state.tokens[i]) )      
         }
 
