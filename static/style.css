@@ -153,3 +153,12 @@ header .links div:hover {
 .daggabletoken img{
     width: 75px;
 }
+
+.daggabletoken .tools{
+    width: 75px;
+    display: none;
+    text-align: center;
+}
+.daggabletoken:hover .tools{
+    display: block;
+}

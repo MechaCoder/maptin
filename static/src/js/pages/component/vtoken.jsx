@@ -81,6 +81,9 @@ export default class Vtoken extends Component {
             >
                 <div className='daggabletoken' style={{opacity: this.state.opacity}}>
                     <img src={this.props.pic} width='15px' />
+                    <div className="tools">
+                        <a href='/' onClick={(e)=>{e.preventDefault()  }}>x</a>  
+                    </div>
                 </div>
             </Draggable>
         )

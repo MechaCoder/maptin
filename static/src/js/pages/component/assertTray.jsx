@@ -20,7 +20,7 @@ function imgEl(src){
         })
         .then(data => data.json())
         .then((json) => {
-            alert(json)
+            window.location.reload()
         })
     }
 
