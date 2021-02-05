@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+import { io } from "socket.io-client";
+
 function imgEl(src){
 
     var eventHandler = (e)=>{
@@ -20,7 +22,12 @@ function imgEl(src){
         })
         .then(data => data.json())
         .then((json) => {
-            window.location.reload()
+            if(json.succ){
+                // window.location.reload()
+                console.log('xxx')
+                var soc = io();
+                soc.emit('flash')
+            }
         })
     }
 
@@ -54,6 +61,8 @@ export default class AssertToken extends Component {
                 this.setState({'tokens': json.data})
             }
         })
+
+
     }
 
     render() {

@@ -136,7 +136,11 @@ def message(_data = {}):
                 'y': obj['y']
 
             }), broadcast=True)
-        print('Updated')
+
+@socket_app.on('flash')
+def flash():
+    print('flash')
+    emit('flash', broadcast=True)
 
 
 

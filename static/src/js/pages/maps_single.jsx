@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Vtoken from './component/vtoken.jsx';
+import { io } from "socket.io-client";
 
+import Vtoken from './component/vtoken.jsx';
 import Youtube from './component/youtube.jsx';
 import {getUserId, userIdExists} from './component/commons.jsx'
 import AssertToken from './component/assertTray.jsx';
@@ -17,14 +18,11 @@ export default class MapSingle extends Component {
             'soundtrack': '',
             'tokens': []
         }
+
+        this.getMapData = this.getMapData.bind(this);
     }
 
-    componentDidUpdate(){
-        this.updateServer()
-    }
-
-    componentDidMount(){
-        // getUserId()
+    getMapData(){
 
         var l = window.location.href;
         l = l.split('/');
@@ -50,6 +48,25 @@ export default class MapSingle extends Component {
             }
 
         })
+
+    }
+
+    componentDidUpdate(){
+        this.updateServer()
+    }
+
+    componentDidMount(){
+        // getUserId()
+        this.socket = io();
+
+        this.socket.on('flash', ()=>{
+            
+            console.log('flash recived client')
+            // this.forceUpdate()
+            this.getMapData()
+        })
+
+
 
     }
 
