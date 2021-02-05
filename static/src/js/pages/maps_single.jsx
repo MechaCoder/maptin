@@ -1,28 +1,28 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { io } from "socket.io-client";
+
+import Vtoken from './component/vtoken.jsx';
 import Youtube from './component/youtube.jsx';
 import {getUserId, userIdExists} from './component/commons.jsx'
+import AssertToken from './component/assertTray.jsx';
+
 
 export default class MapSingle extends Component {
     constructor() {
-        console.log('MapSingle')
         super();
         this.state = {
             'hex': '',
             'title': '',
             'map': '',
-            'soundtrack': ''
+            'soundtrack': '',
+            'tokens': []
         }
-        // this.updateServer = this.updateServer.bind(this);
+
+        this.getMapData = this.getMapData.bind(this);
     }
 
-    componentDidUpdate(){
-        this.updateServer()
-        // console.log('componentDidUpdate')
-    }
-
-    componentDidMount(){
-        // getUserId()
+    getMapData(){
 
         var l = window.location.href;
         l = l.split('/');
@@ -37,11 +37,13 @@ export default class MapSingle extends Component {
         .then(data => data.json())
         .then((json) => {
             if(json.succs){
+
                 this.setState({
                     'hex': json.data.hex,
                     'title': json.data.title,
                     'map': json.data.map_source,
-                    'soundtrack': json.data.map_soundtrack
+                    'soundtrack': json.data.map_soundtrack,
+                    'tokens': json.data.tokens
                 })
             }
 
@@ -49,8 +51,22 @@ export default class MapSingle extends Component {
 
     }
 
+    componentDidUpdate(){
+        this.updateServer()
+    }
+
+    componentDidMount(){
+        // getUserId()
+        this.socket = io();
+
+        this.socket.on('flash', ()=>{
+            // this.forceUpdate()
+            this.getMapData()
+        })
+        this.getMapData()
+    }
+
     updateServer(){
-        console.log('update server')
         if(userIdExists() === false){
             return;
         }
@@ -73,10 +89,13 @@ export default class MapSingle extends Component {
     }
 
     render() {
+
         var dms_els = []
-        if(userIdExists()){
+        var userExists = userIdExists()
+        userExists = false
+        if(userExists){
             dms_els.push(
-                <div className="tools">
+                <div className="tools" key={1} >
                     <label htmlFor='mapTitle' >
                         <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value});}}  />
                     </label>
@@ -90,8 +109,31 @@ export default class MapSingle extends Component {
             )
         }
 
+        dms_els.push(
+            <AssertToken key={2} subpath='tokens' />
+        )
+        
+        var el_draggable = []
+        
+        for(var i = 0; i < this.state.tokens.length; i++){ 
+            el_draggable.push(
+                <Vtoken
+                    key={i}
+                    hex={this.state.tokens[i].hex}
+                    pic={this.state.tokens[i].source}
+                    x={this.state.tokens[i].x}
+                    y={this.state.tokens[i].y}
+                />
+            )
+        }
+
+        console.log(this.state.map.length)
+
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
+                <div className="row_tokens">
+                    {el_draggable}
+                </div>
                 <div className="maps">
                     <img src={this.state.map} />
                 </div>

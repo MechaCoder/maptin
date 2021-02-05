@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack --watch --mode development"
+    "dev": "webpack --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +20,9 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
+    "react-draggable": "^4.4.3",
     "react-router-dom": "^5.2.0",
+    "socket.io-client": "^3.1.1",
     "youtube-embed": "^1.0.0"
   }
 }

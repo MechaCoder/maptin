@@ -13,8 +13,8 @@ export default class Youtube extends Component {
         return (
             <iframe 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                width="250" 
-                height="250" 
+                width="125" 
+                height="125"
                 src={ytv} 
                 frameBorder="0"
             ></iframe>
