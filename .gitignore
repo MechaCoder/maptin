@@ -1,0 +1,8 @@
+node_modules
+static/dist/bundle.js
+.vscode/settings.json
+static/a
+
+ds.json
+_play.py
+ds.vToken.json
