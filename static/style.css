@@ -84,7 +84,7 @@ header .links div:hover {
 }
 
 .mapSingle img {
-    width: 100%;
+    width: 1000px;
 }
 
 .audio {
@@ -104,12 +104,13 @@ header .links div:hover {
 
 .AssertToken{
     background-color: firebrick;
-    width: 100pt;
-    padding: 5px;
+    width: 10pt;
+    padding: 1px;
     overflow: auto;
     position: fixed;
     top: 73%;
     left: 0;
+    height: 180px;
 }
 .AssertToken:hover{
     width: 500pt;
@@ -123,16 +124,23 @@ header .links div:hover {
     color: wheat;
     font-size: larger;
     padding: 5px;
+    display: none;
+}
+.AssertToken:hover .title{
+    display: block;
 }
 
 .AssertToken .tray {
-    background-color: darkred;
+    background-color: firebrick;
     display: flex;
     height: 100px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
+}
+.AssertToken:hover .tray {
+    background-color: darkred;
 }
 
 .AssertToken .asset {
@@ -161,4 +169,57 @@ header .links div:hover {
 }
 .daggabletoken:hover .tools{
     display: block;
+}
+
+.maptray{
+    background-color: firebrick;
+    width: 1pt;
+    padding: 5px;
+    overflow: auto;
+    position: fixed;
+    top: 43.5%;
+    left: 0;
+    height: 180px;
+}
+.maptray:hover{
+    width: 500pt;
+}
+
+.maptray:hover .asset{
+    display: inline;
+}
+
+.maptray .title {
+    color: wheat;
+    font-size: larger;
+    padding: 5px;
+    display: none;
+}
+.maptray:hover .title{
+    display: block;
+}
+
+.maptray .tray {
+    background-color: firebrick;
+    display: flex;
+    height: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.maptray:hover .tray {
+    background-color: darkred;
+}
+
+.maptray .asset {
+    margin: 1px;
+    border: solid white 1px;
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: darkorchid;
+    display: none;
 }

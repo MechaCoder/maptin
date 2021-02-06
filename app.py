@@ -8,6 +8,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask_socketio import SocketIO, emit, send
+from tin.http.trove import trove
 
 from tin import authUser
 from tin import createUser
@@ -19,6 +20,7 @@ from tin import tokensList
 from tin import mapsList
 from tin import createToken
 from tin import updateLocation
+from tin import upadateBgByHex
 from tin import removeVtoken
 
 app = Flask(__name__)
@@ -72,6 +74,12 @@ def mapSingle():
             usrKey=key
         ))
         return obj
+
+@app.route('/ajax/map/bg', methods=['POST'])
+def mapSingleBg():
+    json = request.get_json()
+    obj = upadateBgByHex(json['hex'], json['src'])
+    return obj
 
 @app.route('/ajax/assets/<sub_path>')
 def ajaxAssets(sub_path):

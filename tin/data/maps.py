@@ -45,6 +45,15 @@ class Maps(DataCommons):
         db.close()
         return True
 
+    def updateBgByHex(self, hex:str, bg:str):
+        db = self.createObj()
+        db.tbl.update(
+            {'map_source': bg},
+            Query().hex == hex
+        )
+        db.close()
+        return True
+
     def deleteByHex(self, hex: str):
         db = self.createObj()
         ids = db.tbl.remove(Query().hex == hex)
