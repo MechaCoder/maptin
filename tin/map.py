@@ -9,6 +9,8 @@ from .data.maps import Maps
 from .data.tokens import Tokens
 from .data.vTokens import vTokenData as Vtoken
 
+from .commons import success, fail
+
 def createMap(key):
     tobj = Tokens()
     if tobj.keyExsists(key) == False:
@@ -113,7 +115,12 @@ def updateByHex(hex:str, title:str, map:str, sound:str, usrKey):
         'succs': False,
         'error': 'there has been an error'
     }
-             
+
+def upadateBgByHex(hex:str, bg:str):
+    if Maps().updateBgByHex(hex, bg):
+        return success()
+
+
 def deleteMap(hex:str, key:str):
     tobj = Tokens()
     mobj = Maps()
@@ -138,5 +145,4 @@ def deleteMap(hex:str, key:str):
         'succs': False,
         'error': 'map could not be deleted'
     }
-
 
