@@ -58,24 +58,16 @@ def vaildUrl(addr:str, _domain:str = ''):
 
     try:
         url(addr)
-        addr_broken_down = addr.split('.')
-        if len(addr_broken_down) < 2:
-            return False
-        add_domain = addr_broken_down[1]
-        if _domain is '':
-            return True
-        
-        if _domain == add_domain:
+        if _domain in addr:
             return True
         return False
-        
 
     except ValidationFailure:
+        print('ValidationFailure')
         return False
-    finally:
+    except Exception as error:
+        print(error)
         return False
-
-
 
 class DataCommons(DatabaseBase):
 

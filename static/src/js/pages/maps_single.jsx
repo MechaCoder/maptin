@@ -71,7 +71,6 @@ export default class MapSingle extends Component {
         if(userIdExists() === false){
             return;
         }
-        
         var usr_token = getUserId()
 
         fetch('/ajax/map', {
@@ -86,6 +85,15 @@ export default class MapSingle extends Component {
                 'map': this.state.map,
                 'soundtrack': this.state.soundtrack
             })
+        })
+        .then(data=>data.json())
+        .then((json)=>{
+            if(json.succs){
+                console.log(json.data)
+            }
+            else{
+                alert(json.error)
+            }
         })
     }
 
