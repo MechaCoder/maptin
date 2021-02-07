@@ -1,6 +1,7 @@
 from tinydb.queries import Query
 from tinydb_base import DatabaseBase
 from .commons import mkHex, DataCommons
+from .exceptions import TokenLimit
 
 class vTokenData(DataCommons):
 
@@ -9,8 +10,15 @@ class vTokenData(DataCommons):
 
     def create(self, mapHex, source, tokenType, x, y):
 
-        hex = ''
+        db = self.createObj()
+        num = db.tbl.count(Query().mapHex == mapHex)
+        db.close()
 
+        if num > 100:
+            raise TokenLimit('token limit has been reached for this map')
+
+
+        hex = ''
         while True:
             hex = mkHex()
             if self.exists('hex', hex) == False:
