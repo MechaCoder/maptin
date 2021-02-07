@@ -123,7 +123,6 @@ def sys(action):
 @socket_app.on('connect')
 def connect():
     emit('new client.')
-    print('NEW CLient')
 
 @socket_app.on('message')
 def message(_data = {}):
@@ -143,7 +142,6 @@ def message(_data = {}):
 
 @socket_app.on('flash')
 def flash():
-    print('flash')
     emit('flash', broadcast=True)
 
 

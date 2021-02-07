@@ -68,10 +68,9 @@ def createUser(uname: str, pword: str):
             'error': 'user limit has been reached',
         }
     except Exception as err:
-        print(err)
         return {
             'succs': False,
-            'error': 'there has been an error',
+            'error': str(err),
         }
 
     

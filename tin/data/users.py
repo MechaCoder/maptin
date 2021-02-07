@@ -13,7 +13,6 @@ class DataUser(User):
         
         db = self.createObj()
         num = len(db.tbl.all())
-        print(num)
         db.close()
 
         if num > 10:
