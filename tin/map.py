@@ -20,7 +20,7 @@ def createMap(key):
     Maps().create(
         owner_id=userRow.doc_id,
         title='New Map',
-        mapsource='',
+        mapsource='/static/world-map.gif',
         soundtrack=''
     )
     return {
