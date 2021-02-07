@@ -1,3 +1,4 @@
+from datetime import datetime
 
 def success(_data:dict = {}):
     return {
@@ -10,3 +11,11 @@ def fail(_errMsg:str = 'there has been an error'):
         'succ': False,
         'err': _errMsg 
     }
+
+def debug_file(msg:str):
+
+    fileObj = open('debug.txt', 'a+')
+    fileObj.write( f'{ datetime.now() } | {msg} \n' ) 
+    fileObj.close()
+
+    return True

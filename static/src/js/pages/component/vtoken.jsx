@@ -11,7 +11,8 @@ export default class Vtoken extends Component {
             'opacity': '100%',
             'connection': false,
             'x': 0,
-            'y': 100
+            'y': 100,
+            'hide': false
         }
         this.updateLocation = this.updateLocation.bind(this);
         this.deleteMe = this.deleteMe.bind(this)
@@ -85,13 +86,24 @@ export default class Vtoken extends Component {
         .then(data => data.json())
         .then((json)=>{
             if(json.succ){
-                this.socket.emit('flash')
+                this.setState({
+                    'connection': false,
+                    'hide': true
+                })
+                // this.socket.emit('flash')
+                // this.socket.disconnect()
+                // window.location.reload()
             }
         })
 
     }
 
     render() {
+        var parent_css = {opacity: this.state.opacity}
+        if(this.state.hide){
+            parent_css.display = 'none'
+        }
+
         return (
             <Draggable 
                 defaultPosition={{x: this.state.x, y: this.state.y}}
@@ -99,7 +111,7 @@ export default class Vtoken extends Component {
                 onStop={this.updateLocation} 
                 disabled={!this.state.connection} 
             >
-                <div className='daggabletoken' style={{opacity: this.state.opacity}}>
+                <div className='daggabletoken' style={parent_css}>
                     <img src={this.props.pic} width='15px' />
                     <div className="tools">
                         <a href='/' onClick={(e)=>{e.preventDefault(); this.deleteMe(e)}}>x</a>  
