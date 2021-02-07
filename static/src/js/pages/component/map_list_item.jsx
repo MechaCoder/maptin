@@ -37,8 +37,12 @@ export default class MapListItem extends Component {
 
         return (
             <div className="MapListItem" data-hex={this.props.hex}>
-                <a href={link} ><div> <img src={this.props.map} width='200px' /></div></a>
-                    <div>{this.props.title} <button onClick={this.deleteSelf}>delete</button> </div>
+                <a href={link} >
+                    <div className="coverImg" style={{backgroundImage: 'url(' + this.props.map + ')'}} > 
+                        {/* <img src={this.props.map} width='200px' /> */}
+                    </div>
+                </a>
+                <div>{this.props.title} <button onClick={this.deleteSelf}>delete</button> </div>
             </div> 
         )
     }

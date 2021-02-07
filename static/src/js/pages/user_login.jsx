@@ -117,15 +117,15 @@ export default class Userlogin extends Component {
 
         return (
             <div className="userlogin">
-                <div>
+                <div className='uname' >
                     <label htmlFor='uname' >username</label>
                     <input name="uname" type='text' value={this.state.uname} onChange={(event) => {this.setState({'uname': event.target.value})}} />
                 </div>
-                <div>
+                <div className='pword' >
                     <label htmlFor='password' >password</label>
                     <input name="password" type='text' value={this.state.pword} onChange={(event) => {this.setState({'pword': event.target.value})}} />   
                 </div>
-                <div>
+                <div className='btns' >
                     <button onClick={this.testUser} >Sign In</button>
                     <button onClick={this.mkUser} >Sign Up</button>
                 </div>
