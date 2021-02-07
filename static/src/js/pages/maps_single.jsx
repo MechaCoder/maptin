@@ -92,7 +92,6 @@ export default class MapSingle extends Component {
 
         var dms_els = []
         var userExists = userIdExists()
-        userExists = false
         if(userExists){
             dms_els.push(
                 <div className="tools" key={1} >
