@@ -16,13 +16,18 @@ export default class SiteHeader extends Component {
 
     render() {
 
+        var links = []
+        if( userIdExists() ){
+            links.push(<div onClick={this.logout}> Logout </div>)
+        }
+
         return (
             <header>
                 <div className="siteTitle">
                     <h1>Map Tin</h1>
                 </div>
                 <div className="links">
-                    <div onClick={this.logout}> Logout </div>
+                    {links}
                 </div>
             </header>
         )

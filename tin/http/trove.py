@@ -1,7 +1,7 @@
-from os import mkdir
+from os import mkdir, listdir, rmdir
 from os.path import isdir, isfile
 from time import sleep
-from shutil import copyfileobj
+from shutil import copyfileobj, rmtree
 from random import randint
 from threading import Thread
 
@@ -9,6 +9,15 @@ from threading import Thread
 from requests.api import get
 from .base import getObject
 from tin.data.commons import mkHex
+
+def mkFname(dest:str, oldfname:str):
+    files = listdir(dest)
+    fileExtention = oldfname.split('.')[-1]
+
+    while True:
+        key = mkHex(8)
+        if f'{key}.{fileExtention}' not in files:
+            return f'{key}.{fileExtention}'
 
 def getTokens(addr: str):
     url = addr
@@ -36,8 +45,7 @@ def downloader(img_addr:str, subFolder:str = 'tokens'):
     if isdir(f'static/a/{subFolder}') == False:
         mkdir(f'static/a/{subFolder}')
 
-    if isfile(f'static/a/{subFolder}/{fname}'):
-        return f'static/a/{subFolder}/{fname}'
+    fname = mkFname(f'static/a/{subFolder}', fname)
     
     with open(f'static/a/{subFolder}/{fname}', 'wb') as fileObj:
         copyfileobj(
@@ -47,6 +55,8 @@ def downloader(img_addr:str, subFolder:str = 'tokens'):
     return f'static/a/{subFolder}/{fname}'
 
 def runner(l:list, sub:str = 'tokens'):
+
+    rmtree(f'static/a/{sub}', ignore_errors=True)
 
     newImgs = []
     for addr in l:

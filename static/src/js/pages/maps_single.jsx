@@ -6,6 +6,7 @@ import Vtoken from './component/vtoken.jsx';
 import Youtube from './component/youtube.jsx';
 import {getUserId, userIdExists} from './component/commons.jsx'
 import AssertToken from './component/assertTray.jsx';
+import MapList from './component/mapslist.jsx';
 
 
 export default class MapSingle extends Component {
@@ -98,18 +99,19 @@ export default class MapSingle extends Component {
                     <label htmlFor='mapTitle' >
                         <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value});}}  />
                     </label>
-                    <label htmlFor='mapMap'>
-                        <div>Map:</div> <input name='mapMap' value={this.state.map} onChange={(event) => {this.setState({'map': event.target.value});}} />
-                    </label>
                     <label htmlFor='mapSoundtrack'>
                         <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value});}} />
                     </label>
+                    
                 </div>
+            )
+            dms_els.push(
+                <MapList key={2} />
             )
         }
 
         dms_els.push(
-            <AssertToken key={2} subpath='tokens' />
+            <AssertToken key={3} subpath='tokens' />
         )
         
         var el_draggable = []
@@ -125,8 +127,6 @@ export default class MapSingle extends Component {
                 />
             )
         }
-
-        console.log(this.state.map.length)
 
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
