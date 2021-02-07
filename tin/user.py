@@ -2,6 +2,7 @@ from json import dumps
 from tinydb_base import exceptions
 from .data.users import DataUser
 from .data.tokens import Tokens
+from .data.exceptions import UserLimit
 from .data.commons import checkEmail, password_check
 
 from tinydb_base.exceptions import UsernameExists
@@ -60,6 +61,11 @@ def createUser(uname: str, pword: str):
         return {
             'succs': False,
             'error': 'email already regersted',
+        }
+    except UserLimit:
+        return {
+            'succs': False,
+            'error': 'user limit has been reached',
         }
     except Exception as err:
         print(err)
