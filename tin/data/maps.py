@@ -3,7 +3,7 @@ from .commons import DataCommons, mkHex
 
 class Maps(DataCommons):
 
-    def __init__(self, file: str = 'ds.json', table: str = 'maps', requiredKeys = 'hex,owner_id,title,map_source,map_soundtrack'):
+    def __init__(self, file: str = 'ds.json', table: str = 'maps', requiredKeys = 'hex,owner_id:int,title,map_source,map_soundtrack'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
     def create(self, owner_id:int, title:str, mapsource:str, soundtrack:str):

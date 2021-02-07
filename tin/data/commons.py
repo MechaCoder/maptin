@@ -58,7 +58,10 @@ def vaildUrl(addr:str, _domain:str = ''):
 
     try:
         url(addr)
-        add_domain = addr.split('.')[1]
+        addr_broken_down = addr.split('.')
+        if len(addr_broken_down) < 2:
+            return False
+        add_domain = addr_broken_down[1]
         if _domain is '':
             return True
         
@@ -68,6 +71,8 @@ def vaildUrl(addr:str, _domain:str = ''):
         
 
     except ValidationFailure:
+        return False
+    finally:
         return False
 
 

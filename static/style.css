@@ -1,4 +1,204 @@
 body {
+    background-color:#000;
+    }
+    
+    header {
+    position:fixed;
+    display:flex;
+    background:#b22222;
+    width:100%;
+    top:0;
+    left:0;
+    height:58px;
+    color:#fff;
+    }
+    
+    header .links {
+    position:relative;
+    float:right;
+    }
+    
+    header .siteTitle {
+    width:80%;
+    }
+    
+    header .links div {
+    background-color:darkgrey;
+    width:200px;
+    height:18px;
+    text-align:center;
+    margin:auto;
+    padding:20px;
+    }
+    
+    header .links div:hover {
+    background-color:#708090;
+    }
+    
+    .maps_diolog{
+        background-color: slategray;
+        margin-top: 100px;
+        margin-left: 10%;
+        width: 80%
+    }
+    
+    .maps_diolog .maps_row {
+    display:flex;
+    flex-wrap:wrap;
+    align-content:space-evenly;
+    }
+    
+    .maps_diolog .maps_row div {
+    width:200px;
+    height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    }
+    
+    .maps_diolog .maps_row #newMap {
+    text-align:center;
+    padding-top:4%;
+    border:1px solid darkslategrey;
+    cursor:pointer;
+    }
+    
+    .maps_diolog .maps_row .MapListItem {
+    text-align:center;
+    padding:1px;
+    }
+    
+    .mapSingle .tools {
+    background-color:#b22222;
+    border:#b22222 solid 1px;
+    border-top:none;
+    border-left:none;
+    width:250px;
+    padding:5px;
+    position:fixed;
+    top:58px;
+    left:0;
+    }
+    
+    .mapSingle .tools input {
+    background-color:#2f4f4f;
+    color:#f5deb3;
+    }
+    
+    .mapSingle img {
+    width:100%;
+    }
+    
+    .audio {
+    border:1px solid #b22222;
+    border-top:none;
+    border-right:none;
+    background-color:#2f4f4f;
+    width:125px;
+    position:fixed;
+    right:0;
+    top:58px;
+    opacity:40%;
+    }
+    
+    .audio:hover {
+    opacity:100%;
+    }
+    
+    .AssertToken {
+    background-color:#b22222;
+    width:100pt;
+    padding:5px;
+    overflow:auto;
+    position:fixed;
+    top:73%;
+    left:0;
+    }
+    
+    .AssertToken:hover {
+    width:500pt;
+    }
+    
+    .AssertToken:hover .asset {
+    display:inline;
+    }
+    
+    .AssertToken .title {
+    color:#f5deb3;
+    font-size:larger;
+    padding:5px;
+    }
+    
+    .AssertToken .tray {
+    background-color:#8b0000;
+    display:flex;
+    height:100px;
+    padding:10px;
+    }
+    
+    .AssertToken .asset {
+    margin:1px;
+    border:solid #fff 1px;
+    display:block;
+    width:100px;
+    height:100px;
+    background-repeat:no-repeat;
+    background-size:contain;
+    background-color:#9932cc;
+    display:none;
+    }
+    
+    .daggabletoken {
+    height:0;
+    }
+    
+    .daggabletoken img {
+    width:75px;
+    }
+    
+    .daggabletoken .tools {
+    width:75px;
+    display:none;
+    text-align:center;
+    }
+    
+    .daggabletoken:hover .tools {
+    display:block;
+    }
+    
+    .userlogin {
+    margin-top:100px;
+    margin-left:350px;
+    width:400px;
+    background-color:#b22222;
+    padding:15px;
+    border-radius:8px;
+    color:#fff;
+    }
+    
+    .userlogin label {
+    width:100px;
+    display:inline-block;
+    }
+    
+    .userlogin input {
+    background-color:#000;
+    color:#f5deb3;
+    }
+    
+    .userlogin .pword input {
+    margin-top:5px;
+    }
+    
+    .userlogin .btns button {
+    width:40%;
+    margin-top:10px;
+    background-color:#2f4f4f;
+    color:#f5deb3;
+    }
+    
+    .userlogin .btns button:first-child {
+    margin-right:10px;
+    }
     background-color: black;
 }
 
