@@ -18,7 +18,7 @@ export default class MapSingle extends Component {
             'map': '',
             'soundtrack': '',
             'width': 1000,
-            'tokens': []
+            'tokens': [],
         }
 
         this.getMapData = this.getMapData.bind(this);
@@ -46,7 +46,7 @@ export default class MapSingle extends Component {
                     'map': json.data.map_source,
                     'soundtrack': json.data.map_soundtrack,
                     'tokens': json.data.tokens,
-                    'width': json.data.width
+                    'width': json.data.width,
                 })
             }
 
@@ -115,7 +115,7 @@ export default class MapSingle extends Component {
                         <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value});}} />
                     </label>
                     <label htmlFor="mapWidth" >
-                        <div>Fixed Map Width</div> <input name="mapWith" type='number' min='1000' value={this.state.wifth} onChange={(event) => {this.setState({'width': event.target.value})}} />
+                        <div>Fixed Map Width</div> <input name="mapWith" type='number' min='1000' value={this.state.width} onChange={(event) => {this.setState({'width': event.target.value})}} />
                     </label>
                 </div>
             )
