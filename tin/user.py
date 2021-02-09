@@ -9,7 +9,7 @@ from tinydb_base.exceptions import UsernameExists
 
 def authUser(uname: str, pword: str):
 
-    if checkEmail(uname) == False:
+    if checkEmail(uname) == False:        
         return {
             'succs': False,
             'error': 'Invalid email',
