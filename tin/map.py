@@ -23,7 +23,9 @@ def createMap(key):
         owner_id=userRow.doc_id,
         title='New Map',
         mapsource='/static/world-map.gif',
-        soundtrack=''
+        soundtrack='',
+        width=1000
+
     )
     return {
         'succs': True,
@@ -73,7 +75,7 @@ def getByHex(hex:str):
             'data': returnObj,
         }
 
-def updateByHex(hex:str, title:str, map:str, sound:str, usrKey):
+def updateByHex(hex:str, title:str, map:str, sound:str, width:int, usrKey:str):
     
     map = map.strip()
     mapTestVal = map
@@ -108,7 +110,7 @@ def updateByHex(hex:str, title:str, map:str, sound:str, usrKey):
             'error': 'the user key is not the owner',
         }
 
-    if mapsObj.updateByHex(hex=hex, title=title, map=map, sound=sound):
+    if mapsObj.updateByHex(hex=hex, title=title, map=map, sound=sound, width=width):
         return {
             'succs': True,
         }

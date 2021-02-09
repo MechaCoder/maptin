@@ -1,4 +1,5 @@
 from json import dumps, loads
+from tin.commons import debug_file
 
 from werkzeug import debug
 from tin.data.settings import Settings
@@ -63,6 +64,7 @@ def mapSingle():
     if request.method == 'GET':
         hex = request.headers.get('map')
         return dumps(getByHex(hex))
+
     if request.method == 'PUT': # needs to be confimed by userkey
         key = request.headers.get('Userkey')
         json = request.get_json()
@@ -71,6 +73,7 @@ def mapSingle():
             title=json['title'], 
             map=json['map'],
             sound=json['soundtrack'],
+            width=json['width'],
             usrKey=key
         ))
         return obj
@@ -123,6 +126,10 @@ def map_page(hex):
 
 @app.route('/sys/<action>')
 def sys(action):
+    """
+    /sys/downloadassets
+    """
+
     rObj = {}
     if action == 'downloadassets':
         rObj['downloadassets'] = trove()

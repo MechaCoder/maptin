@@ -17,7 +17,8 @@ export default class MapSingle extends Component {
             'title': '',
             'map': '',
             'soundtrack': '',
-            'tokens': []
+            'width': 1000,
+            'tokens': [],
         }
 
         this.getMapData = this.getMapData.bind(this);
@@ -44,7 +45,8 @@ export default class MapSingle extends Component {
                     'title': json.data.title,
                     'map': json.data.map_source,
                     'soundtrack': json.data.map_soundtrack,
-                    'tokens': json.data.tokens
+                    'tokens': json.data.tokens,
+                    'width': json.data.width,
                 })
             }
 
@@ -84,7 +86,8 @@ export default class MapSingle extends Component {
                 'hex': this.state.hex,
                 'title': this.state.title,
                 'map': this.state.map,
-                'soundtrack': this.state.soundtrack
+                'soundtrack': this.state.soundtrack,
+                'width': this.state.width
             })
         })
         .then(data=>data.json())
@@ -111,7 +114,9 @@ export default class MapSingle extends Component {
                     <label htmlFor='mapSoundtrack'>
                         <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value});}} />
                     </label>
-                    
+                    <label htmlFor="mapWidth" >
+                        <div>Fixed Map Width</div> <input name="mapWith" type='number' min='1000' value={this.state.width} onChange={(event) => {this.setState({'width': event.target.value})}} />
+                    </label>
                 </div>
             )
             dms_els.push(
@@ -143,7 +148,7 @@ export default class MapSingle extends Component {
                     {el_draggable}
                 </div>
                 <div className="maps">
-                    <img src={this.state.map} />
+                    <img src={this.state.map} style={{'width': this.state.width}} />
                 </div>
                 <div className="audio">
                     <Youtube url={this.state.soundtrack} />

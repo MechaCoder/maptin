@@ -3,10 +3,10 @@ from .commons import DataCommons, mkHex
 
 class Maps(DataCommons):
 
-    def __init__(self, file: str = 'ds.json', table: str = 'maps', requiredKeys = 'hex,owner_id:int,title,map_source,map_soundtrack'):
+    def __init__(self, file: str = 'ds.json', table: str = 'maps', requiredKeys = 'hex,owner_id:int,title,map_source,map_soundtrack,width:int'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
-    def create(self, owner_id:int, title:str, mapsource:str, soundtrack:str):
+    def create(self, owner_id:int, title:str, mapsource:str, soundtrack:str, width:int = 1000):
         hex = ''
         while True:
             hex = mkHex(16)
@@ -18,7 +18,8 @@ class Maps(DataCommons):
             'owner_id': owner_id,
             'title': title,
             'map_source': mapsource,
-            'map_soundtrack': soundtrack
+            'map_soundtrack': soundtrack,
+            'width': width
         }
         return super().create(row)
     
@@ -35,12 +36,13 @@ class Maps(DataCommons):
         db.close()
         return row
 
-    def updateByHex(self, hex: str, title: str, map: str, sound: str):
+    def updateByHex(self, hex: str, title: str, map: str, sound: str, width: int):
         db = self.createObj()
         db.tbl.update({
             'title': title,
             'map_source': map,
-            'map_soundtrack': sound
+            'map_soundtrack': sound,
+            'width': width
         }, Query().hex == hex)
         db.close()
         return True
