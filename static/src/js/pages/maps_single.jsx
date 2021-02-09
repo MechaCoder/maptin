@@ -54,6 +54,7 @@ export default class MapSingle extends Component {
 
     componentDidUpdate(){
         this.updateServer()
+        var titleEl = document.title = 'map | ' + this.state.title;
     }
 
     componentDidMount(){

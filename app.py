@@ -115,11 +115,11 @@ def ajaxToken():
 @app.route('/')
 @app.route('/dashboard/')
 def index():
-    return render_template('base.html')
+    return render_template('base.html', pageTitle='dashboard')
 
 @app.route('/map/<hex>')
 def map_page(hex):
-    return render_template('base.html')
+    return render_template('base.html', pageTitle='map')
 
 @app.route('/sys/<action>')
 def sys(action):
