@@ -72,12 +72,15 @@ def runner(l:list, sub:str = 'tokens'):
 def trove():
 
     tokens = getTokens("https://thetrove.is/Assets/By%20Artist%20or%20Source/5eTools/currated/Token/")
+    tokens += getTokens("https://thetrove.is/Assets/Tokens%20(by%20View)/Overhead/All%20the%20Lights%20in%20the%20Sky%20are%20Stars%20-%20Aeyana%20%28H%29/")
     segmentsSize = round( len(tokens) / 2 )
 
     l1 = tokens[0: segmentsSize]
     l2 = tokens[segmentsSize + 1:]
 
     maps = getTokens('https://thetrove.is/Assets/By%20Artist%20or%20Source/Skyrim/')
+    maps += getTokens('https://thetrove.is/Assets/Maps%20&%20Tiles/BattleMaps/City%20Based/Lost%20Mine%20of%20Phandelver%20Maps/')
+    maps + getTokens('https://thetrove.is/Assets/Maps%20&%20Tiles/BattleMaps/City%20Based/Neverwinter/neverwinter_environs.jpg')
 
     segmentsSize = round( len(maps) / 2 )
     l3 = maps[0: segmentsSize]
