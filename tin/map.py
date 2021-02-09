@@ -9,7 +9,7 @@ from .data.maps import Maps
 from .data.tokens import Tokens
 from .data.vTokens import vTokenData as Vtoken
 
-from .commons import success, fail
+from .commons import success, fail, debug_file
 
 def createMap(key):
     tobj = Tokens()
@@ -38,8 +38,10 @@ def listMaps(key:str):
             'succs': False,
             'error': 'invalid key',
         }
+    
     userRow = tobj.getRowByKey(key=key)
     maps = []
+    
     for map in mobj.readByOwnerId(userRow.doc_id):
         row = {}
         for key in map.keys():
@@ -47,6 +49,7 @@ def listMaps(key:str):
         if isfile(row['map_source'] == False) or row['map_source'] == '':
             row['map_source'] = '/static/world-map.gif'
         maps.append(row)
+    
     return maps
 
 def getByHex(hex:str):
@@ -73,11 +76,14 @@ def getByHex(hex:str):
 def updateByHex(hex:str, title:str, map:str, sound:str, usrKey):
     
     map = map.strip()
+    mapTestVal = map
+    if mapTestVal[0] == '/':
+        mapTestVal = mapTestVal[1:]
     sound = sound.strip()
-    tokensObj = Tokens()
+    # tokensObj = Tokens()
     mapsObj = Maps()
     
-    if vaildUrl(map, 'pinimg') == False:
+    if isfile(mapTestVal) == False:
         return {
             'succs': False,
             'error': 'map url is invalid',
@@ -89,18 +95,13 @@ def updateByHex(hex:str, title:str, map:str, sound:str, usrKey):
             'error': 'sound url is invalid',
         }
 
-    keyRow = tokensObj.getRowByKey(key=usrKey)
-    if keyRow == None:
-        return {
-            'succs': False,
-            'error': 'user key is invalid',
-        }
     row = mapsObj.readByHex(hex=hex)
     if row == None:
         return {
             'succs': False,
             'error': 'hex is invalid',
         }
+    
     if checkOwnerByHexAndUsrKey(hex=hex, key=usrKey) == False:
         return {
             'succs': False,
