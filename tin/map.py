@@ -76,13 +76,14 @@ def getByHex(hex:str):
 def updateByHex(hex:str, title:str, map:str, sound:str, usrKey):
     
     map = map.strip()
-    if map[0] == '/':
-        map = map[1:]
+    mapTestVal = map
+    if mapTestVal[0] == '/':
+        mapTestVal = mapTestVal[1:]
     sound = sound.strip()
-    tokensObj = Tokens()
+    # tokensObj = Tokens()
     mapsObj = Maps()
     
-    if isfile(map) == False:
+    if isfile(mapTestVal) == False:
         return {
             'succs': False,
             'error': 'map url is invalid',
