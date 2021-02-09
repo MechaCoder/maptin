@@ -1,5 +1,5 @@
+import logging
 from json import dumps, loads
-from tin.commons import debug_file
 
 from werkzeug import debug
 from tin.data.settings import Settings
@@ -23,7 +23,10 @@ from tin import createToken
 from tin import updateLocation
 from tin import upadateBgByHex
 from tin import removeVtoken
+from tin.commons import debug_file
+import tin.system as systems
 
+logging.basicConfig(filename='log.log', level=logging.NOTSET)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = Settings().get('socketKey')
 socket_app = SocketIO(app)
@@ -124,16 +127,16 @@ def index():
 def map_page(hex):
     return render_template('base.html', pageTitle='map')
 
-@app.route('/sys/<action>')
-def sys(action):
+@app.route('/sys/')
+def sys():
     """
     /sys/downloadassets
     """
-
-    rObj = {}
-    if action == 'downloadassets':
-        rObj['downloadassets'] = trove()
-    return dumps(rObj)
+    return render_template(
+        'system.html', 
+        logStr=systems.getlogfile(),
+        files=systems.getAssets()
+    )
 
 @socket_app.on('connect')
 def connect():
