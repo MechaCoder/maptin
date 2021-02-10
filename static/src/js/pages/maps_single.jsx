@@ -19,6 +19,7 @@ export default class MapSingle extends Component {
             'soundtrack': '',
             'width': 1000,
             'tokens': [],
+            'foggyOfWar': true
         }
 
         this.getMapData = this.getMapData.bind(this);
@@ -105,6 +106,7 @@ export default class MapSingle extends Component {
 
         var dms_els = []
         var userExists = userIdExists()
+        var foggy = {display: 'none'}
         if(userExists){
             dms_els.push(
                 <div className="tools" key={1} >
@@ -115,13 +117,17 @@ export default class MapSingle extends Component {
                         <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value});}} />
                     </label>
                     <label htmlFor="mapWidth" >
-                        <div>Fixed Map Width</div> <input name="mapWith" type='number' min='1000' value={this.state.width} onChange={(event) => {this.setState({'width': event.target.value})}} />
+                        <div>Fixed Map Width</div> <input name="mapWidth" type='number' min='1000' value={this.state.width} onChange={(event) => {this.setState({'width': event.target.value})}} />
+                    </label>
+                    <label htmlFor="fogOfWar" >
+                        <div>Fog of War</div> <input name="fogOfWar" type='checkbox' checked={this.state.foggyOfWar} onChange={(event)=>{this.setState({'foggyOfWar': !this.state.foggyOfWar})}} />
                     </label>
                 </div>
             )
             dms_els.push(
                 <MapList key={2} />
             )
+            foggy['opacity'] = '50%'
         }
 
         dms_els.push(
@@ -142,13 +148,21 @@ export default class MapSingle extends Component {
             )
         }
 
+        if(this.state.foggyOfWar){
+            foggy['display'] = 'block'
+        }
+
+        console.log(this.state)
+
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
                 <div className="row_tokens">
                     {el_draggable}
                 </div>
                 <div className="maps">
-                    <img src={this.state.map} style={{'width': this.state.width}} />
+                    <div class='fogOfWar' style={foggy}></div>
+                    <img ref='image' src={this.state.map} style={{'width': this.state.width}} />
+                    
                 </div>
                 <div className="audio">
                     <Youtube url={this.state.soundtrack} />
