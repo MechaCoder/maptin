@@ -48,6 +48,7 @@ export default class MapSingle extends Component {
                     'soundtrack': json.data.map_soundtrack,
                     'tokens': json.data.tokens,
                     'width': json.data.width,
+                    'foggyOfWar': json.data.fog
                 })
             }
 
@@ -88,7 +89,8 @@ export default class MapSingle extends Component {
                 'title': this.state.title,
                 'map': this.state.map,
                 'soundtrack': this.state.soundtrack,
-                'width': this.state.width
+                'width': this.state.width,
+                'fogOfWar': this.state.foggyOfWar
             })
         })
         .then(data=>data.json())
@@ -97,7 +99,7 @@ export default class MapSingle extends Component {
                 console.log(json.data)
             }
             else{
-                alert(json.error)
+                // alert(json.error)
             }
         })
     }
@@ -151,8 +153,6 @@ export default class MapSingle extends Component {
         if(this.state.foggyOfWar){
             foggy['display'] = 'block'
         }
-
-        console.log(this.state)
 
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>

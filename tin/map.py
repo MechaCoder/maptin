@@ -75,7 +75,7 @@ def getByHex(hex:str):
             'data': returnObj,
         }
 
-def updateByHex(hex:str, title:str, map:str, sound:str, width:int, usrKey:str):
+def updateByHex(hex:str, title:str, map:str, sound:str, width:int, usrKey:str, fog:bool):
     
     map = map.strip()
     mapTestVal = map
@@ -110,7 +110,7 @@ def updateByHex(hex:str, title:str, map:str, sound:str, width:int, usrKey:str):
             'error': 'the user key is not the owner',
         }
 
-    if mapsObj.updateByHex(hex=hex, title=title, map=map, sound=sound, width=width):
+    if mapsObj.updateByHex(hex=hex, title=title, map=map, sound=sound, width=width, fog=fog):
         return {
             'succs': True,
         }

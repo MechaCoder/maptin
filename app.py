@@ -71,15 +71,17 @@ def mapSingle():
     if request.method == 'PUT': # needs to be confimed by userkey
         key = request.headers.get('Userkey')
         json = request.get_json()
-        obj = dumps(updateByHex(
+        obj = updateByHex(
             hex=json['hex'],
             title=json['title'], 
             map=json['map'],
             sound=json['soundtrack'],
             width=json['width'],
+            fog=json['fogOfWar'],
             usrKey=key
-        ))
-        return obj
+        )
+        # socket_app.emit('flash')
+        return dumps(obj)
 
 @app.route('/ajax/map/bg', methods=['POST'])
 def mapSingleBg():
@@ -104,8 +106,8 @@ def ajaxTokens():
             createToken(
                 json['hex'],
                 json['src'],
+                260,
                 0,
-                100,
             )
         )
 
