@@ -66,7 +66,7 @@ def maps():
 def mapSingle():
     if request.method == 'GET':
         hex = request.headers.get('map')
-        return dumps(getByHex(hex))
+        return dumps(getByHex(hex)) ## gets all server information
 
     if request.method == 'PUT': # needs to be confimed by userkey
         key = request.headers.get('Userkey')
@@ -80,7 +80,7 @@ def mapSingle():
             fog=json['fogOfWar'],
             usrKey=key
         )
-        # socket_app.emit('flash')
+        socket_app.emit('mapUpdated', getByHex(json['hex']))
         return dumps(obj)
 
 @app.route('/ajax/map/bg', methods=['POST'])

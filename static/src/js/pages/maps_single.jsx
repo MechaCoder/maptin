@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 
 import Vtoken from './component/vtoken.jsx';
 import Youtube from './component/youtube.jsx';
-import {getUserId, userIdExists} from './component/commons.jsx'
+import {getUserId, userIdExists, getMapHexFromURL} from './component/commons.jsx'
 import AssertToken from './component/assertTray.jsx';
 import MapList from './component/mapslist.jsx';
 
@@ -21,71 +21,47 @@ export default class MapSingle extends Component {
             'tokens': [],
             'foggyOfWar': true
         }
-
-        this.getMapData = this.getMapData.bind(this);
-    }
-
-    getMapData(){
-
-        var l = window.location.href;
-        l = l.split('/');
-        var hex = l[l.length - 1]
-        
-        fetch('/ajax/map', {
-            headers: {
-                'Content-Type': 'application/json',
-                'map': hex
-            },
-        })
-        .then(data => data.json())
-        .then((json) => {
-            if(json.succs){
-
-                this.setState({
-                    'hex': json.data.hex,
-                    'title': json.data.title,
-                    'map': json.data.map_source,
-                    'soundtrack': json.data.map_soundtrack,
-                    'tokens': json.data.tokens,
-                    'width': json.data.width,
-                    'foggyOfWar': json.data.fog
-                })
-            }
-
-        })
-
-    }
-
-    componentDidUpdate(){
-        this.updateServer()
-        var titleEl = document.title = 'map | ' + this.state.title;
     }
 
     componentDidMount(){
-        // getUserId()
-        this.socket = io();
 
-        this.socket.on('flash', ()=>{
-            // this.forceUpdate()
-            this.getMapData()
+        fetch('/ajax/map', {
+            headers: {
+                'Content-Type': 'application/json',
+                'map': getMapHexFromURL()
+            }
         })
-        this.getMapData()
+        .then(data=>data.json())
+        .then((json) => {
+            console.log(json);
+            if(json.succs){
+                this.setState({
+                    'hex': getMapHexFromURL(),
+                    'title': json.data.title,
+                    'map': json.data.map_source,
+                    'soundtrack': json.data.map_soundtrack,
+                    'width': json.data.width,
+                    'tokens': json.data.tokens,
+                    'foggyOfWar': json.data.fog
+                })
+            }
+        })
     }
 
-    updateServer(){
-        if(userIdExists() === false){
-            return;
+    componentDidUpdate(){
+
+        if(!userIdExists()){
+            return
         }
-        var usr_token = getUserId()
 
         fetch('/ajax/map', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'userKey': usr_token
+                'Userkey': getUserId()
             },
             body: JSON.stringify({
-                'hex': this.state.hex,
+                'hex': getMapHexFromURL(),
                 'title': this.state.title,
                 'map': this.state.map,
                 'soundtrack': this.state.soundtrack,
@@ -94,12 +70,10 @@ export default class MapSingle extends Component {
             })
         })
         .then(data=>data.json())
-        .then((json)=>{
-            if(json.succs){
-                console.log(json.data)
-            }
-            else{
-                // alert(json.error)
+        .then((json) => {
+            // console.log(json)
+            if(!json.succs){
+                alert(json.error);
             }
         })
     }
