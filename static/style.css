@@ -84,8 +84,9 @@ body {
     color:#f5deb3;
     }
     
-    .mapSingle img {
+    .mapSingle .maps img {
     width:100%;
+    padding-top: 53px;
     }
     
     .audio {
@@ -199,8 +200,7 @@ body {
     .userlogin .btns button:first-child {
     margin-right:10px;
     }
-    background-color: black;
-}
+    /* background-color: black; */
 
 header {
     position: fixed;
@@ -272,19 +272,14 @@ header .links div:hover {
     position: fixed;
     top: 58px;
     left: 0px;
+    z-index: 10;
     /* opacity: 40%; */
 }
-/* .mapSingle .tools:hover{
-    opacity: 100%;
-} */
+
 
 .mapSingle .tools input {
     background-color: darkslategray;
     color: wheat;
-}
-
-.mapSingle img {
-    width: 1000px;
 }
 
 .audio {
@@ -423,3 +418,18 @@ header .links div:hover {
     background-color: darkorchid;
     display: none;
 }
+
+.fogOfWar {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 58px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    z-index: 1;
+    background-image: url('https://media1.giphy.com/media/kg19fN5BXbZGIDznzG/giphy.gif?cid=ecf05e47hp0hh8w1p1k1npkbb3dom7yivxnsnbovs7d8axbc&rid=giphy.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+  }

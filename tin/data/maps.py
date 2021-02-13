@@ -1,9 +1,10 @@
+from tin.commons import debug_file
 from tinydb.queries import Query
 from .commons import DataCommons, mkHex
 
 class Maps(DataCommons):
 
-    def __init__(self, file: str = 'ds.json', table: str = 'maps', requiredKeys = 'hex,owner_id:int,title,map_source,map_soundtrack,width:int'):
+    def __init__(self, file: str = 'ds.json', table: str = 'maps', requiredKeys = 'hex,owner_id:int,title,map_source,map_soundtrack,width:int,fog:bool'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
     def create(self, owner_id:int, title:str, mapsource:str, soundtrack:str, width:int = 1000):
@@ -19,7 +20,8 @@ class Maps(DataCommons):
             'title': title,
             'map_source': mapsource,
             'map_soundtrack': soundtrack,
-            'width': width
+            'width': width,
+            'fog': False
         }
         return super().create(row)
     
@@ -36,13 +38,15 @@ class Maps(DataCommons):
         db.close()
         return row
 
-    def updateByHex(self, hex: str, title: str, map: str, sound: str, width: int):
+    def updateByHex(self, hex: str, title: str, map: str, sound: str, width: int, fog:bool):
         db = self.createObj()
+        debug_file(fog)
         db.tbl.update({
             'title': title,
             'map_source': map,
             'map_soundtrack': sound,
-            'width': width
+            'width': width,
+            'fog': fog
         }, Query().hex == hex)
         db.close()
         return True
