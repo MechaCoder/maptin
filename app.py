@@ -23,12 +23,11 @@ from tin import createToken
 from tin import updateLocation
 from tin import upadateBgByHex
 from tin import removeVtoken
-from tin.commons import debug_file
 from tin import vTokenData
 import tin.system as systems
 
 
-logging.basicConfig(filename='log.log', level=logging.NOTSET)
+logging.basicConfig(filename='log.log', level=logging.NOTSET, format="%(asctime)s ::: %(levelname)s:%(name)s:%(message)s")
 app = Flask(__name__)
 app.config['SECRET_KEY'] = Settings().get('socketKey')
 socket_app = SocketIO(app)
@@ -130,10 +129,15 @@ def map_page(hex):
     return render_template('base.html', pageTitle='map')
 
 @app.route('/sys/')
-def sys():
+@app.route('/sys/<cmd>')
+def sys(cmd:str = ''):
     """
     /sys/downloadassets
     """
+    if cmd == 'dla':
+        trove()
+        pass
+
     return render_template(
         'system.html', 
         logStr=systems.getlogfile(),

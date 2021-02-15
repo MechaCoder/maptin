@@ -5,7 +5,7 @@ from .exceptions import TokenLimit
 
 class vTokenData(DataCommons):
 
-    def __init__(self, file: str = 'ds.vToken.json', table: str = 'tokens', requiredKeys = 'hex,mapHex,source,type,x:int,y:int,ts:float'):
+    def __init__(self, file: str = 'ds.json', table: str = 'vtokens', requiredKeys = 'hex,mapHex,source,type,x:int,y:int,ts:float'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
     def create(self, mapHex, source, tokenType, x, y):

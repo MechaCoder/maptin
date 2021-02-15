@@ -9,7 +9,7 @@ from .data.maps import Maps
 from .data.tokens import Tokens
 from .data.vTokens import vTokenData as Vtoken
 
-from .commons import success, fail, debug_file
+from .commons import success, fail
 
 def createMap(key):
     tobj = Tokens()
