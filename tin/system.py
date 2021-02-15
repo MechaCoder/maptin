@@ -3,20 +3,22 @@ from os import walk, path
 
 def getlogfile():
 
-    robj = []
-    fObj = open('log.log', 'r')
-    for line in fObj.readlines():
-        x = line.split(':')
+    try:
+        robj = []
+        fObj = open('log.log', 'r')
+        for line in fObj.readlines():
+            x = line.split(':')
 
-        robj.append({
-            'class': x[0].lower(),
-            'text': line
-        })
-        pass
+            robj.append({
+                'class': x[0].lower(),
+                'text': line
+            })
+            pass
 
-    fObj.close()
-
-    return robj
+        fObj.close()
+        return robj
+    except FileNotFoundError as err:
+        return []
 
 def getAssets():
     paths = []
