@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
 import Draggable from 'react-draggable';
-import { io } from "socket.io-client";
+import {io} from 'socket.io-client';
 
 export default class Vtoken extends Component {
+    
     constructor() {
         super();
         this.state = {
@@ -48,6 +49,12 @@ export default class Vtoken extends Component {
                 'connection': false
             })
         })
+        this.socket.on('vtoken:remove', (_data) => {
+            if(this.props.hex == _data.hex){
+                this.setState({'hide': true})
+            }
+
+        })
 
         this.setState({
             'x':this.props.x,
@@ -90,9 +97,6 @@ export default class Vtoken extends Component {
                     'connection': false,
                     'hide': true
                 })
-                // this.socket.emit('flash')
-                // this.socket.disconnect()
-                // window.location.reload()
             }
         })
 

@@ -24,7 +24,9 @@ from tin import updateLocation
 from tin import upadateBgByHex
 from tin import removeVtoken
 from tin.commons import debug_file
+from tin import vTokenData
 import tin.system as systems
+
 
 logging.basicConfig(filename='log.log', level=logging.NOTSET)
 app = Flask(__name__)
@@ -102,23 +104,21 @@ def ajaxAssets(sub_path):
 def ajaxTokens():
     if request.method == 'POST':
         json = request.get_json()
-        return dumps(
-            createToken(
-                json['hex'],
-                json['src'],
-                260,
-                0,
-            )
-        )
+        obj = createToken(json['hex'], json['src'], 260, 0)
+        socket_app.emit('map:update:tokens', {'tokens': vTokenData().readByMapHex(json['hex'])})
+        return dumps(obj)
+
 
 @app.route('/ajax/token', methods=['PUT', 'DELETE'])
 def ajaxToken():
     if request.method == 'PUT':
         json = request.get_json()
         return dumps(updateLocation(json['hex'], json['x'], json['y']))
-    if request.method == 'DELETE':
+    if request.method == 'DELETE': # deletes a v-token.
         hex = request.headers.get('hex')
-        return dumps(removeVtoken(hex))
+        obj = removeVtoken(hex)
+        socket_app.emit('vtoken:remove', {'hex': hex})
+        return dumps(obj) 
 
 @app.route('/')
 @app.route('/dashboard/')
@@ -159,12 +159,6 @@ def message(_data = {}):
                 'y': obj['y']
 
             }), broadcast=True)
-
-@socket_app.on('flash')
-def flash():
-    emit('flash', broadcast=True)
-
-
 
 if __name__ == '__main__':
     socket_app.run(

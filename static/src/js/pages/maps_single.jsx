@@ -12,6 +12,7 @@ import MapList from './component/mapslist.jsx';
 export default class MapSingle extends Component {
     constructor() {
         super();
+
         this.state = {
             'hex': '',
             'title': '',
@@ -24,6 +25,12 @@ export default class MapSingle extends Component {
     }
 
     componentDidMount(){
+        this.socket = io();
+
+        this.socket.on('map:update:tokens', (_data) => {
+            this.setState({'tokens': _data.tokens})
+
+        })
 
         fetch('/ajax/map', {
             headers: {
@@ -33,7 +40,7 @@ export default class MapSingle extends Component {
         })
         .then(data=>data.json())
         .then((json) => {
-            console.log(json);
+            
             if(json.succs){
                 this.setState({
                     'hex': getMapHexFromURL(),
@@ -46,44 +53,20 @@ export default class MapSingle extends Component {
                 })
             }
         })
+
     }
 
-    componentDidUpdate(){
 
-        if(!userIdExists()){
-            return
-        }
-
-        fetch('/ajax/map', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Userkey': getUserId()
-            },
-            body: JSON.stringify({
-                'hex': getMapHexFromURL(),
-                'title': this.state.title,
-                'map': this.state.map,
-                'soundtrack': this.state.soundtrack,
-                'width': this.state.width,
-                'fogOfWar': this.state.foggyOfWar
-            })
-        })
-        .then(data=>data.json())
-        .then((json) => {
-            // console.log(json)
-            if(!json.succs){
-                alert(json.error);
-            }
-        })
-    }
 
     render() {
 
-        var dms_els = []
-        var userExists = userIdExists()
-        var foggy = {display: 'none'}
+        var dms_els = [] // adds user elerments to the page
+        var userExists = userIdExists() // the users session key
+        
+        var foggy = {display: 'none'} // the css the fog of war 
+        
         if(userExists){
+
             dms_els.push(
                 <div className="tools" key={1} >
                     <label htmlFor='mapTitle' >
@@ -99,6 +82,7 @@ export default class MapSingle extends Component {
                         <div>Fog of War</div> <input name="fogOfWar" type='checkbox' checked={this.state.foggyOfWar} onChange={(event)=>{this.setState({'foggyOfWar': !this.state.foggyOfWar})}} />
                     </label>
                 </div>
+            
             )
             dms_els.push(
                 <MapList key={2} />

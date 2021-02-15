@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 function imgEl(src, key){
 
     var eventHandler = (e)=>{
+        
         var l = window.location.href;
         l = l.split('/');
         var hex = l[l.length - 1]
