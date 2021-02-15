@@ -1,5 +1,5 @@
-from os import mkdir, listdir, rmdir
-from os.path import isdir, isfile
+from os import mkdir, listdir
+from os.path import isdir
 from time import sleep
 from shutil import copyfileobj, rmtree
 from random import randint

@@ -10,7 +10,7 @@ def getlogfile():
             x = line.split(':')
 
             robj.append({
-                'class': x[0].lower(),
+                'class': x[5].lower(),
                 'text': line
             })
             pass

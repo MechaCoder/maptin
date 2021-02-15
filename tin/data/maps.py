@@ -1,4 +1,3 @@
-from tin.commons import debug_file
 from tinydb.queries import Query
 from .commons import DataCommons, mkHex
 
@@ -40,7 +39,6 @@ class Maps(DataCommons):
 
     def updateByHex(self, hex: str, title: str, map: str, sound: str, width: int, fog:bool):
         db = self.createObj()
-        debug_file(fog)
         db.tbl.update({
             'title': title,
             'map_source': map,
