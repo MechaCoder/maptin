@@ -1,0 +1,34 @@
+header {
+	position: fixed;
+	display: flex;
+	background: firebrick;
+	width: 100%;
+	top: 0;
+	left: 0;
+	height: 58px;
+	color: white;
+	.links {
+		position: relative;
+		float: right;
+		position: relative;
+		float: right;
+		div {
+			text-align: center;
+			margin: auto;
+			padding: 20px;
+			background-color: darkgrey;
+			width: 200px;
+			height: 18px;
+			text-align: center;
+			padding-top: auto;
+			padding-bottom: auto;
+			margin: auto;
+			&:hover {
+				background-color: #708090;
+			}
+		}
+	}
+	.siteTitle {
+		width: 80%;
+	}
+}
