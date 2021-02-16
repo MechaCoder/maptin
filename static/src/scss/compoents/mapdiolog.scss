@@ -1,31 +1,37 @@
-.maps_diolog{
-    background-color: slategray;
-    margin-top: 100px;
-    margin-left: 10%;
-    width: 80%;
-
-    & .maps_row {
-        display: flex;
-        flex-wrap: wra;
-        align-content:space-evenly;
-
-        & div {
-            width: 200px;
-            height: 200px;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
-        & #newMap {
-            text-align: center;
-            padding-top: 4%;
-            border: 1px soild darkslategray;
-            cursor: pointer;
-        }
-
-        & .MapListItem {
-            text-align:center;
-            padding:1px;
-            }
-    }
+.maps_diolog {
+	background-color: slategray;
+	margin-top: 100px;
+	margin-left: 10%;
+	width: 80%;
+	background-color: darkgrey;
+	.maps_row {
+		display: flex;
+		flex-wrap: wrap;
+		display: flex;
+		flex-wrap: wrap;
+		align-content: space-evenly;
+		div {
+			width: 200px;
+			height: 200px;
+			background-size: contain;
+			background-repeat: no-repeat;
+			width: 200px;
+		}
+		#newMap {
+			text-align: center;
+			padding-top: 4%;
+			border: 1px solid darkslategrey;
+			cursor: pointer;
+			text-align: center;
+			padding-top: 4%;
+			border: 1px solid darkslategrey;
+			cursor: pointer;
+		}
+		.MapListItem {
+			text-align: center;
+			padding: 1px;
+			text-align: center;
+			padding: 1px;
+		}
+	}
 }

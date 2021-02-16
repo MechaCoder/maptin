@@ -1,0 +1,33 @@
+.userlogin {
+	margin-top: 100px;
+	margin-left: 350px;
+	width: 400px;
+	background-color: #b22222;
+	padding: 15px;
+	border-radius: 8px;
+	color: #fff;
+	label {
+		width: 100px;
+		display: inline-block;
+	}
+	input {
+		background-color: #000;
+		color: #f5deb3;
+	}
+	.pword {
+		input {
+			margin-top: 5px;
+		}
+	}
+	.btns {
+		button {
+			width: 40%;
+			margin-top: 10px;
+			background-color: #2f4f4f;
+			color: #f5deb3;
+			&:first-child {
+				margin-right: 10px;
+			}
+		}
+	}
+}

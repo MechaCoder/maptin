@@ -1,100 +1,215 @@
-.mapSingle .tools {
-    background-color:#b22222;
-    border:#b22222 solid 1px;
-    border-top:none;
-    border-left:none;
-    width:250px;
-    padding:5px;
-    position:fixed;
-    top:58px;
-    left:0;
+.mapSingle {
+	.tools {
+		background-color: #b22222;
+		border: #b22222 solid 1px;
+		border-top: none;
+		border-left: none;
+		width: 250px;
+		padding: 5px;
+		position: fixed;
+		top: 58px;
+		left: 0;
+		background-color: firebrick;
+		border: firebrick solid 1px;
+		border-top: none;
+		border-left: none;
+		width: 250px;
+		padding: 5px;
+		position: fixed;
+		top: 58px;
+		left: 0px;
+		z-index: 10;
+		input {
+			background-color: #2f4f4f;
+			color: #f5deb3;
+			background-color: darkslategray;
+			color: wheat;
+		}
+	}
+	.maps {
+		img {
+			width: 100%;
+			padding-top: 53px;
+		}
+	}
+}
 
-    .tools input {
-        background-color:#2f4f4f;
-        color:#f5deb3;
-    }
+.audio {
+	border: 1px solid #b22222;
+	border-top: none;
+	border-right: none;
+	background-color: #2f4f4f;
+	width: 125px;
+	position: fixed;
+	right: 0;
+	top: 58px;
+	opacity: 40%;
+	border: 1px solid firebrick;
+	border-top: none;
+	border-right: none;
+	background-color: darkslategray;
+	width: 125px;
+	position: fixed;
+	right: 0px;
+	top: 58px;
+	opacity: 40%;
+	&:hover {
+		opacity: 100%;
+		opacity: 100%;
+	}
+}
 
-    .maps img {
-        width:100%;
-        padding-top: 53px;
-    }
+.AssertToken {
+	background-color: #b22222;
+	width: 100pt;
+	padding: 5px;
+	overflow: auto;
+	position: fixed;
+	top: 73%;
+	left: 0;
+	background-color: firebrick;
+	width: 10pt;
+	padding: 1px;
+	overflow: auto;
+	position: fixed;
+	top: 73%;
+	left: 0;
+	height: 180px;
+	&:hover {
+		width: 500pt;
+		width: 500pt;
+		.asset {
+			display: inline;
+			display: inline;
+		}
+		.title {
+			display: block;
+		}
+		.tray {
+			background-color: darkred;
+		}
+	}
+	.title {
+		color: #f5deb3;
+		font-size: larger;
+		padding: 5px;
+		color: wheat;
+		font-size: larger;
+		padding: 5px;
+		display: none;
+	}
+	.tray {
+		background-color: #8b0000;
+		display: flex;
+		height: 100px;
+		padding: 10px;
+		background-color: firebrick;
+		display: flex;
+		height: 100px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.asset {
+		margin: 1px;
+		border: solid #fff 1px;
+		display: block;
+		width: 100px;
+		height: 100px;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-color: #9932cc;
+		display: none;
+		margin: 1px;
+		border: solid white 1px;
+		display: block;
+		width: 100px;
+		height: 100px;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-color: darkorchid;
+		display: none;
+	}
+}
 
-    .audio {
-        border:1px solid #b22222;
-        border-top:none;
-        border-right:none;
-        background-color:#2f4f4f;
-        width:125px;
-        position:fixed;
-        right:0;
-        top:58px;
-        opacity:40%;
+.daggabletoken {
+	height: 0px;
+	img {
+		width: 75px;
+	}
+	.tools {
+		width: 75px;
+		display: none;
+		text-align: center;
+	}
+	&:hover {
+		.tools {
+			display: block;
+		}
+	}
+}
 
-        &:hover {
-            opacity:100%;
-        }
-    }
+.maptray {
+	background-color: firebrick;
+	width: 1pt;
+	padding: 5px;
+	overflow: auto;
+	position: fixed;
+	top: 43.5%;
+	left: 0;
+	height: 180px;
+	&:hover {
+		width: 500pt;
+		.asset {
+			display: inline;
+		}
+		.title {
+			display: block;
+		}
+		.tray {
+			background-color: darkred;
+		}
+	}
+	.title {
+		color: wheat;
+		font-size: larger;
+		padding: 5px;
+		display: none;
+	}
+	.tray {
+		background-color: firebrick;
+		display: flex;
+		height: 100px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.asset {
+		margin: 1px;
+		border: solid white 1px;
+		display: block;
+		width: 100px;
+		height: 100px;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-color: darkorchid;
+		display: none;
+	}
+}
 
-    .AssertToken {
-        background-color:#b22222;
-        width:100pt;
-        padding:5px;
-        overflow:auto;
-        position:fixed;
-        top:73%;
-        left:0;
-
-        &:hover {
-            width: 500px;
-
-            .asset {
-                display: inline;
-            }
-        }
-
-        .title {
-            color:#f5deb3;
-            font-size:larger;
-            padding:5px;
-        }
-
-        .tray {
-            background-color:#8b0000;
-            display:flex;
-            height:100px;
-            padding:10px;
-        }
-
-        .asset {
-            margin:1px;
-            border:solid #fff 1px;
-            display:block;
-            width:100px;
-            height:100px;
-            background-repeat:no-repeat;
-            background-size:contain;
-            background-color:#9932cc;
-            display:none;
-        }
-        
-        .daggabletoken {
-            height: 0;
-
-            img {
-                width: 75px;
-            }
-
-            .tools {
-                width: 75px;
-                display:none;
-                text-align:center;
-            }
-
-            &:hover .tools{
-                display: block;
-            }
-
-        }
-
-    }
+.fogOfWar {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 58px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	z-index: 1;
+	background-image: url('https://media1.giphy.com/media/kg19fN5BXbZGIDznzG/giphy.gif?cid=ecf05e47hp0hh8w1p1k1npkbb3dom7yivxnsnbovs7d8axbc&rid=giphy.gif');
+	background-size: cover;
+	background-repeat: no-repeat;
 }
