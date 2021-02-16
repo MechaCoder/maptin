@@ -148,24 +148,6 @@ body {
     display:none;
     }
     
-    .daggabletoken {
-    height:0;
-    }
-    
-    .daggabletoken img {
-    width:75px;
-    }
-    
-    .daggabletoken .tools {
-    width:75px;
-    display:none;
-    text-align:center;
-    }
-    
-    .daggabletoken:hover .tools {
-    display:block;
-    }
-    
     .userlogin {
     margin-top:100px;
     margin-left:350px;

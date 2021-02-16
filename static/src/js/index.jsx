@@ -12,6 +12,7 @@ import MapsList from './pages/maps_list.jsx';
 import MapSingle from './pages/maps_single.jsx';
 
 import SiteHeader from './pages/component/header.jsx';
+import '../scss/style.scss'; 
 
 class App extends Component {
     render(){

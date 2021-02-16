@@ -1,0 +1,33 @@
+
+header {
+    position: fixed;
+    display: flex;
+    background-color: b22222;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 58px;
+    color: #fff;
+
+    & .links {
+        position: relative;
+        float: right;
+
+        & div{
+            background-color: darkgray;
+            width: 200px;
+            height: 18px;
+            text-align: center;
+            margin:auto;
+            padding: 20px;
+
+            &:hover{
+                background-color: #708090;
+            }
+        }
+    }
+
+    & .siteTitle {
+        width: 80%;
+    }
+}
