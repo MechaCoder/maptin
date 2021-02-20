@@ -1,13 +1,14 @@
 import logging
 from json import dumps, loads
 
-from werkzeug import debug
 from tin.data.settings import Settings
 from tin.map import createMap, updateByHex
 
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import abort
+
 from flask_socketio import SocketIO, emit, send
 from tin.http.trove import trove
 
@@ -129,14 +130,17 @@ def map_page(hex):
     return render_template('base.html', pageTitle='map')
 
 @app.route('/sys/')
-@app.route('/sys/<cmd>')
-def sys(cmd:str = ''):
+@app.route('/sys/<cmd>/<pin>')
+def sys(cmd:str = '', pin: str = ''):
     """
     /sys/downloadassets
     """
     if cmd == 'dla':
+        if pin != Settings().get('sessionSysKey'):
+            abort(404)
         trove()
-        pass
+
+    
 
     return render_template(
         'system.html', 
