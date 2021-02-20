@@ -22,6 +22,7 @@ export default class MapSingle extends Component {
             'tokens': [],
             'foggyOfWar': true
         }
+        this.saveInfo = this.saveInfo.bind(this);
     }
 
     componentDidMount(){
@@ -30,6 +31,21 @@ export default class MapSingle extends Component {
         this.socket.on('map:update:tokens', (_data) => {
             this.setState({'tokens': _data.tokens})
 
+        })
+
+        this.socket.on('map:updated', (_data) => {
+            
+            if(_data.succs){
+
+                document.title = _data.data.title
+
+                this.setState({
+                    'title': _data.data.title,
+                    'soundtrack': _data.data.map_soundtrack,
+                    'width': _data.data.width,
+                    'foggyOfWar': _data.data.fog
+                })
+            }
         })
 
         fetch('/ajax/map', {
@@ -56,7 +72,28 @@ export default class MapSingle extends Component {
 
     }
 
+    saveInfo(event){
+        event.preventDefault()
 
+
+        var body = this.state;
+        body.fogOfWar = this.state.foggyOfWar
+        
+
+        fetch('/ajax/map', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Userkey': getUserId(),
+            },
+            body: JSON.stringify(body)
+        })
+        .then(http=>http.json())
+        .then((json)=>{
+            console.log(json)
+        })
+
+    }
 
     render() {
 
@@ -81,6 +118,7 @@ export default class MapSingle extends Component {
                     <label htmlFor="fogOfWar" >
                         <div>Fog of War</div> <input name="fogOfWar" type='checkbox' checked={this.state.foggyOfWar} onChange={(event)=>{this.setState({'foggyOfWar': !this.state.foggyOfWar})}} />
                     </label>
+                    <button onClick={this.saveInfo}> Save </button>
                 </div>
             
             )

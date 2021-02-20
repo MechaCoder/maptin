@@ -30,6 +30,7 @@ from tin.commons import runUnittest
 
 
 logging.basicConfig(filename='log.log', level=logging.NOTSET, format="%(asctime)s ::: %(levelname)s:%(name)s:%(message)s")
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = Settings().get('socketKey')
 socket_app = SocketIO(app)
@@ -83,7 +84,7 @@ def mapSingle():
             fog=json['fogOfWar'],
             usrKey=key
         )
-        socket_app.emit('mapUpdated', getByHex(json['hex']))
+        socket_app.emit('map:updated', getByHex(json['hex']))
         return dumps(obj)
 
 @app.route('/ajax/map/bg', methods=['POST'])
