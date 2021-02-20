@@ -26,6 +26,7 @@ from tin import upadateBgByHex
 from tin import removeVtoken
 from tin import vTokenData
 import tin.system as systems
+from tin.commons import runUnittest
 
 
 logging.basicConfig(filename='log.log', level=logging.NOTSET, format="%(asctime)s ::: %(levelname)s:%(name)s:%(message)s")
@@ -140,12 +141,17 @@ def sys(cmd:str = '', pin: str = ''):
             abort(404)
         trove()
 
-    
+    if cmd == 'ut':
+        if pin != Settings().get('sessionSysKey'):
+            abort(404)
+        runUnittest()
+        
 
     return render_template(
         'system.html', 
         logStr=systems.getlogfile(),
-        files=systems.getAssets()
+        files=systems.getAssets(),
+        unitTestResult=systems.getUnittest()
     )
 
 @socket_app.on('connect')
