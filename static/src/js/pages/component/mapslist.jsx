@@ -6,6 +6,12 @@ import { io } from "socket.io-client";
 function imgEl(src, key){
 
     var clickEvent = () => {
+
+        var sure = confirm('Are you sure you want to change the background map');
+        if(!sure){
+            return;
+        }
+        
         
         var l = window.location.href;
         l = l.split('/');
@@ -45,7 +51,9 @@ export default class MapList extends Component {
     constructor() {
         super();
         this.state = {
-            'maps': []
+            'mapsAll': [],
+            'mapPop': [],
+            'expand': false
         }
     }
 
@@ -56,8 +64,16 @@ export default class MapList extends Component {
         })
         .then(data => data.json())
         .then((json) => {
+            if(!json.succs){
+                alert(json.error)
+            }
             if(json.succs){
-                this.setState({'maps': json.data})
+
+
+                this.setState({
+                    'mapsAll': json.data.all,
+                    'mapPop': json.data.popular
+                })
             }
         })
     }
@@ -65,16 +81,31 @@ export default class MapList extends Component {
     render() {
 
         var maps = []
-        for(var i = 0; i<this.state.maps.length; i++){
-            maps.push(imgEl(this.state.maps[i], i))
+        var mapspop = []
+        for(var i = 0; i<this.state.mapsAll.length; i++){
+            maps.push(imgEl(this.state.mapsAll[i], i))
         }
 
-        var tray_width = (this.state.maps.length * 100)
+        for(var i = 0; i<this.state.mapPop.length; i++){
+            mapspop.push(imgEl(this.state.mapsAll[i], i))
+        }
+
+        // var tray_width = (this.state.maps.length * 100)
+
+        var classExpand = 'maptray'
+        if(this.state.expand){
+            classExpand += ' expand';
+        }
 
         return (
-            <div className="maptray">
-                <div className='title'> Maps </div>
-                <div className='tray' style={{'width': tray_width}}>{maps}</div>
+            <div className={classExpand}>
+                <div className='title' onClick={(e)=>{ this.setState({'expand': !this.state.expand}) }}> Maps <a onClick={(e)=>{ this.setState({'expand': !this.state.expand})}} >x</a> </div>
+                <div className='popularity tray'>
+                    {mapspop}
+                </div>
+                <div className='all tray'>
+                    {maps}
+                </div>
             </div>
         )
     }

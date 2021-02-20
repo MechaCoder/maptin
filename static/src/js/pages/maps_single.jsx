@@ -43,6 +43,7 @@ export default class MapSingle extends Component {
                 this.setState({
                     'title': _data.data.title,
                     'soundtrack': _data.data.map_soundtrack,
+                    'map': _data.data.map_source,
                     'width': _data.data.width,
                     'foggyOfWar': _data.data.fog,
                     'changed': false

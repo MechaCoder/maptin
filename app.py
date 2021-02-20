@@ -91,6 +91,7 @@ def mapSingle():
 def mapSingleBg():
     json = request.get_json()
     obj = upadateBgByHex(json['hex'], json['src'])
+    socket_app.emit('map:updated', getByHex(json['hex']))
     return obj
 
 @app.route('/ajax/assets/<sub_path>')

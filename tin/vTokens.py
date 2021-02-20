@@ -5,8 +5,26 @@ from .map import Maps
 
 from .commons import success, fail
 
-
 class Vtoken(vTokenData): pass
+
+def getUsedMaps():
+    maps = {}
+
+    for map in Maps().readAll():
+        
+        if map['map_source'] not in maps.keys():
+            maps[map['map_source']] = 1
+            continue
+        
+        maps[map['map_source']] = maps[map['map_source']] + 1
+
+    mapsSorted = []
+    
+    for map in {k: v for k, v in sorted(maps.items(), key=lambda item: item[1])}.keys():
+        mapsSorted.append(map)
+    mapsSorted.reverse()
+
+    return mapsSorted
 
 def tokensList():
     path = 'static/a/tokens'
@@ -32,7 +50,7 @@ def mapsList():
 
     return {
         'succs': True,
-        'data': data
+        'data': {'all': data, 'popular': getUsedMaps()}
     }
 
 def createToken(mapHex:str, srcImg:str, x:float, y:float):
