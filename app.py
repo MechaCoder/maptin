@@ -1,13 +1,14 @@
 import logging
 from json import dumps, loads
 
-from werkzeug import debug
 from tin.data.settings import Settings
 from tin.map import createMap, updateByHex
 
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import abort
+
 from flask_socketio import SocketIO, emit, send
 from tin.http.trove import trove
 
@@ -25,6 +26,7 @@ from tin import upadateBgByHex
 from tin import removeVtoken
 from tin import vTokenData
 import tin.system as systems
+from tin.commons import runUnittest
 
 
 logging.basicConfig(filename='log.log', level=logging.NOTSET, format="%(asctime)s ::: %(levelname)s:%(name)s:%(message)s")
@@ -129,19 +131,30 @@ def map_page(hex):
     return render_template('base.html', pageTitle='map')
 
 @app.route('/sys/')
-@app.route('/sys/<cmd>')
-def sys(cmd:str = ''):
+@app.route('/sys/<cmd>/<pin>')
+def sys(cmd:str = '', pin: str = ''):
     """
     /sys/downloadassets
     """
+    settings = Settings()
     if cmd == 'dla':
+        if pin != settings.get('sessionSysKey'):
+            abort(404)
         trove()
-        pass
+        settings.resetSessionSysKey()
+
+    if cmd == 'ut':
+        if pin != settings.get('sessionSysKey'):
+            abort(404)
+        runUnittest()
+        settings.resetSessionSysKey()
+        
 
     return render_template(
         'system.html', 
         logStr=systems.getlogfile(),
-        files=systems.getAssets()
+        files=systems.getAssets(),
+        unitTestResult=systems.getUnittest()
     )
 
 @socket_app.on('connect')

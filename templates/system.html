@@ -89,6 +89,14 @@
                     {% endfor %}
                 </div>
             </div>
+            <div class='unitTest'>
+                <h2>Unit Testing</h2>
+                <div class='rows'>
+                    {% for row in unitTestResult %}
+                    <div> {{row}} </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </body>
     <!-- <script src="{{ url_for('static', filename='dist/bundle.js') }}" ></script> -->

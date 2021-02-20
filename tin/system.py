@@ -31,3 +31,15 @@ def getAssets():
 
     return paths
 
+def getUnittest():
+
+    try:
+        fileObj = open('unittest.results.text', 'r')
+        contentString = fileObj.readlines()
+        return contentString
+
+    except FileExistsError as error:
+        return []
+    except FileNotFoundError as error:
+        return []
+
