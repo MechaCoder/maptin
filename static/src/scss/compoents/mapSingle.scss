@@ -20,10 +20,17 @@
 		left: 0px;
 		z-index: 10;
 		input {
-			background-color: #2f4f4f;
-			color: #f5deb3;
 			background-color: darkslategray;
 			color: wheat;
+		}
+		button {
+			background-color: darkslategray;
+			color: wheat;
+			border: none;
+			width: 100%;
+			&:disabled {
+				opacity: 0;
+			}
 		}
 	}
 	.maps {
@@ -90,9 +97,9 @@
 		}
 	}
 	.title {
-		color: #f5deb3;
+		color: #f5deb3; 
 		font-size: larger;
-		padding: 5px;
+		padding: 5px; 
 		color: wheat;
 		font-size: larger;
 		padding: 5px;
@@ -189,7 +196,6 @@
 	.asset {
 		margin: 1px;
 		border: solid white 1px;
-		display: block;
 		width: 100px;
 		height: 100px;
 		background-repeat: no-repeat;

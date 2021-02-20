@@ -20,8 +20,10 @@ export default class MapSingle extends Component {
             'soundtrack': '',
             'width': 1000,
             'tokens': [],
-            'foggyOfWar': true
+            'foggyOfWar': true,
+            'changed': false
         }
+        this.saveInfo = this.saveInfo.bind(this);
     }
 
     componentDidMount(){
@@ -30,6 +32,22 @@ export default class MapSingle extends Component {
         this.socket.on('map:update:tokens', (_data) => {
             this.setState({'tokens': _data.tokens})
 
+        })
+
+        this.socket.on('map:updated', (_data) => {
+            
+            if(_data.succs){
+
+                document.title = _data.data.title
+
+                this.setState({
+                    'title': _data.data.title,
+                    'soundtrack': _data.data.map_soundtrack,
+                    'width': _data.data.width,
+                    'foggyOfWar': _data.data.fog,
+                    'changed': false
+                })
+            }
         })
 
         fetch('/ajax/map', {
@@ -42,6 +60,9 @@ export default class MapSingle extends Component {
         .then((json) => {
             
             if(json.succs){
+                
+                document.title = json.data.title
+
                 this.setState({
                     'hex': getMapHexFromURL(),
                     'title': json.data.title,
@@ -49,14 +70,38 @@ export default class MapSingle extends Component {
                     'soundtrack': json.data.map_soundtrack,
                     'width': json.data.width,
                     'tokens': json.data.tokens,
-                    'foggyOfWar': json.data.fog
+                    'foggyOfWar': json.data.fog,
+                    'changed': false
                 })
             }
         })
 
     }
 
+    saveInfo(event){
+        event.preventDefault()
 
+
+        var body = this.state;
+        body.fogOfWar = this.state.foggyOfWar
+        
+
+        fetch('/ajax/map', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Userkey': getUserId(),
+            },
+            body: JSON.stringify(body)
+        })
+        .then(http=>http.json())
+        .then((json)=>{
+            if(!json.succs){
+                alert(json.error)
+            }
+        })
+
+    }
 
     render() {
 
@@ -70,17 +115,18 @@ export default class MapSingle extends Component {
             dms_els.push(
                 <div className="tools" key={1} >
                     <label htmlFor='mapTitle' >
-                        <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value});}}  />
+                        <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value, 'changed': true});}}  />
                     </label>
                     <label htmlFor='mapSoundtrack'>
-                        <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value});}} />
+                        <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value, 'changed': true});}} />
                     </label>
                     <label htmlFor="mapWidth" >
-                        <div>Fixed Map Width</div> <input name="mapWidth" type='number' min='1000' value={this.state.width} onChange={(event) => {this.setState({'width': event.target.value})}} />
+                        <div>Fixed Map Width</div> <input name="mapWidth" type='number' min='1000' value={this.state.width} onChange={(event) => {this.setState({'width': event.target.value, 'changed': true})}} />
                     </label>
                     <label htmlFor="fogOfWar" >
-                        <div>Fog of War</div> <input name="fogOfWar" type='checkbox' checked={this.state.foggyOfWar} onChange={(event)=>{this.setState({'foggyOfWar': !this.state.foggyOfWar})}} />
+                        <div>Fog of War</div> <input name="fogOfWar" type='checkbox' checked={this.state.foggyOfWar} onChange={(event)=>{this.setState({'foggyOfWar': !this.state.foggyOfWar, 'changed': true})}} />
                     </label>
+                    <label><div></div> <button disabled={!this.state.changed} onClick={this.saveInfo}> Save </button></label>
                 </div>
             
             )
@@ -118,7 +164,7 @@ export default class MapSingle extends Component {
                     {el_draggable}
                 </div>
                 <div className="maps">
-                    <div class='fogOfWar' style={foggy}></div>
+                    <div className='fogOfWar' style={foggy}></div>
                     <img ref='image' src={this.state.map} style={{'width': this.state.width}} />
                     
                 </div>
