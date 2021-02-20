@@ -11,5 +11,8 @@ class Settings(GetSet):
         self.defaultRows({
             'sessionSysKey': mkHex()
         })
+        
+
+    def resetSessionSysKey(self):
+        self.set('sessionSysKey', mkHex(4))
         print("Session key: {}".format(self.get('sessionSysKey')))
-    

@@ -136,15 +136,18 @@ def sys(cmd:str = '', pin: str = ''):
     """
     /sys/downloadassets
     """
+    settings = Settings()
     if cmd == 'dla':
-        if pin != Settings().get('sessionSysKey'):
+        if pin != settings.get('sessionSysKey'):
             abort(404)
         trove()
+        settings.resetSessionSysKey()
 
     if cmd == 'ut':
-        if pin != Settings().get('sessionSysKey'):
+        if pin != settings.get('sessionSysKey'):
             abort(404)
         runUnittest()
+        settings.resetSessionSysKey()
         
 
     return render_template(
