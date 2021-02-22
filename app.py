@@ -35,6 +35,11 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = Settings().get('socketKey')
 socket_app = SocketIO(app)
 
+@app.errorhandler(404)
+def notfound(e):
+    logging.error(e)
+    return render_template('404.html')
+
 @app.route('/ajax/user', methods=['POST'])
 def ajaxuser():
     creds = request.get_json()
@@ -130,6 +135,8 @@ def index():
 
 @app.route('/map/<hex>')
 def map_page(hex):
+    if getByHex(hex)['succs'] == False:
+        abort(404)
     return render_template('base.html', pageTitle='map')
 
 @app.route('/sys/')
@@ -139,6 +146,7 @@ def sys(cmd:str = '', pin: str = ''):
     /sys/downloadassets
     """
     settings = Settings()
+    
     if cmd == 'dla':
         if pin != settings.get('sessionSysKey'):
             abort(404)
