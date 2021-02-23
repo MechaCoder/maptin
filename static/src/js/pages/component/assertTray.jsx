@@ -76,8 +76,9 @@ export default class AssertToken extends Component {
 
         return (
             <div className='AssertToken'>
-                <div className='title'> AssertToken </div>
-                <div className='tray' style={{'width': tray_width}}>{els}</div>
+                <div className='title'> Tokens </div>
+                {/* <div className='tray' style={{'width': tray_width}}>{els}</div> */}
+                <div className='tray'>{els}</div>
             </div>
         )
     }
