@@ -51,6 +51,22 @@ export default class MapSingle extends Component {
             }
         })
 
+        document.onkeyup = (e) => {
+
+            if(e.ctrlKey && e.shiftKey && e.which == 70){
+                
+                this.setState({foggyOfWar: !this.state.foggyOfWar})
+                this.saveInfo(e)
+            }
+
+            if (e.ctrlKey && e.which == 83){
+                if(this.state.changed){
+                    this.saveInfo(e)
+                }
+            }
+
+        }
+
         fetch('/ajax/map', {
             headers: {
                 'Content-Type': 'application/json',
@@ -80,7 +96,9 @@ export default class MapSingle extends Component {
     }
 
     saveInfo(event){
-        event.preventDefault()
+        if(event != undefined){
+            event.preventDefault()
+        }
 
 
         var body = this.state;
