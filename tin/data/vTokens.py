@@ -63,4 +63,20 @@ class vTokenData(DataCommons):
         db.close()
         return True
 
-    
+    def getPopluarty(self):
+
+        srcs = {}
+        for row in self.readAll():
+            if row['source'] not in srcs.keys():
+                srcs[row['source']] = 1
+                continue
+            srcs[row['source']] = srcs[row['source']] + 1
+
+        sortedDict = {srcs: v for srcs, v in sorted(srcs.items(), key=lambda item: item[1])}
+        rObj = list(sortedDict.keys())
+        rObj.reverse()
+
+        return rObj
+
+        
+

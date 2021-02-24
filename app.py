@@ -112,7 +112,7 @@ def ajaxAssets(sub_path):
 def ajaxTokens():
     if request.method == 'POST':
         json = request.get_json()
-        obj = createToken(json['hex'], json['src'], 260, 0)
+        obj = createToken(json['hex'], json['src'], 260, 260)
         socket_app.emit('map:update:tokens', {'tokens': vTokenData().readByMapHex(json['hex'])})
         return dumps(obj)
 

@@ -24,7 +24,7 @@ def createMap(key):
         title='New Map',
         mapsource='/static/world-map.gif',
         soundtrack='',
-        width=1000
+        width=3000
 
     )
     return {
