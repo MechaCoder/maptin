@@ -28,10 +28,15 @@ def getUsedMaps():
 
 def tokensList():
     path = 'static/a/tokens'
-    data = []
+    data = Vtoken().getPopluarty()
     for f in listdir(path):
+        p = '/' + path + '/'  + f
+
+        if p in data:
+            continue
+
         data.append(
-            '/' + path + '/'  + f
+            p
         )
 
     return {
@@ -87,3 +92,5 @@ def removeVtoken(hex:str):
     if Vtoken().deleteByHex(hex):
         return success()
     return fail()
+
+

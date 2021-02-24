@@ -58,77 +58,45 @@
 }
 
 .AssertToken {
-	background-color: #b22222;
-	width: 100pt;
-	padding: 5px;
-	overflow: auto;
+	background-color: #8b0000;
+	color: #fff;
+	height: 100px;
+	text-align: center;
+	display: flex;
 	position: fixed;
-	top: 73%;
 	left: 0;
-	background-color: firebrick;
-	width: 10pt;
-	padding: 1px;
-	overflow: auto;
-	position: fixed;
-	top: 73%;
-	left: 0;
-	height: 180px;
-	&:hover {
-		width: 500pt;
-		width: 500pt;
+	top: 60%;
+
+	&:hover .tray{
+		display: flex;
+	}
+
+	.title {
+		writing-mode: vertical-lr;
+		height: 100%;
+		float: left;
+		font-size: x-large;
+		border: 1px solid gold;
+	}
+	.tray {
+		display: none;
+		flex-wrap: wrap;
+		overflow-y: scroll;
+		height: 230px;
+		background-color: firebrick;
+		border: 1px solid gold;
+
+		
 		.asset {
-			display: inline;
-			display: inline;
-		}
-		.title {
-			display: block;
-		}
-		.tray {
+			background-size: contain;
+			border: #fff solid 1px;
+			width: 100px;
+			height: 100px;
+			margin: 5px;
 			background-color: darkred;
 		}
 	}
-	.title {
-		color: #f5deb3; 
-		font-size: larger;
-		padding: 5px; 
-		color: wheat;
-		font-size: larger;
-		padding: 5px;
-		display: none;
-	}
-	.tray {
-		background-color: #8b0000;
-		display: flex;
-		height: 100px;
-		padding: 10px;
-		background-color: firebrick;
-		display: flex;
-		height: 100px;
-		padding-top: 10px;
-		padding-bottom: 10px;
-		padding-left: 10px;
-		padding-right: 10px;
-	}
-	.asset {
-		margin: 1px;
-		border: solid #fff 1px;
-		display: block;
-		width: 100px;
-		height: 100px;
-		background-repeat: no-repeat;
-		background-size: contain;
-		background-color: #9932cc;
-		display: none;
-		margin: 1px;
-		border: solid white 1px;
-		display: block;
-		width: 100px;
-		height: 100px;
-		background-repeat: no-repeat;
-		background-size: contain;
-		background-color: darkorchid;
-		display: none;
-	}
+
 }
 
 .daggabletoken {
