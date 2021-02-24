@@ -8,3 +8,4 @@ ds.vToken.json
 debug*
 log.log
 unittest.results.text
+*.ds.json
