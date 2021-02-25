@@ -7,7 +7,7 @@ from faker import Faker
 
 from .settings import Settings
 
-class TestSettinds(TestCase):
+class TestSettings(TestCase):
 
     def setUp(self):
         self.testFile = 'unitTest.ds.json'
