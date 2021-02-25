@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+import {getUserId, userIdExists, getMapHexFromURL} from './commons.jsx';
 import Draggable from 'react-draggable';
 import {io} from 'socket.io-client';
 
@@ -13,7 +14,8 @@ export default class Vtoken extends Component {
             'connection': false,
             'x': 0,
             'y': 100,
-            'hide': false
+            'hide': false,
+            'conseal': true,
         }
         this.updateLocation = this.updateLocation.bind(this);
         this.deleteMe = this.deleteMe.bind(this)
@@ -102,10 +104,36 @@ export default class Vtoken extends Component {
 
     }
 
+    updateConseal(e){
+        e.preventDefault()
+
+        console.log('update conseal')
+
+
+    }
+
     render() {
         var parent_css = {opacity: this.state.opacity}
+
         if(this.state.hide){
             parent_css.display = 'none'
+        }
+
+        if(this.state.conseal){
+            parent_css.opacity = '20%'
+        }
+
+        var dmTools = []
+
+        debugger;
+        if(userIdExists()){
+            var buttonText = ()=>{ if(this.state.conseal){return 'show'} return 'hide';}
+
+            dmTools.push(
+                <button onClick={(e) => { e.preventDefault(); this.setState({'conseal': !this.state.conseal}); this.updateConseal(e)}}>
+                    {buttonText()}
+                </button>
+            )
         }
 
         return (
@@ -118,7 +146,8 @@ export default class Vtoken extends Component {
                 <div className='daggabletoken' style={parent_css}>
                     <img src={this.props.pic} width='15px' />
                     <div className="tools">
-                        <a href='/' onClick={(e)=>{e.preventDefault(); this.deleteMe(e)}}>x</a>  
+                        <button onClick={(e)=>{e.preventDefault(); this.deleteMe(e)}}>Delete</button>
+                        {dmTools}
                     </div>
                 </div>
             </Draggable>
