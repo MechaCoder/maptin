@@ -1,4 +1,3 @@
-from typing import Container
 from unittest import TestCase
 from random import randint, choice
 
@@ -109,7 +108,7 @@ class TestMaps(TestCase):
         randDoc = choice(seq=self.db.readAll())
 
         self.db.deleteByHex(randDoc['hex'])
-        
+
         objTest = self.db.readById(randDoc.doc_id)
 
         self.assertIsNone(
