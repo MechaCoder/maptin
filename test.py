@@ -7,6 +7,7 @@ from tin.data.tests_maps import TestMaps
 from tin.data.tests_settings import TestSettings
 from tin.data.tests_tokens import testTokens
 from tin.data.tests_users import testDataUser
+from tin.data.tests_vtokens import testvTokenData
 
 logging.basicConfig(filename='log.log', level=logging.NOTSET, format="%(asctime)s ::: %(levelname)s:%(name)s:%(message)s")
 

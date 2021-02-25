@@ -12,6 +12,7 @@ class testDataUser(TestCase):
     def setUp(self):
         self.testFile = 'unitTest.ds.json'
         self.db = DataUser(file=self.testFile)
+        self.db.clear()
         return super().setUp()
 
     def test_makeUser(self):
