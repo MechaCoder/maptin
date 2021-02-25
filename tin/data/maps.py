@@ -1,12 +1,23 @@
 from tinydb.queries import Query
 from .commons import DataCommons, mkHex
 
+
 class Maps(DataCommons):
 
-    def __init__(self, file: str = 'ds.json', table: str = 'maps', requiredKeys = 'hex,owner_id:int,title,map_source,map_soundtrack,width:int,fog:bool'):
+    def __init__(
+            self,
+            file: str = 'ds.json',
+            table: str = 'maps',
+            requiredKeys='hex,owner_id:int,title,map_source,map_soundtrack,width:int,fog:bool'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
 
-    def create(self, owner_id:int, title:str, mapsource:str, soundtrack:str, width:int = 1000):
+    def create(
+            self,
+            owner_id: int,
+            title: str,
+            mapsource: str,
+            soundtrack: str,
+            width: int = 1000):
         hex = ''
         while True:
             hex = mkHex(16)
@@ -23,21 +34,28 @@ class Maps(DataCommons):
             'fog': False
         }
         return super().create(row)
-    
-    def readByOwnerId(self, oid:int):
+
+    def readByOwnerId(self, oid: int):
         db = self.createObj()
         rows = db.tbl.search(Query().owner_id == oid)
         db.close()
 
         return rows
 
-    def readByHex(self, hex:str):
+    def readByHex(self, hex: str):
         db = self.createObj()
         row = db.tbl.get(Query().hex == hex)
         db.close()
         return row
 
-    def updateByHex(self, hex: str, title: str, map: str, sound: str, width: int, fog:bool):
+    def updateByHex(
+            self,
+            hex: str,
+            title: str,
+            map: str,
+            sound: str,
+            width: int,
+            fog: bool):
         db = self.createObj()
         db.tbl.update({
             'title': title,
@@ -49,7 +67,7 @@ class Maps(DataCommons):
         db.close()
         return True
 
-    def updateBgByHex(self, hex:str, bg:str):
+    def updateBgByHex(self, hex: str, bg: str):
         db = self.createObj()
         db.tbl.update(
             {'map_source': bg},
@@ -66,6 +84,3 @@ class Maps(DataCommons):
         if ids != []:
             return True
         return False
-
-    
-

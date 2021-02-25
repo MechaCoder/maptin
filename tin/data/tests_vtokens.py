@@ -7,6 +7,7 @@ from faker import Faker
 
 from .vTokens import vTokenData
 
+
 class testvTokenData(TestCase):
 
     def setUp(self):
@@ -44,8 +45,8 @@ class testvTokenData(TestCase):
         randDoc = choice(seq=self.db.readAll())
 
         obj = self.db.updateByHex(
-            randDoc['hex'], 
-            randint(0, 5000), 
+            randDoc['hex'],
+            randint(0, 5000),
             randint(0, 5000)
         )
 
@@ -74,6 +75,3 @@ class testvTokenData(TestCase):
 
         for img in prop:
             self.assertIsInstance(img, str)
-
-
-    
