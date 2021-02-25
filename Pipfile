@@ -13,6 +13,12 @@ requests = "*"
 beautifulsoup4 = "*"
 flask-socketio = "*"
 eventlet = "*"
+faker = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+test = "python test.py"
+start = "python app.py"
+
