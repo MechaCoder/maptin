@@ -4,6 +4,7 @@ from datetime import datetime
 
 from tin.tests__init__ import TestCommons
 from tin.data.tests_maps import TestMaps
+from tin.data.tests_settings import TestSettinds
 
 logging.basicConfig(filename='log.log', level=logging.NOTSET, format="%(asctime)s ::: %(levelname)s:%(name)s:%(message)s")
 

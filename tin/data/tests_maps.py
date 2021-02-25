@@ -1,5 +1,6 @@
 from unittest import TestCase
 from random import randint, choice
+from os import remove
 
 from tinydb.database import Document
 from faker import Faker
@@ -8,9 +9,9 @@ from .maps import Maps
 
 class TestMaps(TestCase):
 
-    def setUp(self) -> None:
-        testFile = 'unitTest.ds.json'
-        self.db = Maps(file=testFile)
+    def setUp(self):
+        self.testFile = 'unitTest.ds.json'
+        self.db = Maps(file=self.testFile)
         return super().setUp()
     
     def test_create(self):
