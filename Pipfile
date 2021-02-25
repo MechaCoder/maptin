@@ -14,6 +14,8 @@ beautifulsoup4 = "*"
 flask-socketio = "*"
 eventlet = "*"
 faker = "*"
+flake8 = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.7"
@@ -21,4 +23,3 @@ python_version = "3.7"
 [scripts]
 test = "python test.py"
 start = "python app.py"
-

@@ -7,6 +7,7 @@ from faker import Faker
 
 from .users import DataUser
 
+
 class testDataUser(TestCase):
 
     def setUp(self):

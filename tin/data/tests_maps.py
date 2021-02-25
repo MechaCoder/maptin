@@ -7,15 +7,16 @@ from faker import Faker
 
 from .maps import Maps
 
+
 class TestMaps(TestCase):
 
     def setUp(self):
         self.testFile = 'unitTest.ds.json'
         self.db = Maps(file=self.testFile)
         return super().setUp()
-    
+
     def test_create(self):
-        
+
         obj = self.db.create(
             owner_id=randint(0, 10),
             title=Faker().name(),
@@ -27,7 +28,7 @@ class TestMaps(TestCase):
         self.assertIsInstance(obj, int)
 
     def test_readByOwnerId(self):
-        
+
         if len(self.db.readAll()) < 100:
             for x in range(1, 100):
                 self.db.create(
@@ -38,7 +39,14 @@ class TestMaps(TestCase):
                     width=randint(0, 5000),
                 )
 
-        keys = ['hex', 'owner_id',  'title', 'map_source', 'map_soundtrack', 'width', 'fog']
+        keys = [
+            'hex',
+            'owner_id',
+            'title',
+            'map_source',
+            'map_soundtrack',
+            'width',
+            'fog']
 
         for row in self.db.readByOwnerId(randint(0, 10)):
             self.assertIsInstance(
@@ -115,9 +123,3 @@ class TestMaps(TestCase):
         self.assertIsNone(
             objTest
         )
-        
-        
-        
-
-    
-

@@ -7,6 +7,7 @@ from faker import Faker
 
 from .tokens import Tokens
 
+
 class testTokens(TestCase):
 
     def setUp(self):
@@ -17,7 +18,7 @@ class testTokens(TestCase):
     def test_addKey(self):
 
         testObj = self.db.addKey(Faker().ascii_email())
-        
+
         self.assertIsInstance(
             testObj,
             str
@@ -44,4 +45,3 @@ class testTokens(TestCase):
             obj,
             Document
         )
-

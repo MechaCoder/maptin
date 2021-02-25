@@ -7,6 +7,7 @@ from faker import Faker
 
 from .settings import Settings
 
+
 class TestSettings(TestCase):
 
     def setUp(self):
