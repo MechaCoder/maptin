@@ -1,7 +1,6 @@
 from datetime import datetime
 from os import system
 import sys
-import unittest
 
 def success(_data:dict = {}):
     return {

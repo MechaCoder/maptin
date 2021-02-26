@@ -3,13 +3,13 @@ from tin import user
 
 from validators import url
 
-from .data import checkOwnerByHexAndUsrKey
-from .data.commons import vaildUrl
-from .data.maps import Maps
-from .data.tokens import Tokens
-from .data.vTokens import vTokenData as Vtoken
+from tin.data import checkOwnerByHexAndUsrKey
+from tin.data.commons import vaildUrl
+from tin.data.maps import Maps
+from tin.data.tokens import Tokens
+from tin.data.vTokens import vTokenData as Vtoken
 
-from .commons import success, fail
+from tin.commons import success, fail
 
 def createMap(key):
     tobj = Tokens()

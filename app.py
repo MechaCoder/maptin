@@ -25,7 +25,7 @@ from tin import updateLocation
 from tin import upadateBgByHex
 from tin import removeVtoken
 from tin import vTokenData
-import tin.system as systems
+from tin.system import getlogfile, getAssets, getUnittest
 from tin.commons import runUnittest
 
 
@@ -179,9 +179,9 @@ def sys(cmd: str = '', pin: str = ''):
 
     return render_template(
         'system.html',
-        logStr=systems.getlogfile(),
-        files=systems.getAssets(),
-        unitTestResult=systems.getUnittest()
+        logStr=getlogfile(),
+        files=getAssets(),
+        unitTestResult=getUnittest()
     )
 
 

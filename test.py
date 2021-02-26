@@ -17,9 +17,9 @@ logging.basicConfig(
 if __name__ == '__main__':
 
     logging.info(msg='Unit tests run')
-
-    with open('unittest.results.text', 'w') as f:
-        ts = "\n \n timestamp: " + str(datetime.now()) + "\n"
-        f.write(ts)
-        outputString = TextTestRunner(f)
-        main(testRunner=outputString)
+    main()
+    # with open('unittest.results.text', 'w') as f:
+    #     ts = "\n \n timestamp: " + str(datetime.now()) + "\n"
+    #     f.write(ts)
+    #     outputString = TextTestRunner(f)
+    #     main(testRunner=outputString)

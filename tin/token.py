@@ -1,4 +1,4 @@
-from .data.tokens import Tokens
+from tin.data.tokens import Tokens
 
 def keyExists(key:str):
     if Tokens().keyExsists(key=key) == False:
