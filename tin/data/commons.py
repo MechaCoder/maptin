@@ -1,3 +1,5 @@
+import os
+
 from string import hexdigits
 from random import choices
 from re import search, fullmatch
@@ -77,6 +79,10 @@ def vaildUrl(addr: str, _domain: str = ''):
 
 
 class DataCommons(DatabaseBase):
+
+    def __init__(self, file: str, table: str, requiredKeys):
+        super().__init__(file=file, table=table, requiredKeys=requiredKeys)
+        self.fileName = os.path.join(os.path.dirname(__file__) + '../../' , file)
 
     def _mkHex(l: int = 8):
         s1 = choices(hexdigits, k=l)
