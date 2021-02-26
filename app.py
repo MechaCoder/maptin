@@ -208,7 +208,4 @@ def message(_data={}):
 
 
 if __name__ == '__main__':
-    socket_app.run(
-        app=app,
-        debug=True
-    )
+    socket_app.run(app=app)
