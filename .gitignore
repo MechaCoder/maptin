@@ -2,6 +2,7 @@ node_modules
 .vscode/settings.json
 static/a
 
+*.pyc
 ds.json
 _play.py
 ds.vToken.json

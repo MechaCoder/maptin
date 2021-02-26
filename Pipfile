@@ -17,6 +17,7 @@ faker = "*"
 flake8 = "*"
 autopep8 = "*"
 cryptography = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
