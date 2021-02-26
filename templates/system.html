@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>SYSTEM</title>
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" /> -->
+        <style>
+            body {
+                background-color: #191919;
+                color: wheat;
+            }
+            h1 {
+                color: darkred;
+            }
+            .rows{
+                background-color: black;
+                overflow: auto;
+                height: 400px;
+            }
+            .critical {
+                color: red
+            }
+            .error {
+                color: darkred;
+            }
+            .warning {
+                color: yellow;
+            }
+            .info {
+                color: darkgreen;
+            }
+            .debug {
+                color: #fff
+            }
+            .logging, .assets{
+                width: 50%;
+            }
+            .logging{
+                float: left;
+            }
+            .assets {
+                float: right;
+            }
+            .assets .rows{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .assets .row {
+                width: 80px;
+                
+            }
+            .assets img {
+                width: 80px;
+            }
+
+            .assets .row:nth-child(even) {
+                background-color: #191919;
+            }
+            .log {
+                width: 5000px;
+                padding-left: 5px;
+            }
+            .log:nth-child(even){
+                background-color: #080808;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>System</h1>
+            <hr />
+            <div class='logging'>
+                <h2>logging</h2>
+                <div class='rows'>
+                    {% for row in logStr %}
+                        <div class="log {{row.class}}">{{row.text}}</div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+            <div class='assets'>
+                <h2>Assets</h2>
+                <div class="rows">
+                    {% for row in files %}
+                        <div class='row'>
+                            <a href="/{{ row }}">
+                                <img src="/{{row}}"/>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class='unitTest'>
+                <h2>Unit Testing</h2>
+                <div class='rows'>
+                    {% for row in unitTestResult %}
+                    <div> {{row}} </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+    <!-- <script src="{{ url_for('static', filename='dist/bundle.js') }}" ></script> -->
+</html>

@@ -35,3 +35,9 @@ export function userIdExists(){
      return false;
 
 }
+
+export function getMapHexFromURL(){
+     var l = window.location.href;
+     l = l.split('/');
+     return l[l.length - 1]
+}

@@ -1,0 +1,253 @@
+.mapSingle {
+	.tools {
+		background-color: firebrick;
+		border: firebrick solid 1px;
+		border-top: none;
+		border-left: none;
+		width: 250px;
+		padding: 5px;
+		position: fixed;
+		top: 58px;
+		left: 0px;
+		z-index: 10;
+		input {
+			background-color: darkslategray;
+			color: wheat;
+		}
+		button {
+			background-color: darkslategray;
+			color: wheat;
+			border: none;
+			width: 100%;
+			&:disabled {
+				opacity: 0;
+			}
+		}
+	}
+	.maps {
+		img {
+			width: 100%;
+			padding-top: 53px;
+		}
+	}
+}
+
+.audio {
+	border: 1px solid #b22222;
+	border-top: none;
+	border-right: none;
+	background-color: #2f4f4f;
+	width: 125px;
+	position: fixed;
+	right: 0;
+	top: 58px;
+	opacity: 40%;
+	border: 1px solid firebrick;
+	border-top: none;
+	border-right: none;
+	background-color: darkslategray;
+	width: 125px;
+	position: fixed;
+	right: 0px;
+	top: 58px;
+	opacity: 40%;
+	&:hover {
+		opacity: 100%;
+		opacity: 100%;
+	}
+}
+
+.AssertToken {
+	background-color: #8b0000;
+	color: #fff;
+	height: 100px;
+	text-align: center;
+	display: flex;
+	position: fixed;
+	left: 0;
+	top: 60%;
+
+	&:hover .tray{
+		display: flex;
+	}
+
+	.title {
+		writing-mode: vertical-lr;
+		height: 100%;
+		float: left;
+		font-size: x-large;
+		border: 1px solid gold;
+	}
+	.tray {
+		display: none;
+		flex-wrap: wrap;
+		overflow-y: scroll;
+		height: 230px;
+		background-color: firebrick;
+		border: 1px solid gold;
+
+		
+		.asset {
+			background-size: contain;
+			border: #fff solid 1px;
+			width: 100px;
+			height: 100px;
+			margin: 5px;
+			background-color: darkred;
+		}
+	}
+
+}
+
+.daggabletoken {
+	height: 0px;
+	img {
+		width: 75px;
+	}
+	.tools {
+		width: 75px;
+		display: none;
+		text-align: center;
+	}
+	&:hover {
+		.tools {
+			display: block;
+		}
+	}
+}
+
+.maptray {
+
+	background-color: firebrick;
+	height: 100px;
+	top: 43%;
+	left: 0;
+	position: fixed;
+	display: block;
+	writing-mode: vertical-lr;
+	font-size: x-large;
+	text-align: center;
+	border: 1px solid gold;
+
+	&.expand{
+		background: #8b0000; 
+		left: 10%;
+		top: 10%;
+		width: 80%;
+		height: 400px;
+		writing-mode: horizontal-tb;
+		text-align: left;	
+		z-index: 50;
+		
+		a {
+			display: block;
+			float: right;
+			cursor: pointer;
+			margin-right: 5px;
+		}
+
+		.popularity{
+			border-bottom: gold solid 1px;
+		}
+		
+		.tray {
+			background-color: firebrick;
+			display: flex;
+			flex-wrap: wrap;
+			height: 41.5%;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			padding-left: 10px;
+			padding-right: 10px;
+			overflow-y: scroll;
+		}
+		.asset {
+			margin: 1px;
+			border: solid white 1px;
+			width: 100px;
+			height: 100px;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-color: darkorchid;
+			cursor: pointer;
+		}
+
+	}
+
+	.title{
+		color: #fff;
+		cursor: pointer; 
+	}
+	.tray {
+		display: none;
+	}
+	a {
+		display: none;
+	}
+
+	
+}
+
+
+// .maptray {
+// 	background-color: firebrick;
+// 	width: 1pt;
+// 	padding: 5px;
+// 	overflow: auto;
+// 	position: fixed;
+// 	top: 43.5%;
+// 	left: 0;
+	
+// 	&:hover {
+// 		width: 500pt; 
+// 		.asset {
+// 			display: inline;
+// 		}
+// 		.title {
+// 			display: block;
+// 		}
+// 		.tray {
+// 			background-color: darkred;
+// 		}
+// 	}
+// 	.title {
+// 		color: wheat;
+// 		font-size: larger;
+// 		padding: 5px;
+// 		display: none;
+// 	}
+// 	.tray {
+// 		background-color: firebrick;
+// 		display: flex;
+// 		height: 100px;
+// 		padding-top: 10px;
+// 		padding-bottom: 10px;
+// 		padding-left: 10px;
+// 		padding-right: 10px;
+// 	}
+// 	.asset {
+// 		margin: 1px;
+// 		border: solid white 1px;
+// 		width: 100px;
+// 		height: 100px;
+// 		background-repeat: no-repeat;
+// 		background-size: cover;
+// 		background-color: darkorchid;
+// 		display: none;
+// 	}
+// }
+
+.fogOfWar {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 58px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	z-index: 1;
+	background-image: url('https://media1.giphy.com/media/kg19fN5BXbZGIDznzG/giphy.gif?cid=ecf05e47hp0hh8w1p1k1npkbb3dom7yivxnsnbovs7d8axbc&rid=giphy.gif');
+	background-size: cover;
+	background-repeat: no-repeat;
+}

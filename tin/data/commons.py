@@ -5,10 +5,12 @@ from validators import url, ValidationFailure
 
 from tinydb_base import DatabaseBase
 
+
 def checkEmail(email: str):
     if fullmatch(r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$', email):
         return True
     return False
+
 
 def password_check(password):
     """
@@ -35,45 +37,47 @@ def password_check(password):
     lowercase_error = search(r"[a-z]", password) is None
 
     # searching for symbols
-    symbol_error = search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~"+r'"]', password) is None
+    symbol_error = search(
+        r"[ !#$%&'()*+,-./[\\\]^_`{|}~" + r'"]',
+        password) is None
 
     # overall result
-    password_ok = not ( length_error or digit_error or uppercase_error or lowercase_error or symbol_error )
+    password_ok = not (
+        length_error or digit_error or uppercase_error or lowercase_error or symbol_error)
 
     return {
-        'password_ok' : password_ok,
-        'length_error' : length_error,
-        'digit_error' : digit_error,
-        'uppercase_error' : uppercase_error,
-        'lowercase_error' : lowercase_error,
-        'symbol_error' : symbol_error,
+        'password_ok': password_ok,
+        'length_error': length_error,
+        'digit_error': digit_error,
+        'uppercase_error': uppercase_error,
+        'lowercase_error': lowercase_error,
+        'symbol_error': symbol_error,
     }
-    
 
-def mkHex(l:int = 8):
+
+def mkHex(l: int = 8):
     s1 = choices(hexdigits, k=l)
     return ''.join(s1)
 
-def vaildUrl(addr:str, _domain:str = ''):
+
+def vaildUrl(addr: str, _domain: str = ''):
 
     try:
         url(addr)
-        add_domain = addr.split('.')[1]
-        if _domain is '':
-            return True
-        
-        if _domain == add_domain:
+        if _domain in addr:
             return True
         return False
-        
 
     except ValidationFailure:
+        print('ValidationFailure')
         return False
-
+    except Exception as error:
+        print(error)
+        return False
 
 
 class DataCommons(DatabaseBase):
 
-    def _mkHex(l:int = 8):
+    def _mkHex(l: int = 8):
         s1 = choices(hexdigits, k=l)
         return ''.join(s1)

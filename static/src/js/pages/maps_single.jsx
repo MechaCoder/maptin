@@ -4,113 +4,159 @@ import { io } from "socket.io-client";
 
 import Vtoken from './component/vtoken.jsx';
 import Youtube from './component/youtube.jsx';
-import {getUserId, userIdExists} from './component/commons.jsx'
+import {getUserId, userIdExists, getMapHexFromURL} from './component/commons.jsx'
 import AssertToken from './component/assertTray.jsx';
+import MapList from './component/mapslist.jsx';
 
 
 export default class MapSingle extends Component {
     constructor() {
         super();
+
         this.state = {
             'hex': '',
             'title': '',
             'map': '',
             'soundtrack': '',
-            'tokens': []
+            'width': 1000,
+            'tokens': [],
+            'foggyOfWar': true,
+            'changed': false
         }
-
-        this.getMapData = this.getMapData.bind(this);
-    }
-
-    getMapData(){
-
-        var l = window.location.href;
-        l = l.split('/');
-        var hex = l[l.length - 1]
-        
-        fetch('/ajax/map', {
-            headers: {
-                'Content-Type': 'application/json',
-                'map': hex
-            },
-        })
-        .then(data => data.json())
-        .then((json) => {
-            if(json.succs){
-
-                this.setState({
-                    'hex': json.data.hex,
-                    'title': json.data.title,
-                    'map': json.data.map_source,
-                    'soundtrack': json.data.map_soundtrack,
-                    'tokens': json.data.tokens
-                })
-            }
-
-        })
-
-    }
-
-    componentDidUpdate(){
-        this.updateServer()
+        this.saveInfo = this.saveInfo.bind(this);
     }
 
     componentDidMount(){
-        // getUserId()
         this.socket = io();
 
-        this.socket.on('flash', ()=>{
-            // this.forceUpdate()
-            this.getMapData()
+        this.socket.on('map:update:tokens', (_data) => {
+            this.setState({'tokens': _data.tokens})
+
         })
-        this.getMapData()
+
+        this.socket.on('map:updated', (_data) => {
+            
+            if(_data.succs){
+
+                document.title = _data.data.title
+
+                this.setState({
+                    'title': _data.data.title,
+                    'soundtrack': _data.data.map_soundtrack,
+                    'map': _data.data.map_source,
+                    'width': _data.data.width,
+                    'foggyOfWar': _data.data.fog,
+                    'changed': false
+                })
+            }
+        })
+
+        document.onkeyup = (e) => {
+
+            if(e.ctrlKey && e.shiftKey && e.which == 70){
+                
+                this.setState({foggyOfWar: !this.state.foggyOfWar})
+                this.saveInfo(e)
+            }
+
+            if (e.ctrlKey && e.which == 83){
+                if(this.state.changed){
+                    this.saveInfo(e)
+                }
+            }
+
+        }
+
+        fetch('/ajax/map', {
+            headers: {
+                'Content-Type': 'application/json',
+                'map': getMapHexFromURL()
+            }
+        })
+        .then(data=>data.json())
+        .then((json) => {
+            
+            if(json.succs){
+                
+                document.title = json.data.title
+
+                this.setState({
+                    'hex': getMapHexFromURL(),
+                    'title': json.data.title,
+                    'map': json.data.map_source,
+                    'soundtrack': json.data.map_soundtrack,
+                    'width': json.data.width,
+                    'tokens': json.data.tokens,
+                    'foggyOfWar': json.data.fog,
+                    'changed': false
+                })
+            }
+        })
+
     }
 
-    updateServer(){
-        if(userIdExists() === false){
-            return;
+    saveInfo(event){
+        if(event != undefined){
+            event.preventDefault()
         }
+
+
+        var body = this.state;
+        body.fogOfWar = this.state.foggyOfWar
         
-        var usr_token = getUserId()
 
         fetch('/ajax/map', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'userKey': usr_token
+                'Userkey': getUserId(),
             },
-            body: JSON.stringify({
-                'hex': this.state.hex,
-                'title': this.state.title,
-                'map': this.state.map,
-                'soundtrack': this.state.soundtrack
-            })
+            body: JSON.stringify(body)
         })
+        .then(http=>http.json())
+        .then((json)=>{
+            if(!json.succs){
+                alert(json.error)
+            }
+        })
+
     }
 
     render() {
 
-        var dms_els = []
-        var userExists = userIdExists()
-        userExists = false
+        var dms_els = [] // adds user elerments to the page
+        var userExists = userIdExists() // the users session key
+        
+        var foggy = {display: 'none'} // the css the fog of war 
+        
         if(userExists){
+
             dms_els.push(
                 <div className="tools" key={1} >
                     <label htmlFor='mapTitle' >
-                        <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value});}}  />
-                    </label>
-                    <label htmlFor='mapMap'>
-                        <div>Map:</div> <input name='mapMap' value={this.state.map} onChange={(event) => {this.setState({'map': event.target.value});}} />
+                        <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value, 'changed': true});}}  />
                     </label>
                     <label htmlFor='mapSoundtrack'>
-                        <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value});}} />
+                        <div>soundtrack:</div> <input name='mapSoundtrack' value={this.state.soundtrack} onChange={(event) => {this.setState({'soundtrack': event.target.value, 'changed': true});}} />
                     </label>
+                    <label htmlFor="mapWidth" >
+                        <div>Fixed Map Width</div> <input name="mapWidth" type='number' min='1000' value={this.state.width} onChange={(event) => {this.setState({'width': event.target.value, 'changed': true})}} />
+                    </label>
+                    <label htmlFor="fogOfWar" >
+                        <div>Fog of War</div> <input name="fogOfWar" type='checkbox' checked={this.state.foggyOfWar} onChange={(event)=>{this.setState({'foggyOfWar': !this.state.foggyOfWar, 'changed': true})}} />
+                    </label>
+                    <label><div></div> <button disabled={!this.state.changed} onClick={this.saveInfo}> Save </button></label>
                 </div>
+            
             )
+            dms_els.push(
+                <MapList key={2} />
+            )
+            foggy['opacity'] = '50%'
         }
 
         dms_els.push(
-            <AssertToken key={2} subpath='tokens' />
+            <AssertToken key={3} subpath='tokens' />
         )
         
         var el_draggable = []
@@ -127,7 +173,9 @@ export default class MapSingle extends Component {
             )
         }
 
-        console.log(this.state.map.length)
+        if(this.state.foggyOfWar){
+            foggy['display'] = 'block'
+        }
 
         return (
             <div className="mapSingle" data-map={JSON.stringify(this.state)}>
@@ -135,7 +183,9 @@ export default class MapSingle extends Component {
                     {el_draggable}
                 </div>
                 <div className="maps">
-                    <img src={this.state.map} />
+                    <div className='fogOfWar' style={foggy}></div>
+                    <img ref='image' src={this.state.map} style={{'width': this.state.width}} />
+                    
                 </div>
                 <div className="audio">
                     <Youtube url={this.state.soundtrack} />

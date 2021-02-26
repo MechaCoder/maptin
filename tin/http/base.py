@@ -1,12 +1,15 @@
 from requests import get
 from bs4 import BeautifulSoup
 
-class HttpBaseException(Exception): pass
+
+class HttpBaseException(Exception):
+    pass
+
 
 def getObject(url: str):
 
     req = get(url=url)
-    if req.ok == False:
+    if not req.ok:
         raise HttpBaseException('the request has encounded and issue')
 
     html = req.text
@@ -16,4 +19,3 @@ def getObject(url: str):
     req.close()
     bs = BeautifulSoup(html, 'html.parser')
     return bs
-

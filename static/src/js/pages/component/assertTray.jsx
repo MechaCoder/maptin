@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 function imgEl(src, key){
 
     var eventHandler = (e)=>{
+        
         var l = window.location.href;
         l = l.split('/');
         var hex = l[l.length - 1]
@@ -75,8 +76,9 @@ export default class AssertToken extends Component {
 
         return (
             <div className='AssertToken'>
-                <div className='title'> AssertToken </div>
-                <div className='tray' style={{'width': tray_width}}>{els}</div>
+                <div className='title'> Tokens </div>
+                {/* <div className='tray' style={{'width': tray_width}}>{els}</div> */}
+                <div className='tray'>{els}</div>
             </div>
         )
     }
