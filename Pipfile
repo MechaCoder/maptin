@@ -16,6 +16,7 @@ eventlet = "*"
 faker = "*"
 flake8 = "*"
 autopep8 = "*"
+cryptography = "*"
 
 [requires]
 python_version = "3.7"
