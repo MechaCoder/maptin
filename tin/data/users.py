@@ -1,3 +1,4 @@
+import os
 from tinydb.queries import Query
 from tinydb_base.user import User
 from .exceptions import UserLimit
@@ -8,6 +9,7 @@ class DataUser(User):
     def __init__(self, file='ds.json', table='users',
                  requiredKeys='username,password'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
+        self.fileName = os.path.join(os.path.dirname(__file__) + '/../../' , file)
 
     def makeUser(self, username: str, password: str):
 

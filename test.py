@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     logging.info(msg='Unit tests run')
 
-    with open('unittest.results.text', 'a') as f:
+    with open('unittest.results.text', 'w') as f:
         ts = "\n \n timestamp: " + str(datetime.now()) + "\n"
         f.write(ts)
         outputString = TextTestRunner(f)

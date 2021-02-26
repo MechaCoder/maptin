@@ -1,3 +1,4 @@
+import os
 from tinydb_base.getSet import GetSet, Factory, Query, futureTimeStamp
 from .commons import mkHex
 
@@ -6,6 +7,7 @@ class Tokens(GetSet):
 
     def __init__(self, file: str = 'ds.json', table: str = 'tokens'):
         super().__init__(file=file, table=table)
+        self.fileName = os.path.join(os.path.dirname(__file__) + '/../../' , file)
 
     def addKey(self, uname: str):
         key = ''
