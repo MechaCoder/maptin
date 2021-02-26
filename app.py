@@ -1,8 +1,8 @@
 import logging
 from json import dumps, loads
 
-from tin.data.settings import Settings
-from tin.map import createMap, updateByHex
+from maptin.tin.data.settings import Settings
+from maptin.tin.map import createMap, updateByHex
 
 from flask import Flask
 from flask import render_template
@@ -10,23 +10,23 @@ from flask import request
 from flask import abort
 
 from flask_socketio import SocketIO, emit
-from tin.http.trove import trove
+from maptin.tin.http.trove import trove
 
-from tin import authUser
-from tin import createUser
-from tin import keyExists
-from tin import listMaps
-from tin import deleteMap
-from tin import getByHex
-from tin import tokensList
-from tin import mapsList
-from tin import createToken
-from tin import updateLocation
-from tin import upadateBgByHex
-from tin import removeVtoken
-from tin import vTokenData
-from tin.system import getlogfile, getAssets, getUnittest
-from tin.commons import runUnittest
+from maptin.tin import authUser
+from maptin.tin import createUser
+from maptin.tin import keyExists
+from maptin.tin import listMaps
+from maptin.tin import deleteMap
+from maptin.tin import getByHex
+from maptin.tin import tokensList
+from maptin.tin import mapsList
+from maptin.tin import createToken
+from maptin.tin import updateLocation
+from maptin.tin import upadateBgByHex
+from maptin.tin import removeVtoken
+from maptin.tin import vTokenData
+from maptin.tin.system import getlogfile, getAssets, getUnittest
+from maptin.tin.commons import runUnittest
 
 
 logging.basicConfig(

@@ -7,8 +7,8 @@ from threading import Thread
 
 
 from requests.api import get
-from .base import getObject
-from tin.data.commons import mkHex
+from maptin.tin.http.base import getObject
+from maptin.tin.data.commons import mkHex
 
 
 def mkFname(dest: str, oldfname: str):

@@ -1,7 +1,7 @@
 from os import listdir
 from os.path import isfile
-from tin.data.vTokens import vTokenData
-from tin.map import Maps
+from maptin.tin.data.vTokens import vTokenData
+from maptin.tin.map import Maps
 
 from .commons import success, fail
 

@@ -1,9 +1,9 @@
 from json import dumps
 from tinydb_base import exceptions
-from tin.data.users import DataUser
-from tin.data.tokens import Tokens
-from tin.data.exceptions import UserLimit
-from tin.data.commons import checkEmail, password_check
+from maptin.tin.data.users import DataUser
+from maptin.tin.data.tokens import Tokens
+from maptin.tin.data.exceptions import UserLimit
+from maptin.tin.data.commons import checkEmail, password_check
 
 from tinydb_base.exceptions import UsernameExists
 

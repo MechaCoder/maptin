@@ -1,15 +1,15 @@
 from os.path import isfile
-from tin import user
+from maptin.tin import user
 
 from validators import url
 
-from tin.data import checkOwnerByHexAndUsrKey
-from tin.data.commons import vaildUrl
-from tin.data.maps import Maps
-from tin.data.tokens import Tokens
-from tin.data.vTokens import vTokenData as Vtoken
+from maptin.tin.data import checkOwnerByHexAndUsrKey
+from maptin.tin.data.commons import vaildUrl
+from maptin.tin.data.maps import Maps
+from maptin.tin.data.tokens import Tokens
+from maptin.tin.data.vTokens import vTokenData as Vtoken
 
-from tin.commons import success, fail
+from maptin.tin.commons import success, fail
 
 def createMap(key):
     tobj = Tokens()

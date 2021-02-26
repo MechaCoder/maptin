@@ -1,4 +1,4 @@
-from tin.data.tokens import Tokens
+from maptin.tin.data.tokens import Tokens
 
 def keyExists(key:str):
     if Tokens().keyExsists(key=key) == False:
