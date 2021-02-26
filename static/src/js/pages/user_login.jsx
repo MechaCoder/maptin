@@ -5,8 +5,8 @@ export default class Userlogin extends Component {
     constructor() {
         super();
         this.state = {
-            'uname': 'test@anno.com',
-            'pword': 'zVuC_evzwa;EF3;h',
+            'uname': '',
+            'pword': '',    
             'logged-in': false
             
         }
