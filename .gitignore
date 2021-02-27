@@ -10,3 +10,4 @@ debug*
 log.log
 unittest.results.text
 *.ds.json
+credentials.json
