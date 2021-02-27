@@ -15,7 +15,7 @@ export default class Vtoken extends Component {
             'x': 0,
             'y': 100,
             'hide': false,
-            'conseal': true,
+            'conseal': false,
         }
         this.updateLocation = this.updateLocation.bind(this);
         this.deleteMe = this.deleteMe.bind(this)
@@ -59,18 +59,23 @@ export default class Vtoken extends Component {
         })
 
         this.socket.on('vtoken:conseal', (_data) => {
-            if(_data.uhex != this.props.hex){
-                return;
+            console.log('2')
+            console.log(_data)
+            // return;
+
+            if(_data.uhex == this.props.hex){
+                this.setState({
+                    'conseal': _data['conseal']
+                })
+                console.log('three')
             }
 
-            this.setState({
-                'conseal': _data['conseal']
-            })
         })
 
         this.setState({
             'x':this.props.x,
-            'y':this.props.y
+            'y':this.props.y,
+            'conseal': this.props.conseal
         })
         
     }
@@ -117,10 +122,12 @@ export default class Vtoken extends Component {
     updateConseal(e){
         e.preventDefault()
 
+        console.log('1')
+
         this.socket.emit('vtoken:conseal', {
             'uhex': this.props.hex,
             'conseal': this.state.conseal,
-        })
+        });
     }
 
     render() {
@@ -144,7 +151,7 @@ export default class Vtoken extends Component {
             var buttonText = ()=>{ if(this.state.conseal){return 'show'} return 'hide';}
 
             dmTools.push(
-                <button onClick={(e) => { e.preventDefault(); this.setState({'conseal': !this.state.conseal}); this.updateConseal(e)}}>
+                <button onClick={(e) => { e.preventDefault(); this.updateConseal(e)}}>
                     {buttonText()}
                 </button>
             )

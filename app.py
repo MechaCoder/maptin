@@ -193,9 +193,14 @@ def connect():
 
 @socket_app.on('vtoken:conseal')
 def consoleupdate(_data={}):
-    debug_file(str(_data.keys()))
-    x = updateConseal(_data['uhex'], _data['conseal'])
-    emit('vtoken:conseal', _data)
+    updateConseal(_data['uhex'], _data['conseal'])
+    
+    if _data['conseal']:
+        _data['conseal'] = False
+    else:
+        _data['conseal'] = True
+
+    emit('vtoken:conseal', _data, broadcast=True)
     pass
 
 
