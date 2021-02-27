@@ -25,8 +25,9 @@ from tin import updateLocation
 from tin import upadateBgByHex
 from tin import removeVtoken
 from tin import vTokenData
+from tin import updateConseal
 import tin.system as systems
-from tin.commons import runUnittest
+from tin.commons import debug_file, runUnittest
 
 
 logging.basicConfig(
@@ -188,6 +189,19 @@ def sys(cmd: str = '', pin: str = ''):
 @socket_app.on('connect')
 def connect():
     emit('new client.')
+
+
+@socket_app.on('vtoken:conseal')
+def consoleupdate(_data={}):
+    updateConseal(_data['uhex'], _data['conseal'])
+    
+    if _data['conseal']:
+        _data['conseal'] = False
+    else:
+        _data['conseal'] = True
+
+    emit('vtoken:conseal', _data, broadcast=True)
+    pass
 
 
 @socket_app.on('message')

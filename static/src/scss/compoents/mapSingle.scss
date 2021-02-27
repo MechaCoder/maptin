@@ -1,4 +1,5 @@
 .mapSingle {
+
 	.tools {
 		background-color: firebrick;
 		border: firebrick solid 1px;
@@ -101,15 +102,25 @@
 
 .daggabletoken {
 	height: 0px;
+	
 	img {
 		width: 75px;
 	}
 	.tools {
 		width: 75px;
+		height: 75px;
+		top: 0;
 		display: none;
 		text-align: center;
+		border: 1px solid gold;
+		border-radius: 10%;
+
+		button {
+			margin-bottom: 5px;
+		}
 	}
 	&:hover {
+		opacity: 100% !important;
 		.tools {
 			display: block;
 		}
@@ -187,55 +198,6 @@
 
 	
 }
-
-
-// .maptray {
-// 	background-color: firebrick;
-// 	width: 1pt;
-// 	padding: 5px;
-// 	overflow: auto;
-// 	position: fixed;
-// 	top: 43.5%;
-// 	left: 0;
-	
-// 	&:hover {
-// 		width: 500pt; 
-// 		.asset {
-// 			display: inline;
-// 		}
-// 		.title {
-// 			display: block;
-// 		}
-// 		.tray {
-// 			background-color: darkred;
-// 		}
-// 	}
-// 	.title {
-// 		color: wheat;
-// 		font-size: larger;
-// 		padding: 5px;
-// 		display: none;
-// 	}
-// 	.tray {
-// 		background-color: firebrick;
-// 		display: flex;
-// 		height: 100px;
-// 		padding-top: 10px;
-// 		padding-bottom: 10px;
-// 		padding-left: 10px;
-// 		padding-right: 10px;
-// 	}
-// 	.asset {
-// 		margin: 1px;
-// 		border: solid white 1px;
-// 		width: 100px;
-// 		height: 100px;
-// 		background-repeat: no-repeat;
-// 		background-size: cover;
-// 		background-color: darkorchid;
-// 		display: none;
-// 	}
-// }
 
 .fogOfWar {
 	position: fixed;

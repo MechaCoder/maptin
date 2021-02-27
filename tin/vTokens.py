@@ -88,6 +88,13 @@ def updateLocation(hex:str, x:int, y:int):
 
     return success({'data': updated})
 
+
+def updateConseal(hex:str, conseal:bool):
+    obj = vTokenData().updateConsealByHex(hex, conseal)
+    if obj == []:
+        return fail()
+    return success()
+
 def removeVtoken(hex:str):
     if Vtoken().deleteByHex(hex):
         return success()
