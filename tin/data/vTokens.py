@@ -1,16 +1,16 @@
 import os
 from tinydb.queries import Query
 from tinydb_base import DatabaseBase
-from .commons import mkHex, DataCommons
+from .commons import mkHex, DataCommons, Credentials
 from .exceptions import TokenLimit
 
-
+    
 class vTokenData(DataCommons):
 
     def __init__(self, file: str = 'ds.json', table: str = 'vtokens',
                  requiredKeys='hex,mapHex,source,type,x:int,y:int,ts:float,conseal:bool'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
-        self.fileName = os.path.join(os.path.dirname(__file__) + '/../../' , file)
+        self.fileName = Credentials().read()['ds']
 
     def create(self, mapHex, source, tokenType, x, y):
 

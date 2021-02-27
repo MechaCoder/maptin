@@ -1,6 +1,6 @@
 import os
 from tinydb.queries import Query
-from .commons import DataCommons, mkHex
+from .commons import DataCommons, mkHex, Credentials
 
 
 class Maps(DataCommons):
@@ -11,7 +11,8 @@ class Maps(DataCommons):
             table: str = 'maps',
             requiredKeys='hex,owner_id:int,title,map_source,map_soundtrack,width:int,fog:bool'):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
-        self.fileName = os.path.join(os.path.dirname(__file__) + '/../../' , file)
+        
+
 
     def create(
             self,

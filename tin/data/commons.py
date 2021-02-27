@@ -4,6 +4,9 @@ from string import hexdigits
 from random import choices
 from re import search, fullmatch
 from validators import url, ValidationFailure
+from os import getcwd
+from os.path import join, realpath
+from json import dumps, loads
 
 from tinydb_base import DatabaseBase
 
@@ -82,8 +85,38 @@ class DataCommons(DatabaseBase):
 
     def __init__(self, file: str, table: str, requiredKeys):
         super().__init__(file=file, table=table, requiredKeys=requiredKeys)
-        self.fileName = os.path.join(os.path.dirname(__file__) + '../../' , file)
+        self.fileName = Credentials().read()['ds']
 
     def _mkHex(l: int = 8):
         s1 = choices(hexdigits, k=l)
         return ''.join(s1)
+
+class Credentials:
+
+    def __init__(self):
+        dirPath = realpath(__file__)
+        fname = 'credentials.json'
+
+        a = dirPath.split('/')[:-3]
+
+        self.fPath = join('/'.join(a), fname)
+        self.directory = '/'.join(a)
+
+    def read(self):
+        fileObj = open(self.fPath, 'r')
+        contentString = fileObj.read()
+        json = loads(contentString)
+        fileObj.close()
+        return json
+
+    def write(self):
+        d = {
+            'ds': join(self.directory, 'ds.json'),
+            'log': join(self.directory, 'log.log')
+        }
+        fileObj = open(self.fPath, 'w')
+        fileObj.write(
+            dumps(d, indent=4, sort_keys=True)
+        )
+        fileObj.close()
+        return True
