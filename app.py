@@ -27,11 +27,11 @@ from tin import removeVtoken
 from tin import vTokenData
 from tin import updateConseal
 import tin.system as systems
-from tin.commons import debug_file, runUnittest
+from tin.commons import debug_file, runUnittest, Credentials
 
 
 logging.basicConfig(
-    filename='log.log',
+    filename=Credentials().read()['log'],
     level=logging.NOTSET,
     format="%(asctime)s ::: %(levelname)s:%(name)s:%(message)s"
 )
