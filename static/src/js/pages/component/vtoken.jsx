@@ -58,6 +58,16 @@ export default class Vtoken extends Component {
 
         })
 
+        this.socket.on('vtoken:conseal', (_data) => {
+            if(_data.uhex != this.props.hex){
+                return;
+            }
+
+            this.setState({
+                'conseal': _data['conseal']
+            })
+        })
+
         this.setState({
             'x':this.props.x,
             'y':this.props.y
@@ -107,9 +117,10 @@ export default class Vtoken extends Component {
     updateConseal(e){
         e.preventDefault()
 
-        console.log('update conseal')
-
-
+        this.socket.emit('vtoken:conseal', {
+            'uhex': this.props.hex,
+            'conseal': this.state.conseal,
+        })
     }
 
     render() {
@@ -121,11 +132,14 @@ export default class Vtoken extends Component {
 
         if(this.state.conseal){
             parent_css.opacity = '20%'
+
+            if(userIdExists()===false){
+                parent_css.display = 'none'
+            }
         }
 
         var dmTools = []
 
-        debugger;
         if(userIdExists()){
             var buttonText = ()=>{ if(this.state.conseal){return 'show'} return 'hide';}
 
