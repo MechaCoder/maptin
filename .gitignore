@@ -4,7 +4,7 @@ static/a
 
 *.pyc
 ds.json
-_play.py
+*_play.*
 ds.vToken.json
 debug*
 log.log
