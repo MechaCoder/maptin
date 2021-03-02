@@ -1,6 +1,12 @@
 from .users import DataUser as User
 from .tokens import Tokens
 from .maps import Maps
+from .settings import Settings
+
+from .commons import Credentials
+from .sql import MySQL_Settings
+
+
 
 
 def checkOwnerByHexAndUsrKey(hex: str, key: str):
@@ -21,3 +27,11 @@ def checkOwnerByHexAndUsrKey(hex: str, key: str):
         return False
 
     return userData.doc_id == mapData['owner_id']
+
+
+def getSettingsObject():
+
+    if 'mysqlUname' in Credentials().read().keys():
+        return MySQL_Settings()
+
+    return Settings()

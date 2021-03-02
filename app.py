@@ -1,7 +1,7 @@
 import logging
 from json import dumps, loads
 
-from tin.data.settings import Settings
+from tin.data import getSettingsObject as Settings
 from tin.map import createMap, updateByHex
 
 from flask import Flask

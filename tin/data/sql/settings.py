@@ -1,12 +1,23 @@
 from .base import MysqlBase
+from .exception import MySQL_SettingsException
 
-class MySQL_SettingsException(Exception): pass
+from tin.data.commons import mkHex
 
 class MySQL_Settings(MysqlBase):
     
     def __init__(self):
         super().__init__()
         self.tblName = 'settings'
+
+        if self.tableExists() is False:
+            return
+
+        if self.RowExists('tag', 'sessionSysKey') is False:
+            self.set('sessionSysKey', mkHex(4))
+
+        if self.RowExists('tag', 'socketKey') is False:
+            self.set('socketKey', mkHex(1024))
+
 
     def createTable(self):
         """ creates the table if the table dose not exist"""
@@ -17,7 +28,7 @@ class MySQL_Settings(MysqlBase):
             CREATE TABLE {self.tblName} (
                 id int NOT NULL AUTO_INCREMENT,
                 tag varchar(255) NOT NULL,
-                val varchar(255) NOT NULL,
+                val varchar(1024) NOT NULL,
                 PRIMARY KEY (id)
             )
         """
@@ -26,7 +37,6 @@ class MySQL_Settings(MysqlBase):
             cur = conn.cursor()
             cur.execute(sql)
         return True
-
 
     def get(self, tag:str):
 
@@ -54,7 +64,6 @@ class MySQL_Settings(MysqlBase):
 
         except MySQL_SettingsException:
             #insert statement
-            print('insert')
 
             sql = f"INSERT INTO {self.tblName} (tag, val) VALUES (%s, %s)"
             values = (tag, val)
@@ -65,5 +74,9 @@ class MySQL_Settings(MysqlBase):
             conn.commit()
 
         return True
+
+    def resetSessionSysKey(self):
+        self.set('sessionSysKey', mkHex(4))
+        print("Session key: {}".format(self.get('sessionSysKey')))
 
             

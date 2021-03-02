@@ -1,6 +1,7 @@
-from tin.data.commons import Credentials
 from mysql.connector import connect, Error
+from tinydb.table import Document
 
+from tin.data.commons import Credentials
 from .exception import MySQLBaseExceptionCredsNotFound
 
 class MysqlBase:
@@ -49,3 +50,19 @@ class MysqlBase:
             if tbl[0] == self.tblName:
                 return True
         return False
+
+    def RowExists(self, col:str, val:str):
+
+        sql = f"""SELECT * FROM {self.tblName} WHERE %s = %s;"""
+        vals = (col, val)
+
+        with self._creatDbObject() as conn:
+            cur = conn.cursor()
+            cur.execute(sql, vals)
+
+            result = cur.fetchall()
+
+        if result == []:
+            return False     
+        return True
+
