@@ -7,7 +7,13 @@ from tin.data.sql import Builder
 import sys
 
 if __name__ == '__main__':
+
+    
+
     Credentials().write() #will wirte standeard creds
-    Builder().main()
+
+    if input('do want to build a mysql database? (y)') == 'y':
+        Builder().main()
     Settings() #will write the ds
-    trove() # will down load all maps
+    if input('do want to download assets? (y)') == 'y':
+        trove() # will down load all maps
