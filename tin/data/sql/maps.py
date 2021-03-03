@@ -31,26 +31,26 @@ class MySQL_Maps(MysqlBase):
         with self._creatDbObject() as conn:
             cur = conn.cursor()
             cur.execute(sql)
-        
+
         return True
 
-    def create(self, owner_id:int, title:str, map_source:str, map_soundtrack:str, width:int, fog:bool):
+    def create(self, owner_id:int, title:str, mapsource:str, soundtrack:str, width:int, fog:bool = False):
 
         hex = ''
         while True:
             hex = mkHex(16)
             if self.RowExists('hex', hex) == False:
                 break
-    
-        sql = f""" 
+
+        sql = f"""
             INSERT INTO {self.tblName} (
                 hex, owner_id, title, map_source, map_soundtrack, width, fog
             ) VALUES (
                 %s, %s, %s, %s, %s, %s, %s
-            ) 
+            )
         """
 
-        values = (hex , owner_id, title, map_source, map_soundtrack, width, fog)
+        values = (hex , owner_id, title, mapsource, soundtrack, width, fog)
 
         with self._creatDbObject() as conn:
             cur = conn.cursor()
@@ -58,6 +58,31 @@ class MySQL_Maps(MysqlBase):
             conn.commit()
 
         return True
+
+    def readAll(self):
+        sql = f""" SELECT * FROM {self.tblName} """
+
+        with self._creatDbObject() as conn:
+            cur = conn.cursor()
+            cur.execute(sql)
+            result = cur.fetchall()
+
+        rList = []
+        for e in result:
+            obj = Document(
+                {
+                    'hex': e[1],
+                    'owner_id': e[2],
+                    'title': e[3],
+                    'map_source': e[4],
+                    'map_soundtrack': e[5],
+                    'width': e[6],
+                    'fog': e[7]
+                },
+                doc_id=e[0]
+            )
+            rList.append(obj)
+        return rList
 
     def readByOwnerId(self, oid: int):
 
@@ -97,7 +122,7 @@ class MySQL_Maps(MysqlBase):
             cur = conn.cursor()
             cur.execute(sql, values)
             results = cur.fetchall()
-        
+
         rList = []
         for e in results:
             obj = Document(
@@ -114,11 +139,11 @@ class MySQL_Maps(MysqlBase):
                 doc_id=e[0]
             )
             rList.append(obj)
-        return rList
+        return rList[0]
 
     def updateByHex(self, hex: str, title: str, map: str, sound: str, width: int, fog: bool):
 
-        sql = f""" 
+        sql = f"""
         UPDATE {self.tblName} SET
             title = %s,
             map_source = %s,
@@ -126,21 +151,21 @@ class MySQL_Maps(MysqlBase):
             width = %s,
             fog = %s
         WHERE hex = %s
-            
+
         """
         values = (title, map, sound, width, fog, hex)
 
         with self._creatDbObject() as conn:
             cur = conn.cursor()
             cur.execute(sql, values)
-            cur.commit()
+            conn.commit()
 
         return True
-        
+
     def updateBgByHex(self, hex:str, bg:str  ):
-        
-        sql = f""" 
-        UPDATE {self.tblName} SET 
+
+        sql = f"""
+        UPDATE {self.tblName} SET
             map_source = %s
         WHERE hex = %s
         """
@@ -149,7 +174,7 @@ class MySQL_Maps(MysqlBase):
         with self._creatDbObject() as conn:
             cur = conn.cursor()
             cur.execute(sql, values)
-            cur.commit()
+            conn.commit()
 
         return True
 
@@ -162,6 +187,5 @@ class MySQL_Maps(MysqlBase):
         with self._creatDbObject() as conn:
             cur = conn.cursor()
             cur.execute(sql, values)
-        
+            conn.commit()
         return True
-        

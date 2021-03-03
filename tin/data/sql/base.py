@@ -53,11 +53,17 @@ class MysqlBase:
 
     def RowExists(self, col:str, val:str):
 
-        sql = f"""SELECT * FROM {self.tblName} WHERE %s = %s;"""
-        vals = (col, val)
+        sql = f"""
+        SELECT * FROM 
+            {self.tblName} 
+        WHERE 
+            {col} = %s
+        """
+        vals = (val,)
 
         with self._creatDbObject() as conn:
             cur = conn.cursor()
+
             cur.execute(sql, vals)
 
             result = cur.fetchall()
@@ -65,4 +71,7 @@ class MysqlBase:
         if result == []:
             return False     
         return True
+
+    def exists(self, col:str, val:str):
+        return self.RowExists(col, val)
 

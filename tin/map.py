@@ -3,11 +3,11 @@ from tin import user
 
 from validators import url
 
-from .data import checkOwnerByHexAndUsrKey
+from .data import checkOwnerByHexAndUsrKey, getMapsObject as Maps
 from .data.commons import vaildUrl
-from .data.maps import Maps
 from .data.tokens import Tokens
 from .data.vTokens import vTokenData as Vtoken
+from tin.commons import debug_file
 
 from .commons import success, fail
 
@@ -23,7 +23,7 @@ def createMap(key):
         owner_id=userRow.doc_id,
         title='New Map',
         mapsource='/static/world-map.gif',
-        soundtrack='',
+        soundtrack='https://www.youtube.com/watch?v=zOvsyamoEDg',
         width=3000
 
     )
@@ -40,10 +40,10 @@ def listMaps(key:str):
             'succs': False,
             'error': 'invalid key',
         }
-    
+
     userRow = tobj.getRowByKey(key=key)
     maps = []
-    
+
     for map in mobj.readByOwnerId(userRow.doc_id):
         row = {}
         for key in map.keys():
@@ -51,7 +51,7 @@ def listMaps(key:str):
         if isfile(row['map_source'] == False) or row['map_source'] == '':
             row['map_source'] = '/static/world-map.gif'
         maps.append(row)
-    
+
     return maps
 
 def getByHex(hex:str):
@@ -69,14 +69,13 @@ def getByHex(hex:str):
         returnObj[k] = mapRow[k]
 
     returnObj['tokens'] = Vtoken().readByMapHex(hex)
-    
+
     return {
             'succs': True,
             'data': returnObj,
         }
 
 def updateByHex(hex:str, title:str, map:str, sound:str, width:int, usrKey:str, fog:bool):
-    
     map = map.strip()
     mapTestVal = map
     if mapTestVal[0] == '/':
@@ -84,13 +83,13 @@ def updateByHex(hex:str, title:str, map:str, sound:str, width:int, usrKey:str, f
     sound = sound.strip()
     # tokensObj = Tokens()
     mapsObj = Maps()
-    
+
     if isfile(mapTestVal) == False:
         return {
             'succs': False,
             'error': 'map url is invalid',
         }
-    
+
     if vaildUrl(sound, 'youtube') == False:
         return {
             'succs': False,
@@ -103,7 +102,7 @@ def updateByHex(hex:str, title:str, map:str, sound:str, width:int, usrKey:str, f
             'succs': False,
             'error': 'hex is invalid',
         }
-    
+
     if checkOwnerByHexAndUsrKey(hex=hex, key=usrKey) == False:
         return {
             'succs': False,
@@ -127,6 +126,7 @@ def upadateBgByHex(hex:str, bg:str):
 def deleteMap(hex:str, key:str):
     tobj = Tokens()
     mobj = Maps()
+    debug_file(type(mobj))
 
     if tobj.keyExsists(key) == False:
         return {
@@ -148,6 +148,3 @@ def deleteMap(hex:str, key:str):
         'succs': False,
         'error': 'map could not be deleted'
     }
-
-
-

@@ -4,13 +4,24 @@ from .maps import Maps
 from .settings import Settings
 
 from .commons import Credentials
-from .sql import MySQL_Settings
+from .sql import MySQL_Settings, MySQL_Maps
 
 
+def getSettingsObject():
+
+    if 'mysqlUname' in Credentials().read().keys():
+        return MySQL_Settings()
+    return Settings()
+
+def getMapsObject():
+
+    if 'mysqlUname' in Credentials().read().keys():
+        return MySQL_Maps()
+    return Maps()
 
 
 def checkOwnerByHexAndUsrKey(hex: str, key: str):
-    mapsObj = Maps()
+    mapsObj = getMapsObject()
     tokensObj = Tokens()
     usersObj = User()
 
@@ -27,11 +38,3 @@ def checkOwnerByHexAndUsrKey(hex: str, key: str):
         return False
 
     return userData.doc_id == mapData['owner_id']
-
-
-def getSettingsObject():
-
-    if 'mysqlUname' in Credentials().read().keys():
-        return MySQL_Settings()
-
-    return Settings()

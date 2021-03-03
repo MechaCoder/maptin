@@ -1,5 +1,5 @@
 import logging
-from json import dumps, loads
+from json import dump, dumps, loads
 
 from tin.data import getSettingsObject as Settings
 from tin.map import createMap, updateByHex
@@ -78,7 +78,9 @@ def maps():
         return dumps(createMap(key))
     if request.method == 'DELETE':  # delete a map
         mapHex = request.get_json()
-        return dumps(deleteMap(hex=mapHex['map'], key=key))
+        obj = deleteMap(hex=mapHex['map'], key=key)
+        debug_file(dumps(obj))
+        return dumps(obj)
 
 
 @app.route('/ajax/map', methods=['GET', 'PUT'])
@@ -99,6 +101,7 @@ def mapSingle():
             fog=json['fogOfWar'],
             usrKey=key
         )
+        debug_file(obj)
         socket_app.emit('map:updated', getByHex(json['hex']))
         return dumps(obj)
 
@@ -116,6 +119,8 @@ def ajaxAssets(sub_path):
     if sub_path == 'tokens':
         return dumps(tokensList())
     if sub_path == 'maps':
+        obj = mapsList()
+        debug_file(obj)
         return dumps(mapsList())
 
     return dumps({'succs': False})
@@ -153,7 +158,9 @@ def index():
 
 @app.route('/map/<hex>')
 def map_page(hex):
-    if getByHex(hex)['succs'] is False:
+    obj = getByHex(hex)
+    # debug_file(dumps(obj))
+    if obj['succs'] is False:
         abort(404)
     return render_template('base.html', pageTitle='map')
 
@@ -194,7 +201,7 @@ def connect():
 @socket_app.on('vtoken:conseal')
 def consoleupdate(_data={}):
     updateConseal(_data['uhex'], _data['conseal'])
-    
+
     if _data['conseal']:
         _data['conseal'] = False
     else:
@@ -222,4 +229,4 @@ def message(_data={}):
 
 
 if __name__ == '__main__':
-    socket_app.run(app=app)
+    socket_app.run(app=app, debug=True)
