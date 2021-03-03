@@ -10,7 +10,7 @@ class MySQL_Settings(MysqlBase):
         self.tblName = 'settings'
 
         if self.tableExists() is False:
-            return
+            return False
 
         if self.RowExists('tag', 'sessionSysKey') is False:
             self.set('sessionSysKey', mkHex(4))

@@ -2,7 +2,7 @@ from json import dumps
 from tinydb_base import exceptions
 # from .data.users import DataUser
 from .data import getUsersObject as DataUser
-from .data.tokens import Tokens
+from .data import getTokensObject as Tokens
 from .data.exceptions import UserLimit
 from .data.commons import checkEmail, password_check
 

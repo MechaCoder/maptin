@@ -5,9 +5,9 @@ from validators import url
 
 from .data import checkOwnerByHexAndUsrKey, getMapsObject as Maps
 from .data.commons import vaildUrl
-from .data.tokens import Tokens
+# from .data.tokens import Tokens
+from .data import getTokensObject as Tokens
 from .data.vTokens import vTokenData as Vtoken
-from tin.commons import debug_file
 
 from .commons import success, fail
 
@@ -126,7 +126,6 @@ def upadateBgByHex(hex:str, bg:str):
 def deleteMap(hex:str, key:str):
     tobj = Tokens()
     mobj = Maps()
-    debug_file(type(mobj))
 
     if tobj.keyExsists(key) == False:
         return {

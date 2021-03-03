@@ -1,4 +1,3 @@
-from dns.flags import DO
 from tinydb.table import Document
 from tin.data.commons import mkHex
 from .base import MysqlBase

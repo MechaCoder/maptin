@@ -4,7 +4,7 @@ from .maps import Maps
 from .settings import Settings
 
 from .commons import Credentials
-from .sql import MySQL_Settings, MySQL_Maps, MySQL_Users
+from .sql import MySQL_Settings, MySQL_Maps, MySQL_Users, MySQL_Tokens
 
 
 def getSettingsObject():
@@ -22,10 +22,15 @@ def getUsersObject():
         return  MySQL_Users()
     return User()
 
+def getTokensObject():
+    if 'mysqlUname' in Credentials().read().keys():
+        return MySQL_Tokens()
+    return Tokens()
+
 
 def checkOwnerByHexAndUsrKey(hex: str, key: str):
     mapsObj = getMapsObject()
-    tokensObj = Tokens()
+    tokensObj = getTokensObject()
     usersObj = getUsersObject()
 
     mapData = mapsObj.readByHex(hex=hex)
