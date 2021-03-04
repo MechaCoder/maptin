@@ -84,11 +84,54 @@ class MySQL_Vtokens(MysqlBase):
             rList.append(obj)
         return rList
 
-    # def updateByHex(self): pass
+    def updateByHex(self, hex:str, x:int, y:int):
 
-    # def updateConsealByHex(self): pass
+        sql = f"""
+        UPDATE {self.tblName} SET
+            x = %s,
+            y = %s
+        WHERE hex = %s
+        """
+        values = (x, y, hex)
 
-    # def deleteByHex(self): pass
+        with self._creatDbObject() as conn:
+            cur = conn.cursor()
+            cur.execute(sql, values)
+            conn.commit()
+
+        return True
+
+    def updateConsealByHex(self, hex, conseal):
+
+        sql = f"""
+        UPDATE {self.tblName} SET
+            conseal = %s
+        WHERE hex = %s
+        """
+        values = (conseal, hex)
+
+        with self._creatDbObject() as conn:
+            cur = conn.cursor()
+            cur.execute(sql, values)
+            conn.commit()
+
+
+        return True
+
+    def deleteByHex(self, hex: str):
+
+        sql = f"""
+        DELETE FROM {self.tblName} WHERE hex = %s
+        """
+        values = (hex,)
+
+        with self._creatDbObject() as conn:
+            cur = conn.cursor()
+            cur.execute(sql, values)
+            conn.commit()
+
+        return True
+
 
     def getPopluarty(self):
 
