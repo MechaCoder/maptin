@@ -5,7 +5,7 @@ from random import choices
 from re import search, fullmatch
 from validators import url, ValidationFailure
 from os import getcwd
-from os.path import join, realpath
+from os.path import join, realpath, isfile
 from json import dumps, loads
 
 from tinydb_base import DatabaseBase
@@ -110,6 +110,10 @@ class Credentials:
         return json
 
     def write(self):
+        
+        if isfile(self.fPath):
+            return False
+
         d = {
             'ds': join(self.directory, 'ds.json'),
             'log': join(self.directory, 'log.log')

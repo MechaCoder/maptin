@@ -1,11 +1,14 @@
+from json import dumps
 from os import listdir
 from os.path import isfile
-from .data.vTokens import vTokenData
+# from .data.vTokens import vTokenData
+from .data import getVtokensObject as vTokenData
+from .data import getVtokensObject as Vtoken
 from .map import Maps
 
 from .commons import success, fail
 
-class Vtoken(vTokenData): pass
+# class Vtoken(): pass
 
 def getUsedMaps():
     maps = {}

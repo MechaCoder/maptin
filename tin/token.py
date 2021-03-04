@@ -1,4 +1,4 @@
-from .data.tokens import Tokens
+from .data import getTokensObject as Tokens
 
 def keyExists(key:str):
     if Tokens().keyExsists(key=key) == False:
