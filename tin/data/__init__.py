@@ -1,10 +1,12 @@
+from tin.data.sql import vtokens
 from .users import DataUser as User
 from .tokens import Tokens
 from .maps import Maps
 from .settings import Settings
+from .vTokens import vTokenData
 
 from .commons import Credentials
-from .sql import MySQL_Settings, MySQL_Maps, MySQL_Users, MySQL_Tokens
+from .sql import MySQL_Settings, MySQL_Maps, MySQL_Users, MySQL_Tokens, MySQL_Vtokens
 
 
 def getSettingsObject():
@@ -26,6 +28,11 @@ def getTokensObject():
     if 'mysqlUname' in Credentials().read().keys():
         return MySQL_Tokens()
     return Tokens()
+
+def getVtokensObject():
+    if 'mysqlUname' in Credentials().read().keys():
+        return MySQL_Vtokens()
+    return vTokenData()
 
 
 def checkOwnerByHexAndUsrKey(hex: str, key: str):

@@ -24,7 +24,7 @@ from tin import createToken
 from tin import updateLocation
 from tin import upadateBgByHex
 from tin import removeVtoken
-from tin import vTokenData
+from tin.data import getVtokensObject as vTokenData
 from tin import updateConseal
 import tin.system as systems
 from tin.commons import debug_file, runUnittest, Credentials
@@ -79,7 +79,6 @@ def maps():
     if request.method == 'DELETE':  # delete a map
         mapHex = request.get_json()
         obj = deleteMap(hex=mapHex['map'], key=key)
-        debug_file(dumps(obj))
         return dumps(obj)
 
 
@@ -87,7 +86,8 @@ def maps():
 def mapSingle():
     if request.method == 'GET':
         hex = request.headers.get('map')
-        return dumps(getByHex(hex))  # gets all server information
+        obj = getByHex(hex)
+        return dumps(obj)  # gets all server information
 
     if request.method == 'PUT':  # needs to be confimed by userkey
         key = request.headers.get('Userkey')
@@ -101,7 +101,7 @@ def mapSingle():
             fog=json['fogOfWar'],
             usrKey=key
         )
-        debug_file(obj)
+        
         socket_app.emit('map:updated', getByHex(json['hex']))
         return dumps(obj)
 
@@ -120,7 +120,6 @@ def ajaxAssets(sub_path):
         return dumps(tokensList())
     if sub_path == 'maps':
         obj = mapsList()
-        debug_file(obj)
         return dumps(mapsList())
 
     return dumps({'succs': False})
@@ -159,7 +158,6 @@ def index():
 @app.route('/map/<hex>')
 def map_page(hex):
     obj = getByHex(hex)
-    # debug_file(dumps(obj))
     if obj['succs'] is False:
         abort(404)
     return render_template('base.html', pageTitle='map')

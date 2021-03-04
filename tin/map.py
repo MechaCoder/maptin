@@ -7,7 +7,8 @@ from .data import checkOwnerByHexAndUsrKey, getMapsObject as Maps
 from .data.commons import vaildUrl
 # from .data.tokens import Tokens
 from .data import getTokensObject as Tokens
-from .data.vTokens import vTokenData as Vtoken
+# from .data.vTokens import vTokenData as Vtoken
+from .data import getVtokensObject as Vtoken
 
 from .commons import success, fail
 
