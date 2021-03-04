@@ -51,7 +51,6 @@ class MySQL_Maps(MysqlBase):
         """
 
         values = (hex , owner_id, title, mapsource, soundtrack, width, fog)
-        debug_file(owner_id)
 
         with self._creatDbObject() as conn:
             cur = conn.cursor()
