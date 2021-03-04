@@ -40,7 +40,7 @@ def checkOwnerByHexAndUsrKey(hex: str, key: str):
     tokensObj = getTokensObject()
     usersObj = getUsersObject()
 
-    mapData = mapsObj.readByHex(hex=hex)
+    mapData = mapsObj.readByHex(hex=hex) 
     if mapData is None:
         return False
 
@@ -51,5 +51,5 @@ def checkOwnerByHexAndUsrKey(hex: str, key: str):
     userData = usersObj.getIdByUname(tokenData['tag'])
     if userData is None:
         return False
-
+    
     return userData.doc_id == mapData['owner_id']

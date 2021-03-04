@@ -27,7 +27,7 @@ from tin import removeVtoken
 from tin.data import getVtokensObject as vTokenData
 from tin import updateConseal
 import tin.system as systems
-from tin.commons import debug_file, runUnittest, Credentials
+from tin.commons import runUnittest, Credentials
 
 
 logging.basicConfig(
@@ -92,6 +92,7 @@ def mapSingle():
     if request.method == 'PUT':  # needs to be confimed by userkey
         key = request.headers.get('Userkey')
         json = request.get_json()
+        
         obj = updateByHex(
             hex=json['hex'],
             title=json['title'],

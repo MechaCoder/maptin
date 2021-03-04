@@ -4,6 +4,7 @@ from os import urandom
 
 from tin.data.commons import mkHex
 from tinydb_base.user import mkpassword
+from tinydb.table import Document
 
 class MySQL_Users(MysqlBase):
 
@@ -60,6 +61,11 @@ class MySQL_Users(MysqlBase):
             cur = conn.cursor()
             cur.execute(sql, values)
             results = cur.fetchall()  
+
+        return Document({
+            'username': results[0][0],
+            'password': results[0][1],
+        }, results[0][2])
 
     def authUser(self, username: str, password: str) -> bool:
 

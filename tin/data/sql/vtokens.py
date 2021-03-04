@@ -1,4 +1,3 @@
-from tin.commons import debug_file
 from tin.data import sql
 from tinydb.table import Document
 from .base import MysqlBase
