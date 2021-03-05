@@ -3,6 +3,8 @@ from os import system
 import sys
 import unittest
 
+from .data.commons import Credentials
+
 def success(_data:dict = {}):
     return {
         'succ': True,

@@ -17,9 +17,11 @@ faker = "*"
 flake8 = "*"
 autopep8 = "*"
 cryptography = "*"
+gunicorn = "*"
+mysql-connector-python = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
 
 [scripts]
 test = "python test.py"

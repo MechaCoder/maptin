@@ -1,7 +1,13 @@
+import json
+import os
+
 from string import hexdigits
 from random import choices
 from re import search, fullmatch
 from validators import url, ValidationFailure
+from os import getcwd
+from os.path import join, realpath, isfile
+from json import dumps, loads
 
 from tinydb_base import DatabaseBase
 
@@ -78,6 +84,45 @@ def vaildUrl(addr: str, _domain: str = ''):
 
 class DataCommons(DatabaseBase):
 
+    def __init__(self, file: str, table: str, requiredKeys):
+        super().__init__(file=file, table=table, requiredKeys=requiredKeys)
+        self.fileName = Credentials().read()['ds']
+
     def _mkHex(l: int = 8):
         s1 = choices(hexdigits, k=l)
         return ''.join(s1)
+
+class Credentials:
+
+    def __init__(self):
+        dirPath = realpath(__file__)
+        fname = 'credentials.json'
+
+        a = dirPath.split('/')[:-3]
+
+        self.fPath = join('/'.join(a), fname)
+        self.directory = '/'.join(a)
+
+    def read(self):
+        fileObj = open(self.fPath, 'r')
+        contentString = fileObj.read()
+        json = loads(contentString)
+        fileObj.close()
+        return json
+
+    def write(self):
+        
+        if isfile(self.fPath):
+            return False
+
+        d = {
+            'ds': join(self.directory, 'ds.json'),
+            'log': join(self.directory, 'log.log'),
+            'root': join(self.directory)
+        }
+        fileObj = open(self.fPath, 'w')
+        fileObj.write(
+            dumps(d, indent=4, sort_keys=True)
+        )
+        fileObj.close()
+        return True

@@ -1,12 +1,15 @@
+import os
 from tinydb_base.getSet import GetSet
 
-from .commons import mkHex
+from .commons import mkHex, Credentials
 
 
 class Settings(GetSet):
 
     def __init__(self, file: str = 'ds.json', table: str = 'settings'):
         super().__init__(file=file, table=table)
+        self.fileName = Credentials().read()['ds']
+        
         self.set('socketKey', mkHex(1024))
 
         self.defaultRows({

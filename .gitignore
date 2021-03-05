@@ -2,10 +2,12 @@ node_modules
 .vscode/settings.json
 static/a
 
+*.pyc
 ds.json
-_play.py
+*_play.*
 ds.vToken.json
 debug*
 log.log
 unittest.results.text
 *.ds.json
+credentials.json

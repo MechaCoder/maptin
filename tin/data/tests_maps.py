@@ -13,6 +13,17 @@ class TestMaps(TestCase):
     def setUp(self):
         self.testFile = 'unitTest.ds.json'
         self.db = Maps(file=self.testFile)
+
+        if self.db.readAll == []:
+
+            for e in range(0, 20):
+                obj = self.db.create(
+                    owner_id=randint(0, 10),
+                    title=Faker().name(),
+                    mapsource='static/world-map.gif',
+                    soundtrack=Faker().url(),
+                    width=randint(0, 5000),
+                )
         return super().setUp()
 
     def test_create(self):
@@ -65,6 +76,7 @@ class TestMaps(TestCase):
     def test_readByHex(self):
 
         randDoc = choice(seq=self.db.readAll())
+        
         testObj = self.db.readByHex(hex=randDoc['hex'])
 
         self.assertEqual(

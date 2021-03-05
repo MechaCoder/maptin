@@ -13,7 +13,19 @@ class testvTokenData(TestCase):
     def setUp(self):
         self.testFile = 'unitTest.ds.json'
         self.db = vTokenData(file=self.testFile)
+        if self.db.readAll() == []:
+
+            for e in range(0, 20):
+                self.db.create(
+                    mapHex='testMap',
+                    source='/static/tea_break_by_mattdixon_dd1un2s.jpg',
+                    tokenType='token',
+                    x=randint(0, 5000),
+                    y=randint(0, 5000),
+                )
+
         return super().setUp()
+
 
     def test_create(self):
 

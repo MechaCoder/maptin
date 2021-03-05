@@ -169,6 +169,7 @@ export default class MapSingle extends Component {
                     pic={this.state.tokens[i].source}
                     x={this.state.tokens[i].x}
                     y={this.state.tokens[i].y}
+                    conseal={this.state.tokens[i].conseal}
                 />
             )
         }
