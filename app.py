@@ -38,6 +38,7 @@ logging.basicConfig(
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = Settings().get('socketKey')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 socket_app = SocketIO(app)
 
 
