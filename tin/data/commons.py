@@ -1,3 +1,4 @@
+import json
 import os
 
 from string import hexdigits
@@ -116,7 +117,8 @@ class Credentials:
 
         d = {
             'ds': join(self.directory, 'ds.json'),
-            'log': join(self.directory, 'log.log')
+            'log': join(self.directory, 'log.log'),
+            'root': join(self.directory)
         }
         fileObj = open(self.fPath, 'w')
         fileObj.write(

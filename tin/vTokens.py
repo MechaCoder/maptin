@@ -1,6 +1,8 @@
 from json import dumps
 from os import listdir
 from os.path import isfile
+from os.path import join
+from tin.data.commons import Credentials
 # from .data.vTokens import vTokenData
 from .data import getVtokensObject as vTokenData
 from .data import getVtokensObject as Vtoken
@@ -32,7 +34,9 @@ def getUsedMaps():
 def tokensList():
     path = 'static/a/tokens'
     data = Vtoken().getPopluarty()
-    for f in listdir(path):
+    imgPath = join(Credentials().read()['root'], path)
+    
+    for f in listdir(imgPath):
         p = '/' + path + '/'  + f
 
         if p in data:
@@ -51,7 +55,9 @@ def tokensList():
 def mapsList():
     path = 'static/a/maps'
     data = []
-    for f in listdir(path):
+    imgPath = join(Credentials().read()['root'], path)
+
+    for f in listdir(imgPath):
         data.append(
             '/' + path + '/'  + f
         )
