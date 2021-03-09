@@ -20,6 +20,8 @@ cryptography = "*"
 gunicorn = "*"
 mysql-connector-python = "*"
 flask-sqlalchemy = "*"
+peewee = "*"
+argon2-cffi = "*"
 
 [requires]
 python_version = "3.8"
