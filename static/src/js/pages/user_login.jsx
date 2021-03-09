@@ -47,7 +47,9 @@ export default class Userlogin extends Component {
         .then((json) => {
             if(json.succs){
                 this.setState({'logged-in': true})
+                return;
             }
+            alert(json.err)
             
         })
 
@@ -68,12 +70,14 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
+            console.log(json)
             if(json.sucss == true){
+
                 localStorage.setItem('usr_token', json.key);
                 this.setState({'logged-in': true})
                 this.forceUpdate()
             }else{
-                alert(json.error)
+                alert(json.err)
             }
 
         })
@@ -101,7 +105,7 @@ export default class Userlogin extends Component {
                 })
                 this.forceUpdate()
             }else{
-                alert(json.error)
+                alert(json.err)
             }
             
         })

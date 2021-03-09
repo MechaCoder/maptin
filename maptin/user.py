@@ -33,7 +33,7 @@ class User:
             raise MaptinException('uname is required in the request')
 
         try:
-            if self.data.create(creds['uanme'], creds['pword']):
+            if self.data.create(creds['uname'], creds['pword']):
                 return success()
         except IntegrityError as Error:
             return fail('this email already exists')

@@ -1,5 +1,5 @@
 import logging
-from json import dump, dumps, loads
+from json import dumps, loads
 
 from flask import Flask
 from flask import render_template
