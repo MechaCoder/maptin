@@ -1,3 +1,4 @@
+from os.path import expanduser
 from maptin.data.users import User as UserDatabaseTable
 from maptin.data.userKeys import UserTokens
 from maptin.utills.http import success, fail
@@ -24,9 +25,12 @@ class User:
             
             user = self.data.getUserByEmail(creds['uname'])
             user = user[0]
-
-            key = UserTokens().create(user['id'])
-            return success({'key': key})
+            try:
+                key = UserTokens().create(user['id'])
+                return success({'key': key})
+            except IntegrityError as Error:
+                return fail(Error)
+            
 
         return fail('vaildation has failed')
 
@@ -46,4 +50,4 @@ class User:
                 key = UserTokens().create(user['id'])
                 return success({'key': key})
         except IntegrityError as Error:
-            return fail('this email already exists')
+            return fail(Error.message)
