@@ -33,14 +33,16 @@ class Maps:
 
     def POST(self, owner_id: str):
         """ creates a blank map"""
+        try:
+            new_hex = self.data.create(
+                owner_id=owner_id,
+                map_background='static/world-map.gif',
+                map_soundtrack='https://www.youtube.com/watch?v=bANjQqUVgvM'
+            )
 
-        new_hex = self.data.create(
-            owner_id=owner_id,
-            map_background='',
-            map_soundtrack='https://www.youtube.com/watch?v=bANjQqUVgvM'
-        )
-
-        return success({'hex': new_hex})
+            return success({'hex': new_hex})
+        except DataInvaild as error:
+            return fail(str(error))
 
     def GET(self, owner_id: int):
         """ gets list of maps by the owner_id """

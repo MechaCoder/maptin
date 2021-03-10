@@ -48,14 +48,15 @@ def vaildateEmail(email: str):
         return False
 
 def vaildateUrl(addr):
+
     try:
         if 'youtube' not in addr:
             return False
 
-        if 'watch=' not in addr:
+        if 'watch?v=' not in addr:
             return False
 
-        return vaildateUrl(addr)
+        return validatorUrl(addr)
     except ValidationFailure:
         return False
 
