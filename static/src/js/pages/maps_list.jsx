@@ -39,13 +39,8 @@ export default class MapsList extends Component {
 
     createMap(event){
 
-        var usr_token = localStorage.getItem('usr_token')
-        if(usr_token == null){
-            return;
-        }
-        if(usr_token.length != 128){
-            return;
-        }
+        var usr_token = getUserId();
+        
         fetch('/ajax/maps', {
             method: 'POST',
             headers: {

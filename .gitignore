@@ -13,3 +13,4 @@ unittest.results.text
 credentials.json
 old_credentals.json
 .gitignore
+ds.db
