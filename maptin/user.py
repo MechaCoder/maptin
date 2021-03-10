@@ -1,4 +1,5 @@
 from maptin.data.users import User as UserDatabaseTable
+from maptin.data.userKeys import UserTokens
 from maptin.utills.http import success, fail
 from maptin.exception import MaptinException
 
@@ -20,7 +21,13 @@ class User:
             raise MaptinException('uname is required in the request')
 
         if self.data.validate(email=creds['uname'], password=creds['pword']):
-            return success()
+            
+            user = self.data.getUserByEmail(creds['uname'])
+            user = user[0]
+
+            key = UserTokens().create(user['id'])
+            return success({'key': key})
+
         return fail('vaildation has failed')
 
     def createUser(self, req: request):
@@ -34,6 +41,9 @@ class User:
 
         try:
             if self.data.create(creds['uname'], creds['pword']):
-                return success()
+                user = self.data.getUserByEmail(creds['uname'])
+                user = user[0]
+                key = UserTokens().create(user['id'])
+                return success({'key': key})
         except IntegrityError as Error:
             return fail('this email already exists')

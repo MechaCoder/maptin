@@ -34,7 +34,7 @@ export default class Userlogin extends Component {
             return
         }
 
-        fetch('/ajax/user/key', {
+        fetch('/ajax/user/key', { // tests key 
             'method': 'POST',
             'headers': {
                 'Content-Type': 'application/json'
@@ -45,17 +45,21 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
+            debugger;
             if(json.succs){
                 this.setState({'logged-in': true})
                 return;
+            }else{
+                alert(json.err)
+                this.setState({'logged-in': false})
+                return;
             }
-            alert(json.err)
-            
         })
 
     }
 
     testUser(event){
+        console.log('testUser');
         
         fetch('/ajax/user', {
             'method': 'POST',
@@ -70,9 +74,9 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            console.log(json)
+            console.log(json);
+            
             if(json.sucss == true){
-
                 localStorage.setItem('usr_token', json.key);
                 this.setState({'logged-in': true})
                 this.forceUpdate()
@@ -82,7 +86,7 @@ export default class Userlogin extends Component {
 
         })
 
-    }
+    } // testUser
     mkUser(event){
         
         fetch('/ajax/user', {
@@ -98,8 +102,9 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            if(json.sucss == true){
-                localStorage.setItem('usr_token', json.key);
+            if(json.succ == true){
+
+                localStorage.setItem('usr_token', json.data.key);
                 this.setState({
                     'logged-in': true,
                 })
@@ -109,7 +114,7 @@ export default class Userlogin extends Component {
             }
             
         })
-    }
+    } // mkUser 
 
     logout(){
         localStorage.removeItem('usr_token');

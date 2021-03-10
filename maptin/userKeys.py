@@ -21,7 +21,7 @@ class UserToken:
         obj = self.data.getIdByKey(token)
         if len(obj) == 1:
             return success()
-        return fail()
+        return fail('user key is invaild.')
 
     def getId(self, token:str):
         return self.data.getIdByKey(token)

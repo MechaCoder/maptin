@@ -27,6 +27,7 @@ class UserTokens:
         return key
 
     def getIdByKey(self, key: str):
+        
         keys = []
         with db.atomic():
 

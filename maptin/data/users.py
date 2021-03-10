@@ -42,6 +42,7 @@ class User:
         with db.atomic():
             for each in UserModel.select().where(UserModel.id == id):
                 rList.append({
+                    'id': each.id,
                     'name': each.common_name,
                     'email': each.contact_email,
                     'joined': each.date_created
@@ -54,6 +55,7 @@ class User:
         with db.atomic():
             for each in UserModel.select().where(UserModel.contact_email == email):
                 rList.append({
+                    'id': each.id,
                     'name': each.common_name,
                     'email': each.contact_email,
                     'joined': each.date_created
@@ -65,6 +67,7 @@ class User:
         with db.atomic():
             for each in UserModel.select():
                 rList.append({
+                    'id': each.id,
                     'name': each.common_name,
                     'email': each.contact_email,
                     'joined': each.date_created
