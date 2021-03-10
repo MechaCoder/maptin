@@ -30,7 +30,7 @@ export default class Userlogin extends Component {
             return
         }
 
-        if(usr_token.length != 128){MapsList
+        if(usr_token.length != 128){
             return
         }
 
@@ -73,10 +73,8 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            console.log(json);
-            
-            if(json.sucss == true){
-                localStorage.setItem('usr_token', json.key);
+            if(json.succ == true){
+                localStorage.setItem('usr_token', json.data.key);
                 this.setState({'logged-in': true})
                 this.forceUpdate()
             }else{
@@ -134,7 +132,7 @@ export default class Userlogin extends Component {
                     <input name="password" type='text' value={this.state.pword} onChange={(event) => {this.setState({'pword': event.target.value})}} />   
                 </div>
                 <div className='btns' >
-                    <button onClick={this.testUser} >Sign In</button>
+                    <button onClick={this.testUser} disabled={this.state["logged-in"]} >Sign In</button>
                     <button onClick={this.mkUser} >Sign Up</button>
                 </div>
             </div>

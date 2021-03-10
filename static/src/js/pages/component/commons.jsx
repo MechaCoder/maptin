@@ -8,11 +8,14 @@ export function getUserId(){
 
     var usr_token = localStorage.getItem(key)
     if(usr_token == null){
+        alert('the user key has not been found')
         window.location.href = '/';
         return;
    }
-
-   if(usr_token.length != 128){
+   var usr_token = localStorage.getItem(key)
+   if(usr_token.length != 256){
+        alert('the user key is not the correct length')
+        alert(usr_token.length);
         window.localStorage.removeItem(key)
         window.location.href = '/';
         return;
@@ -28,7 +31,7 @@ export function userIdExists(){
           return false;
      }
 
-     if(k.toString().length === 128){
+     if(k.toString().length === 256){
           return true;
      }
 

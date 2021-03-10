@@ -1,11 +1,10 @@
-from os.path import expanduser
 from maptin.data.users import User as UserDatabaseTable
 from maptin.data.userKeys import UserTokens
 from maptin.utills.http import success, fail
 from maptin.exception import MaptinException
 
 from flask import request
-from peewee import IntegrityError
+from peewee import IntegrityError, OperationalError
 
 class User:
 
@@ -28,8 +27,10 @@ class User:
             try:
                 key = UserTokens().create(user['id'])
                 return success({'key': key})
-            except IntegrityError as Error:
-                return fail(Error)
+            except IntegrityError as error:
+                return fail(str(error))
+            except OperationalError as error:
+                return fail(str(error))
             
 
         return fail('vaildation has failed')
@@ -49,5 +50,7 @@ class User:
                 user = user[0]
                 key = UserTokens().create(user['id'])
                 return success({'key': key})
-        except IntegrityError as Error:
-            return fail(Error.message)
+        except IntegrityError as error:
+            return fail(str(error))
+        except OperationalError as error:
+            return fail(str(error))

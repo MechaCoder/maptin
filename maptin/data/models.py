@@ -45,7 +45,11 @@ class VirtualToken(BaseModel):
     conseal = BooleanField(default=False)
 
 class UserToken(BaseModel):
-    userId = IntegerField(unique=True)
+    userId = IntegerField()
     key = CharField(max_length=256, unique=True)
 
-maptinDatabase_object.create_tables([User, Map, VirtualToken, UserToken])
+def createTables():
+    print('tables created')
+    maptinDatabase_object.create_tables([User, Map, VirtualToken, UserToken])
+
+createTables()
