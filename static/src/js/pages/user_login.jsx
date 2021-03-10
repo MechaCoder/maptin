@@ -5,8 +5,8 @@ export default class Userlogin extends Component {
     constructor() {
         super();
         this.state = {
-            'uname': '',
-            'pword': '',    
+            'uname': 'test@testserver.com',
+            'pword': 'password1234',
             'logged-in': false
             
         }
@@ -45,7 +45,6 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            debugger;
             if(json.succs){
                 this.setState({'logged-in': true})
                 return;
