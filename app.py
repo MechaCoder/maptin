@@ -124,7 +124,7 @@ def index():
 @app.route('/map/<hex>')
 def map_page(hex):
     obj = Map().GET(hex)
-    if obj['succs'] is False:
+    if obj['succ'] is False:
         abort(404)
     return render_template('base.html', pageTitle='map')
 

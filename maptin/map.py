@@ -6,6 +6,7 @@ from peewee import IntegrityError
 
 from maptin.data.maps import Map as MapDatabaseTable
 from maptin.data.userKeys import UserTokens
+from maptin.data.virualtokens import VirtualToken
 
 class Maps:
 
@@ -80,8 +81,12 @@ class Map:
     def GET(self, hex: str):
         r_object = fail()
         try:
-            rows = self.data.readByHex(hex)
-            r_object = success({'maps': rows})
+            print('x')
+            row = self.data.readByHex(hex)[0]
+            row['tokens'] = VirtualToken().getByMaphex(hex)
+
+            print(row)
+            r_object = success({'map': row})
 
         except DoseNotExist as err:
             r_object = fail(f'hex {hex} dose not exist.')

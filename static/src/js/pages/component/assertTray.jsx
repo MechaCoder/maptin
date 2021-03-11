@@ -34,7 +34,7 @@ function imgEl(src, key){
         <span 
             key={key}
             className='asset'
-            style={{backgroundImage: 'url(' + src + ')'}}
+            style={{backgroundImage: 'url(/' + src + ')'}}
             onClick={eventHandler}
         >
         </span>
@@ -56,9 +56,7 @@ export default class AssertToken extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            if(json.succs){
-                this.setState({'tokens': json.data})
-            }
+            this.setState({'tokens': json})
         })
 
 

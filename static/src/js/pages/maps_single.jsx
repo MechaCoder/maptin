@@ -27,45 +27,11 @@ export default class MapSingle extends Component {
     }
 
     componentDidMount(){
-        this.socket = io();
 
-        this.socket.on('map:update:tokens', (_data) => {
-            this.setState({'tokens': _data.tokens})
-
-        })
-
-        this.socket.on('map:updated', (_data) => {
-            
-            if(_data.succs){
-
-                document.title = _data.data.title
-
-                this.setState({
-                    'title': _data.data.title,
-                    'soundtrack': _data.data.map_soundtrack,
-                    'map': _data.data.map_source,
-                    'width': _data.data.width,
-                    'foggyOfWar': _data.data.fog,
-                    'changed': false
-                })
-            }
-        })
-
-        document.onkeyup = (e) => {
-
-            if(e.ctrlKey && e.shiftKey && e.which == 70){
-                
-                this.setState({foggyOfWar: !this.state.foggyOfWar})
-                this.saveInfo(e)
-            }
-
-            if (e.ctrlKey && e.which == 83){
-                if(this.state.changed){
-                    this.saveInfo(e)
-                }
-            }
-
-        }
+        // TODO websockets
+        // + map:update:tokens
+        // + map:updated
+        // keyboard shortcuts
 
         fetch('/ajax/map', {
             headers: {
@@ -75,20 +41,18 @@ export default class MapSingle extends Component {
         })
         .then(data=>data.json())
         .then((json) => {
-            
-            if(json.succs){
-                
-                document.title = json.data.title
+            // console.log(json)
+            if(json.succ){
+                // console.log(json.data);
+                document.title = json.data.map.title;
 
                 this.setState({
-                    'hex': getMapHexFromURL(),
-                    'title': json.data.title,
-                    'map': json.data.map_source,
-                    'soundtrack': json.data.map_soundtrack,
-                    'width': json.data.width,
-                    'tokens': json.data.tokens,
-                    'foggyOfWar': json.data.fog,
-                    'changed': false
+                    'hex': json.data.map.hex,
+                    'title': json.data.map.title,
+                    'map': json.data.map.map_background,
+                    'soundtrack': json.data.map.map_soundtrack,
+                    'width': json.data.map.map_width,
+                    'foggyOfWar': json.data.map.map_fog
                 })
             }
         })
@@ -115,8 +79,9 @@ export default class MapSingle extends Component {
         })
         .then(http=>http.json())
         .then((json)=>{
+            
             if(!json.succs){
-                alert(json.error)
+                // alert(json.error)
             }
         })
 
