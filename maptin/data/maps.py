@@ -1,4 +1,4 @@
-from os.path import isfile
+from os.path import isfile, join
 
 from peewee import Model
 
@@ -6,6 +6,7 @@ from .models import Map as MapModel
 from .users import User
 from .models import maptinDatabase_object as db
 from .commons import makeUid, vaildateUrl, Document
+from maptin.utills.credentals import Credentials
 
 from .exceptions import DoseNotExist, DataInvaild
 
@@ -41,8 +42,12 @@ class Map:
 
         if vaildateUrl(map_soundtrack) is False:
             raise DataInvaild('the sound track url is not vaild')
+        
+        path2bg = join(
+            Credentials().read()['root'], map_background[1:]
+        )
 
-        if isfile(map_background) is False:
+        if isfile(path2bg) is False:
             raise DataInvaild('the background path is invaild')
 
         with db.atomic():
@@ -118,11 +123,12 @@ class Map:
 
         if self._hexExists(hex) is False:
             raise DoseNotExist('The passed hex dose not exist')
-
+        
         with db.atomic():
-            MapModel().delete().where(
+            delQry = MapModel().delete().where(
                 MapModel.hex == hex
             )
+            delQry.execute()
 
         return True
 

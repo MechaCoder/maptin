@@ -36,7 +36,7 @@ class Maps:
         try:
             new_hex = self.data.create(
                 owner_id=owner_id,
-                map_background='static/world-map.gif',
+                map_background='/static/world-map.gif',
                 map_soundtrack='https://www.youtube.com/watch?v=bANjQqUVgvM'
             )
 
@@ -52,7 +52,6 @@ class Maps:
 
     def DELETE(self, hex:str):
         """ deletes a map """
-
         self.data.deleteByHex(hex=hex)
         return success()
         

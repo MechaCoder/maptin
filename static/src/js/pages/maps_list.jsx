@@ -30,7 +30,6 @@ export default class MapsList extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            debugger;
             if(json.succ){
                 this.setState({'maps': json.data.maps})
             } else {
@@ -80,7 +79,7 @@ export default class MapsList extends Component {
                 hex={el.hex}
                 title={el.title}
                 map={el.map_background}
-                soundtrack={el.map_soundtrack} 
+                soundtrack={el.map_soundtrack}
             />)
 
         }
