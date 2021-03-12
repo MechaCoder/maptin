@@ -15,4 +15,11 @@ class Sockets:
         
         return success(obj)
 
+    def updateVirtualTokens(self, hex: str, x: int, y:int):
         
+        if VTDBT().updateByHex(hex, x, y):
+            return({
+                'hex': hex,
+                'x': x,
+                'y': y
+            })

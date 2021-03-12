@@ -50,10 +50,13 @@ class VirtualToken:
     def updateByHex(self, hex: str, x: int, y: int):
 
         with db.atomic():
-            VirtualTokenModels.update(
+            qry = VirtualTokenModels.update(
                 x=x,
                 y=y
             ).where(VirtualTokenModels.hex == hex)
+
+            qry.execute()
+
         return True
 
     def deleteByHex(self, hex: str):

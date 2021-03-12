@@ -108,18 +108,12 @@ def ajaxTokens():
             )
         )
 
+    if request.method == 'DELETE':
+        socket_app.emit('vtoken:remove', {
+            'hex': request.get_json()['hex']
+        })
+
     return dumps(obj)
-
-# def ajaxToken():
-#     if request.method == 'PUT':
-#         json = request.get_json()
-#         return dumps(updateLocation(json['hex'], json['x'], json['y']))
-#     if request.method == 'DELETE':  # deletes a v-token.
-#         hex = request.headers.get('hex')
-#         obj = removeVtoken(hex)
-#         socket_app.emit('vtoken:remove', {'hex': hex})
-#         return dumps(obj)
-
 
 @app.route('/')
 @app.route('/dashboard/')
@@ -170,7 +164,7 @@ def connect():
 
 @socket_app.on('vtoken:conseal')
 def consoleupdate(_data={}):
-    updateConseal(_data['uhex'], _data['conseal'])
+    # updateConseal(_data['uhex'], _data['conseal'])
 
     if _data['conseal']:
         _data['conseal'] = False
@@ -184,18 +178,12 @@ def consoleupdate(_data={}):
 @socket_app.on('message')
 def message(_data={}):
     obj = loads(_data)
-    k = updateLocation(
+    k = Sockets().updateVirtualTokens(
         hex=obj['hex'],
         x=obj['x'],
         y=obj['y']
     )
-    if k['succ']:
-        emit('message', dumps({
-            'hex': obj['hex'],
-            'x': obj['x'],
-            'y': obj['y']
-
-        }), broadcast=True)
+    emit('message', dumps(k), broadcast=True)
 
 
 if __name__ == '__main__':
