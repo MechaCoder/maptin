@@ -81,11 +81,8 @@ class Map:
     def GET(self, hex: str):
         r_object = fail()
         try:
-            print('x')
             row = self.data.readByHex(hex)[0]
             row['tokens'] = VirtualToken().getByMaphex(hex)
-
-            print(row)
             r_object = success({'map': row})
 
         except DoseNotExist as err:

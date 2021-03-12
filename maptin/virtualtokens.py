@@ -25,8 +25,11 @@ class VirtualTokens:
         if 'hex' not in json.keys():
             return fail('hex key not found.')
 
-        if 'src' not in json.key():
+        if 'src' not in json.keys():
             return fail('src key not found')
+
+        if json['src'][0] != '/':
+            json['src'] = '/' + json['src']
         
         self.data.create(json['src'], json['hex'])
         return success()

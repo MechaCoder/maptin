@@ -33,6 +33,26 @@ export default class MapSingle extends Component {
         // + map:updated
         // keyboard shortcuts
 
+        this.socket = io();
+
+        this.socket.on('map:update:tokens', (_data) => {
+            // when the map tokens are updated then update them in the clients
+            // EVENTS
+                // create token
+            // this.setState({'tokens': _data.tokens})
+            if(_data.succ == false){
+                return; 
+            }
+
+            if(_data.data.mapHex != this.state.hex){
+                return;
+            }
+            
+            console.log(_data.data.tokens)
+            this.setState({'tokens': _data.data.tokens})
+        })
+
+
         fetch('/ajax/map', {
             headers: {
                 'Content-Type': 'application/json',
@@ -41,9 +61,7 @@ export default class MapSingle extends Component {
         })
         .then(data=>data.json())
         .then((json) => {
-            // console.log(json)
             if(json.succ){
-                // console.log(json.data);
                 document.title = json.data.map.title;
 
                 this.setState({
@@ -52,7 +70,8 @@ export default class MapSingle extends Component {
                     'map': json.data.map.map_background,
                     'soundtrack': json.data.map.map_soundtrack,
                     'width': json.data.map.map_width,
-                    'foggyOfWar': json.data.map.map_fog
+                    'foggyOfWar': json.data.map.map_fog,
+                    'tokens': json.data.map.tokens
                 })
             }
         })
@@ -126,16 +145,17 @@ export default class MapSingle extends Component {
         
         var el_draggable = []
         
-        for(var i = 0; i < this.state.tokens.length; i++){ 
+        for(var i = 0; i < this.state.tokens.length; i++){
+            console.log(this.state.tokens[i]);
             el_draggable.push(
                 <Vtoken
                     key={i}
                     hex={this.state.tokens[i].hex}
-                    pic={this.state.tokens[i].source}
+                    pic={this.state.tokens[i].token_source}
                     x={this.state.tokens[i].x}
                     y={this.state.tokens[i].y}
                     conseal={this.state.tokens[i].conseal}
-                />
+                /> 
             )
         }
 

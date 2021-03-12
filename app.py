@@ -63,7 +63,6 @@ def mapSingle():
             'map:updated', 
             m_obj.GET(request.json()['hex'])
         )
-    
     return dumps(obj)
 
 
@@ -102,6 +101,13 @@ def ajaxAssets(sub_path):
 @app.route('/ajax/token', methods=['PUT', 'DELETE'])
 def ajaxTokens():
     obj = VirtualTokens().main(request)
+    if request.method == 'POST':
+        socket_app.emit('map:update:tokens', 
+            Sockets().mapVirtualTokens(
+                request.get_json()['hex']
+            )
+        )
+
     return dumps(obj)
 
 # def ajaxToken():

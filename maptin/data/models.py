@@ -6,6 +6,7 @@ from peewee import CharField, DateTimeField, IntegerField, BooleanField
 from maptin.utills.credentals import Credentials
 from maptin.data.commons import makeUid
 
+# TODO change to use MySQL
 maptinDatabase_object = SqliteDatabase(
     database=Credentials().getKey('ds')
 )

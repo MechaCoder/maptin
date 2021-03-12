@@ -6,3 +6,4 @@ from .user import User
 from .userKeys import UserToken
 from .map import Maps, Map
 from .virtualtokens import VirtualTokens
+from .sockets import Sockets

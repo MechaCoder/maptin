@@ -52,7 +52,6 @@ export default class MapsList extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            // TODO: script out reading maps
             if(json.succ){
                 alert('new map has been created');
                 console.log(json);
