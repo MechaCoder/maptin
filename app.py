@@ -60,14 +60,14 @@ def mapSingle():
 
     if request.method == 'PUT':
         socket_app.emit(
-            'map:updated', 
-            m_obj.GET(request.json()['hex'])
+            'map:updated',
+            m_obj.GET(request.get_json()['hex'])
         )
     return dumps(obj)
 
 
 @app.route('/ajax/map/bg', methods=['POST'])
-def mapSingleBg():    
+def mapSingleBg():
     m_obj = Map()
     obj = m_obj.main(request)
     socket_app.emit('map:updated', m_obj.GET(
@@ -86,32 +86,19 @@ def ajaxAssets(sub_path):
     return dumps({'succs': False})
 
 
-# @app.route('/ajax/tokens', methods=['POST'])
-# def ajaxTokens():
-#     if request.method == 'POST':
-#         json = request.get_json()
-#         obj = createToken(json['hex'], json['src'], 260, 260)
-#         socket_app.emit(
-#             'map:update:tokens',
-#             {'tokens': vTokenData().readByMapHex(json['hex'])}
-#         )
-#         return dumps(obj)
-
 @app.route('/ajax/tokens', methods=['POST'])
 @app.route('/ajax/token', methods=['PUT', 'DELETE'])
 def ajaxTokens():
     obj = VirtualTokens().main(request)
     if request.method == 'POST':
-        socket_app.emit('map:update:tokens', 
+        socket_app.emit('map:update:tokens',
             Sockets().mapVirtualTokens(
                 request.get_json()['hex']
             )
         )
 
     if request.method == 'DELETE':
-        socket_app.emit('vtoken:remove', {
-            'hex': request.get_json()['hex']
-        })
+        socket_app.emit('vtoken:remove', {'hex': request.headers.get('Hex')})
 
     return dumps(obj)
 
@@ -127,34 +114,6 @@ def map_page(hex):
     if obj['succ'] is False:
         abort(404)
     return render_template('base.html', pageTitle='map')
-
-
-# @app.route('/sys/')
-# @app.route('/sys/<cmd>/<pin>')
-# def sys(cmd: str = '', pin: str = ''):
-#     """
-#     /sys/downloadassets
-#     """
-#     settings = Settings()
-
-#     if cmd == 'dla':
-#         if pin != settings.get('sessionSysKey'):
-#             abort(404)
-#         trove()
-#         settings.resetSessionSysKey()
-
-#     if cmd == 'ut':
-#         if pin != settings.get('sessionSysKey'):
-#             abort(404)
-#         runUnittest()
-#         settings.resetSessionSysKey()
-
-#     return render_template(
-#         'system.html',
-#         logStr=systems.getlogfile(),
-#         files=systems.getAssets(),
-#         unitTestResult=systems.getUnittest()
-#     )
 
 
 @socket_app.on('connect')

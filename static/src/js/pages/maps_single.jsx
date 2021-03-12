@@ -29,8 +29,6 @@ export default class MapSingle extends Component {
     componentDidMount(){
 
         // TODO websockets
-        // + map:update:tokens
-        // + map:updated
         // keyboard shortcuts
 
         this.socket = io();
@@ -41,13 +39,13 @@ export default class MapSingle extends Component {
                 // create token
             // this.setState({'tokens': _data.tokens})
             if(_data.succ == false){
-                return; 
+                return;
             }
 
             if(_data.data.mapHex != this.state.hex){
                 return;
             }
-            
+
             console.log(_data.data.tokens)
             this.setState({'tokens': _data.data.tokens})
         })
@@ -86,7 +84,7 @@ export default class MapSingle extends Component {
 
         var body = this.state;
         body.fogOfWar = this.state.foggyOfWar
-        
+
 
         fetch('/ajax/map', {
             method: 'PUT',
@@ -98,11 +96,14 @@ export default class MapSingle extends Component {
         })
         .then(http=>http.json())
         .then((json)=>{
-            
-            if(!json.succs){
-                // alert(json.error)
+            console.log(json)
+            if(!json.succ){
+                alert(json.err)
+                return;
             }
-        })
+        });
+        document.title = this.state.title;
+        this.setState({'changed': false})
 
     }
 
@@ -110,9 +111,9 @@ export default class MapSingle extends Component {
 
         var dms_els = [] // adds user elerments to the page
         var userExists = userIdExists() // the users session key
-        
-        var foggy = {display: 'none'} // the css the fog of war 
-        
+
+        var foggy = {display: 'none'} // the css the fog of war
+
         if(userExists){
 
             dms_els.push(
@@ -131,7 +132,7 @@ export default class MapSingle extends Component {
                     </label>
                     <label><div></div> <button disabled={!this.state.changed} onClick={this.saveInfo}> Save </button></label>
                 </div>
-            
+
             )
             dms_els.push(
                 <MapList key={2} />
@@ -142,9 +143,9 @@ export default class MapSingle extends Component {
         dms_els.push(
             <AssertToken key={3} subpath='tokens' />
         )
-        
+
         var el_draggable = []
-        
+
         for(var i = 0; i < this.state.tokens.length; i++){
             console.log(this.state.tokens[i]);
             el_draggable.push(
@@ -155,7 +156,7 @@ export default class MapSingle extends Component {
                     x={this.state.tokens[i].x}
                     y={this.state.tokens[i].y}
                     conseal={this.state.tokens[i].conseal}
-                /> 
+                />
             )
         }
 
@@ -171,7 +172,7 @@ export default class MapSingle extends Component {
                 <div className="maps">
                     <div className='fogOfWar' style={foggy}></div>
                     <img ref='image' src={this.state.map} style={{'width': this.state.width}} />
-                    
+
                 </div>
                 <div className="audio">
                     <Youtube url={this.state.soundtrack} />

@@ -17,7 +17,8 @@ class VirtualTokens:
             return self.PUT(req.get_json())
 
         if req.method == 'DELETE':
-            return self.DELETE(req.get_json())
+            x = self.DELETE(req.headers.get('Hex'))
+            return x
 
     
     def POST(self, json: dict):
@@ -48,10 +49,6 @@ class VirtualTokens:
         self.data.updateByHex(self, json['hex'], json['x'], json['y'])
         return success()
 
-    def DELETE(self, json: dict):
-
-        if 'hex' not in json.keys():
-            return fail('hex key not found')
-
-        self.data.deleteByHex(json['hex'])
+    def DELETE(self, hex):
+        self.data.deleteByHex(hex)
         return success()

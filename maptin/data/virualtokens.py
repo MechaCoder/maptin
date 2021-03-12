@@ -61,10 +61,14 @@ class VirtualToken:
 
     def deleteByHex(self, hex: str):
 
+        print(hex)
+
         with db.atomic():
-            VirtualTokenModels.delete().where(
+            qry = VirtualTokenModels.delete().where(
                 VirtualTokenModels.hex == hex
             )
+
+            qry.execute()
 
         return True
 

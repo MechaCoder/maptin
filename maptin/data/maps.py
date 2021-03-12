@@ -90,7 +90,9 @@ class Map:
         if vaildateUrl(map_soundtrack) is False:
             raise DataInvaild('The soundtrack is invalid')
 
-        if isfile(map_background) is False:
+        path = Credentials().read()['root'] + map_background
+        print(path)
+        if isfile(path) is False:
             raise DataInvaild('the background path is invaild')
 
         with db.atomic():
