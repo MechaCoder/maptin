@@ -27,45 +27,43 @@ export default class MapSingle extends Component {
     }
 
     componentDidMount(){
+
+        // TODO websockets
+        // keyboard shortcuts
+
         this.socket = io();
 
         this.socket.on('map:update:tokens', (_data) => {
-            this.setState({'tokens': _data.tokens})
+            // when the map tokens are updated then update them in the clients
+            // EVENTS
+                // create token
+            // this.setState({'tokens': _data.tokens})
+            if(_data.succ == false){
+                return;
+            }
+
+            if(_data.data.mapHex != this.state.hex){
+                return;
+            }
+
+            this.setState({'tokens': _data.data.tokens})
+        })
+
+        this.socket.on('map:updated', (json) => {
+
+          if(!json.succ){
+            alert(json.err);
+            return;
+          }
+
+          if(json.data.map.hex != this.state.hex){
+              return;
+          }
+
+          this.setState({'map': json.data.map.map_background})
 
         })
 
-        this.socket.on('map:updated', (_data) => {
-            
-            if(_data.succs){
-
-                document.title = _data.data.title
-
-                this.setState({
-                    'title': _data.data.title,
-                    'soundtrack': _data.data.map_soundtrack,
-                    'map': _data.data.map_source,
-                    'width': _data.data.width,
-                    'foggyOfWar': _data.data.fog,
-                    'changed': false
-                })
-            }
-        })
-
-        document.onkeyup = (e) => {
-
-            if(e.ctrlKey && e.shiftKey && e.which == 70){
-                
-                this.setState({foggyOfWar: !this.state.foggyOfWar})
-                this.saveInfo(e)
-            }
-
-            if (e.ctrlKey && e.which == 83){
-                if(this.state.changed){
-                    this.saveInfo(e)
-                }
-            }
-
-        }
 
         fetch('/ajax/map', {
             headers: {
@@ -75,20 +73,17 @@ export default class MapSingle extends Component {
         })
         .then(data=>data.json())
         .then((json) => {
-            
-            if(json.succs){
-                
-                document.title = json.data.title
+            if(json.succ){
+                document.title = json.data.map.title;
 
                 this.setState({
-                    'hex': getMapHexFromURL(),
-                    'title': json.data.title,
-                    'map': json.data.map_source,
-                    'soundtrack': json.data.map_soundtrack,
-                    'width': json.data.width,
-                    'tokens': json.data.tokens,
-                    'foggyOfWar': json.data.fog,
-                    'changed': false
+                    'hex': json.data.map.hex,
+                    'title': json.data.map.title,
+                    'map': json.data.map.map_background,
+                    'soundtrack': json.data.map.map_soundtrack,
+                    'width': json.data.map.map_width,
+                    'foggyOfWar': json.data.map.map_fog,
+                    'tokens': json.data.map.tokens
                 })
             }
         })
@@ -103,7 +98,7 @@ export default class MapSingle extends Component {
 
         var body = this.state;
         body.fogOfWar = this.state.foggyOfWar
-        
+
 
         fetch('/ajax/map', {
             method: 'PUT',
@@ -115,10 +110,14 @@ export default class MapSingle extends Component {
         })
         .then(http=>http.json())
         .then((json)=>{
-            if(!json.succs){
-                alert(json.error)
+            console.log(json)
+            if(!json.succ){
+                alert(json.err)
+                return;
             }
-        })
+        });               
+        document.title = this.state.title;
+        this.setState({'changed': false})
 
     }
 
@@ -126,9 +125,9 @@ export default class MapSingle extends Component {
 
         var dms_els = [] // adds user elerments to the page
         var userExists = userIdExists() // the users session key
-        
-        var foggy = {display: 'none'} // the css the fog of war 
-        
+
+        var foggy = {display: 'none'} // the css the fog of war
+
         if(userExists){
 
             dms_els.push(
@@ -147,7 +146,7 @@ export default class MapSingle extends Component {
                     </label>
                     <label><div></div> <button disabled={!this.state.changed} onClick={this.saveInfo}> Save </button></label>
                 </div>
-            
+
             )
             dms_els.push(
                 <MapList key={2} />
@@ -158,15 +157,16 @@ export default class MapSingle extends Component {
         dms_els.push(
             <AssertToken key={3} subpath='tokens' />
         )
-        
+
         var el_draggable = []
-        
-        for(var i = 0; i < this.state.tokens.length; i++){ 
+
+        for(var i = 0; i < this.state.tokens.length; i++){
+            console.log(this.state.tokens[i]);
             el_draggable.push(
                 <Vtoken
                     key={i}
                     hex={this.state.tokens[i].hex}
-                    pic={this.state.tokens[i].source}
+                    pic={this.state.tokens[i].token_source}
                     x={this.state.tokens[i].x}
                     y={this.state.tokens[i].y}
                     conseal={this.state.tokens[i].conseal}
@@ -186,7 +186,6 @@ export default class MapSingle extends Component {
                 <div className="maps">
                     <div className='fogOfWar' style={foggy}></div>
                     <img ref='image' src={this.state.map} style={{'width': this.state.width}} />
-                    
                 </div>
                 <div className="audio">
                     <Youtube url={this.state.soundtrack} />

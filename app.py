@@ -1,8 +1,5 @@
 import logging
-from json import dump, dumps, loads
-
-from tin.data import getSettingsObject as Settings
-from tin.map import createMap, updateByHex
+from json import dumps, loads
 
 from flask import Flask
 from flask import render_template
@@ -10,25 +7,8 @@ from flask import request
 from flask import abort
 
 from flask_socketio import SocketIO, emit
-from tin.http.trove import trove
 
-from tin import authUser
-from tin import createUser
-from tin import keyExists
-from tin import listMaps
-from tin import deleteMap
-from tin import getByHex
-from tin import tokensList
-from tin import mapsList
-from tin import createToken
-from tin import updateLocation
-from tin import upadateBgByHex
-from tin import removeVtoken
-from tin.data import getVtokensObject as vTokenData
-from tin import updateConseal
-import tin.system as systems
-from tin.commons import runUnittest, Credentials
-
+from maptin import *
 
 logging.basicConfig(
     filename=Credentials().read()['log'],
@@ -37,7 +17,7 @@ logging.basicConfig(
 )
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = Settings().get('socketKey')
+app.config['SECRET_KEY'] = 'socket'
 socket_app = SocketIO(app)
 
 
@@ -49,106 +29,78 @@ def notfound(e):
 
 @app.route('/ajax/user', methods=['POST'])
 def ajaxuser():
+    resp = fail('the type key is invaild')
     creds = request.get_json()
     if creds['type'] == 'test':
-        resp = authUser(creds['uname'], creds['pword'])
-        return dumps(resp)
+        resp = User().testUser(request)
 
     if creds['type'] == 'create':
-        resp = createUser(
-            creds['uname'],
-            creds['pword']
-        )
-        return dumps(resp)
+        resp = User().createUser(request)
+    return dumps(resp)
 
 
 @app.route('/ajax/user/key', methods=['POST'])
 def ajaxTestKey():
     key = request.get_json()
     key = key['key']
-    return dumps(keyExists(key=key))
+    return dumps(
+        UserToken().checkToken(key)
+    )
 
 
 @app.route('/ajax/maps', methods=['GET', 'POST', 'DELETE'])
 def maps():
-    key = request.headers.get('Userkey')
-    if request.method == 'GET':  # get all maps that a user key has
-        return dumps(listMaps(key))
-    if request.method == 'POST':  # create a blank map
-        return dumps(createMap(key))
-    if request.method == 'DELETE':  # delete a map
-        mapHex = request.get_json()
-        obj = deleteMap(hex=mapHex['map'], key=key)
-        return dumps(obj)
+    return Maps().main(request)
 
 
 @app.route('/ajax/map', methods=['GET', 'PUT'])
 def mapSingle():
-    if request.method == 'GET':
-        hex = request.headers.get('map')
-        obj = getByHex(hex)
-        return dumps(obj)  # gets all server information
+    m_obj = Map()
+    obj = m_obj.main(request)
 
-    if request.method == 'PUT':  # needs to be confimed by userkey
-        key = request.headers.get('Userkey')
-        json = request.get_json()
-        
-        obj = updateByHex(
-            hex=json['hex'],
-            title=json['title'],
-            map=json['map'],
-            sound=json['soundtrack'],
-            width=json['width'],
-            fog=json['fogOfWar'],
-            usrKey=key
+    if request.method == 'PUT':
+        socket_app.emit(
+            'map:updated',
+            m_obj.GET(request.get_json()['hex'])
         )
-        
-        socket_app.emit('map:updated', getByHex(json['hex']))
-        return dumps(obj)
+    return dumps(obj)
 
 
 @app.route('/ajax/map/bg', methods=['POST'])
 def mapSingleBg():
-    json = request.get_json()
-    obj = upadateBgByHex(json['hex'], json['src'])
-    socket_app.emit('map:updated', getByHex(json['hex']))
-    return obj
+    m_obj = Map()
+    obj = m_obj.main(request)
+    socket_app.emit('map:updated', m_obj.GET(
+        request.get_json()['hex']
+    ))
+    return dumps(obj)
 
 
 @app.route('/ajax/assets/<sub_path>')
 def ajaxAssets(sub_path):
     if sub_path == 'tokens':
-        return dumps(tokensList())
+        return dumps(Assets().tokens())
     if sub_path == 'maps':
-        obj = mapsList()
-        return dumps(mapsList())
+        return dumps(getMapAssets())
 
-    return dumps({'succs': False})
+    return dumps({'succ': False})
 
 
 @app.route('/ajax/tokens', methods=['POST'])
-def ajaxTokens():
-    if request.method == 'POST':
-        json = request.get_json()
-        obj = createToken(json['hex'], json['src'], 260, 260)
-        socket_app.emit(
-            'map:update:tokens',
-            {'tokens': vTokenData().readByMapHex(json['hex'])}
-        )
-        return dumps(obj)
-
-
 @app.route('/ajax/token', methods=['PUT', 'DELETE'])
-def ajaxToken():
-    if request.method == 'PUT':
-        json = request.get_json()
-        return dumps(updateLocation(json['hex'], json['x'], json['y']))
-    if request.method == 'DELETE':  # deletes a v-token.
-        hex = request.headers.get('hex')
-        obj = removeVtoken(hex)
-        socket_app.emit('vtoken:remove', {'hex': hex})
-        return dumps(obj)
+def ajaxTokens():
+    obj = VirtualTokens().main(request)
+    if request.method == 'POST':
+        socket_app.emit('map:update:tokens',
+            Sockets().mapVirtualTokens(
+                request.get_json()['hex']
+            )
+        )
 
+    if request.method == 'DELETE':
+        socket_app.emit('vtoken:remove', {'hex': request.headers.get('Hex')})
+
+    return dumps(obj)
 
 @app.route('/')
 @app.route('/dashboard/')
@@ -158,38 +110,10 @@ def index():
 
 @app.route('/map/<hex>')
 def map_page(hex):
-    obj = getByHex(hex)
-    if obj['succs'] is False:
+    obj = Map().GET(hex)
+    if obj['succ'] is False:
         abort(404)
     return render_template('base.html', pageTitle='map')
-
-
-@app.route('/sys/')
-@app.route('/sys/<cmd>/<pin>')
-def sys(cmd: str = '', pin: str = ''):
-    """
-    /sys/downloadassets
-    """
-    settings = Settings()
-
-    if cmd == 'dla':
-        if pin != settings.get('sessionSysKey'):
-            abort(404)
-        trove()
-        settings.resetSessionSysKey()
-
-    if cmd == 'ut':
-        if pin != settings.get('sessionSysKey'):
-            abort(404)
-        runUnittest()
-        settings.resetSessionSysKey()
-
-    return render_template(
-        'system.html',
-        logStr=systems.getlogfile(),
-        files=systems.getAssets(),
-        unitTestResult=systems.getUnittest()
-    )
 
 
 @socket_app.on('connect')
@@ -199,7 +123,7 @@ def connect():
 
 @socket_app.on('vtoken:conseal')
 def consoleupdate(_data={}):
-    updateConseal(_data['uhex'], _data['conseal'])
+    # updateConseal(_data['uhex'], _data['conseal'])
 
     if _data['conseal']:
         _data['conseal'] = False
@@ -213,18 +137,12 @@ def consoleupdate(_data={}):
 @socket_app.on('message')
 def message(_data={}):
     obj = loads(_data)
-    k = updateLocation(
+    k = Sockets().updateVirtualTokens(
         hex=obj['hex'],
         x=obj['x'],
         y=obj['y']
     )
-    if k['succ']:
-        emit('message', dumps({
-            'hex': obj['hex'],
-            'x': obj['x'],
-            'y': obj['y']
-
-        }), broadcast=True)
+    emit('message', dumps(k), broadcast=True)
 
 
 if __name__ == '__main__':

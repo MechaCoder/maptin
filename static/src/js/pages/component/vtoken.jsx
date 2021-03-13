@@ -51,6 +51,7 @@ export default class Vtoken extends Component {
                 'connection': false
             })
         })
+
         this.socket.on('vtoken:remove', (_data) => {
             if(this.props.hex == _data.hex){
                 this.setState({'hide': true})
@@ -59,8 +60,6 @@ export default class Vtoken extends Component {
         })
 
         this.socket.on('vtoken:conseal', (_data) => {
-            console.log('2')
-            console.log(_data)
             // return;
 
             if(_data.uhex == this.props.hex){
@@ -114,6 +113,8 @@ export default class Vtoken extends Component {
                     'connection': false,
                     'hide': true
                 })
+            } else {
+                alert(json.err)
             }
         })
 

@@ -18,7 +18,7 @@ export default class SiteHeader extends Component {
 
         var links = []
         if( userIdExists() ){
-            links.push(<div onClick={this.logout}> Logout </div>)
+            links.push(<div key="0" onClick={this.logout}> Logout </div>)
         }
 
         return (

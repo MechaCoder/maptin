@@ -5,10 +5,9 @@ export default class Userlogin extends Component {
     constructor() {
         super();
         this.state = {
-            'uname': '',
-            'pword': '',    
+            'uname': 'test@testserver.com',
+            'pword': 'password1234',
             'logged-in': false
-            
         }
 
         this.testUser = this.testUser.bind(this)
@@ -25,16 +24,16 @@ export default class Userlogin extends Component {
     componentDidMount(){
 
         var usr_token = localStorage.getItem('usr_token');
-        
+
         if (usr_token == null ){
             return
         }
 
-        if(usr_token.length != 128){MapsList
+        if(usr_token.length != 128){
             return
         }
 
-        fetch('/ajax/user/key', {
+        fetch('/ajax/user/key', { // tests key
             'method': 'POST',
             'headers': {
                 'Content-Type': 'application/json'
@@ -47,14 +46,19 @@ export default class Userlogin extends Component {
         .then((json) => {
             if(json.succs){
                 this.setState({'logged-in': true})
+                return;
+            }else{
+                alert(json.err)
+                this.setState({'logged-in': false})
+                return;
             }
-            
         })
 
     }
 
     testUser(event){
-        
+        console.log('testUser');
+
         fetch('/ajax/user', {
             'method': 'POST',
             'headers': {
@@ -68,19 +72,19 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            if(json.sucss == true){
-                localStorage.setItem('usr_token', json.key);
+            if(json.succ == true){
+                localStorage.setItem('usr_token', json.data.key);
                 this.setState({'logged-in': true})
                 this.forceUpdate()
             }else{
-                alert(json.error)
+                alert(json.err)
             }
 
         })
 
-    }
+    } // testUser
     mkUser(event){
-        
+
         fetch('/ajax/user', {
             'method': 'POST',
             'headers': {
@@ -94,18 +98,19 @@ export default class Userlogin extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            if(json.sucss == true){
-                localStorage.setItem('usr_token', json.key);
+            if(json.succ == true){
+
+                localStorage.setItem('usr_token', json.data.key);
                 this.setState({
                     'logged-in': true,
                 })
                 this.forceUpdate()
             }else{
-                alert(json.error)
+                alert(json.err)
             }
-            
+
         })
-    }
+    } // mkUser
 
     logout(){
         localStorage.removeItem('usr_token');
@@ -123,10 +128,10 @@ export default class Userlogin extends Component {
                 </div>
                 <div className='pword' >
                     <label htmlFor='password' >password</label>
-                    <input name="password" type='text' value={this.state.pword} onChange={(event) => {this.setState({'pword': event.target.value})}} />   
+                    <input name="password" type='text' value={this.state.pword} onChange={(event) => {this.setState({'pword': event.target.value})}} />
                 </div>
                 <div className='btns' >
-                    <button onClick={this.testUser} >Sign In</button>
+                    <button onClick={this.testUser} disabled={this.state["logged-in"]} >Sign In</button>
                     <button onClick={this.mkUser} >Sign Up</button>
                 </div>
             </div>

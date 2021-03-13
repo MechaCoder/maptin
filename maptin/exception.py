@@ -1,0 +1,1 @@
+class MaptinException(Exception): pass

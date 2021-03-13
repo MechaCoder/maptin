@@ -30,22 +30,19 @@ export default class MapsList extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            this.setState({
-                'maps': json
-            })
+            if(json.succ){
+                this.setState({'maps': json.data.maps})
+            } else {
+                alert(json.err)
+            }
 
         })
     }
 
     createMap(event){
 
-        var usr_token = localStorage.getItem('usr_token')
-        if(usr_token == null){
-            return;
-        }
-        if(usr_token.length != 128){
-            return;
-        }
+        var usr_token = getUserId();
+
         fetch('/ajax/maps', {
             method: 'POST',
             headers: {
@@ -55,9 +52,14 @@ export default class MapsList extends Component {
         })
         .then(data => data.json())
         .then((json) => {
-            alert('new map has been created')
-            // TODO: script out reading maps
-            this.getMaps()
+            if(json.succ){
+                alert('new map has been created');
+                console.log(json);
+                this.getMaps();
+            } else {
+                alert(json.err)
+            }
+            
         })
 
     }
@@ -71,12 +73,12 @@ export default class MapsList extends Component {
         var items = []
         for(var i = 0; i < this.state.maps.length; i++){
             var el = this.state.maps[i];
-            items.push(<MapListItem 
-                key={i} 
-                hex={el.hex} 
-                title={el.title} 
-                map={el.map_source} 
-                soundtrack={el.map_soundtrack} 
+            items.push(<MapListItem
+                key={i}
+                hex={el.hex}
+                title={el.title}
+                map={el.map_background}
+                soundtrack={el.map_soundtrack}
             />)
 
         }

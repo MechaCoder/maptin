@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+import {getUserId} from './commons.jsx';
 import { io } from "socket.io-client";
 
 function imgEl(src, key){
@@ -11,8 +12,8 @@ function imgEl(src, key){
         if(!sure){
             return;
         }
-        
-        
+
+
         var l = window.location.href;
         l = l.split('/');
         var hex = l[l.length - 1]
@@ -21,7 +22,10 @@ function imgEl(src, key){
             '/ajax/map/bg',
             {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Userkey': getUserId()
+                },
                 body: JSON.stringify({
                     'hex': hex,
                     'src': src
@@ -29,15 +33,15 @@ function imgEl(src, key){
             })
             .then(data=>data.json())
             .then((json)=>{
-                if(json.succ){
-                    var sock = io();
-                    sock.emit('flash')
+                
+                if(!json.succ){
+                    alert(json.err)
                 }
             })
     }
 
     return(
-        <span 
+        <span
             key={key}
             className='asset'
             style={{backgroundImage: 'url(' + src + ')'}}
@@ -58,18 +62,20 @@ export default class MapList extends Component {
     }
 
     componentDidMount(){
+
+
         fetch(
-            '/ajax/assets/maps', 
+            '/ajax/assets/maps',
             {headers: {'Content-Type': 'application/json'}
         })
         .then(data => data.json())
         .then((json) => {
-            if(!json.succs){
-                alert(json.error)
+            console.log(json)
+
+            if(!json.succ){
+                alert(json.err)
             }
-            if(json.succs){
-
-
+            if(json.succ){
                 this.setState({
                     'mapsAll': json.data.all,
                     'mapPop': json.data.popular

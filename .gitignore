@@ -11,3 +11,6 @@ log.log
 unittest.results.text
 *.ds.json
 credentials.json
+old_credentals.json
+.gitignore
+ds.db
