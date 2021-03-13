@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "react-draggable": "^4.4.3",
+    "react-lazy-load-image-component": "^1.5.1",
     "react-router-dom": "^5.2.0",
     "socket.io-client": "^3.1.1",
     "youtube-embed": "^1.0.0"

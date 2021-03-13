@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import {getUserId} from './commons.jsx';
 import { io } from "socket.io-client";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function imgEl(src, key){
 
@@ -40,15 +41,21 @@ function imgEl(src, key){
             })
     }
 
+    // return(
+    //     <span
+    //         key={key}
+    //         className='asset'
+    //         style={{backgroundImage: 'url(' + src + ')'}}
+    //         onClick={clickEvent}
+    //     >
+    //     </span>
+    // );
+
     return(
-        <span
-            key={key}
-            className='asset'
-            style={{backgroundImage: 'url(' + src + ')'}}
-            onClick={clickEvent}
-        >
+        <span className='asset' onClick={clickEvent}>
+            <LazyLoadImage src={src} placeholderSrc='static/world-map.gif' effect="blur" width="100%" /> 
         </span>
-    );
+    )
 }
 
 export default class MapList extends Component {
