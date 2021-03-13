@@ -1,6 +1,6 @@
 from .utills.http import success, fail
 from .utills.credentals import Credentials
-from .utills.assets import Assets
+from .utills.assets import Assets, getMapAssets
 
 from .user import User
 from .userKeys import UserToken

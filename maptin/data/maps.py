@@ -35,14 +35,14 @@ class Map:
             hex_candate = makeUid(16)
             if self._hexExists(hex_candate) is False:
                 break
-        
+
         obj = User().getUserById(owner_id)
         if len(obj) == 0:
             raise DoseNotExist('user.id dose not exist.')
 
         if vaildateUrl(map_soundtrack) is False:
             raise DataInvaild('the sound track url is not vaild')
-        
+
         path2bg = join(
             Credentials().read()['root'], map_background[1:]
         )
@@ -59,8 +59,15 @@ class Map:
             )
         return hex_candate
 
+    def readAll(self):
+        rList = []
+        with db.atomic():
+            for each in MapModel.select():
+                rList.append(self._makeDocument(each))
+        return rList
+
     def readByOwnerId(self, owner_id: int):
-        
+
         rList = []
         with db.atomic():
             for each in MapModel.select().where(MapModel.owner_id == owner_id):
@@ -73,7 +80,7 @@ class Map:
 
         if self._hexExists(hex) is False:
             raise DoseNotExist('The passed hex dose not exist')
-        
+
         rList = []
         with db.atomic():
             for each in MapModel.select().where(MapModel.hex == hex):
@@ -91,7 +98,6 @@ class Map:
             raise DataInvaild('The soundtrack is invalid')
 
         path = Credentials().read()['root'] + map_background
-        print(path)
         if isfile(path) is False:
             raise DataInvaild('the background path is invaild')
 
@@ -103,29 +109,27 @@ class Map:
                 map_width=map_width,
                 map_fog=map_fog
             ).where(MapModel.hex == hex).execute()
-        
+
         return True
 
-    def updateBgByHex(self, hex: str, bg:str): 
+    def updateBgByHex(self, hex: str, bg:str):
 
         if self._hexExists(hex) is False:
             raise DoseNotExist('The passed hex dose not exist')
 
-        if isfile(bg):
-            raise DataInvaild('the background path is invaild')
-        
         with db.atomic():
-            MapModel().update(
+            qry = MapModel().update(
                 map_background=bg
             ).where(MapModel.hex == hex)
-        
+            qry.execute()
+
         return False
 
     def deleteByHex(self, hex: str):
 
         if self._hexExists(hex) is False:
             raise DoseNotExist('The passed hex dose not exist')
-        
+
         with db.atomic():
             delQry = MapModel().delete().where(
                 MapModel.hex == hex
@@ -133,4 +137,3 @@ class Map:
             delQry.execute()
 
         return True
-

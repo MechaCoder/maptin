@@ -81,9 +81,9 @@ def ajaxAssets(sub_path):
     if sub_path == 'tokens':
         return dumps(Assets().tokens())
     if sub_path == 'maps':
-        return dumps(Assets().maps())
+        return dumps(getMapAssets())
 
-    return dumps({'succs': False})
+    return dumps({'succ': False})
 
 
 @app.route('/ajax/tokens', methods=['POST'])

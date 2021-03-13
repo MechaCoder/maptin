@@ -61,8 +61,6 @@ class VirtualToken:
 
     def deleteByHex(self, hex: str):
 
-        print(hex)
-
         with db.atomic():
             qry = VirtualTokenModels.delete().where(
                 VirtualTokenModels.hex == hex

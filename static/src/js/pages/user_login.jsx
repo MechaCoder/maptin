@@ -8,7 +8,6 @@ export default class Userlogin extends Component {
             'uname': 'test@testserver.com',
             'pword': 'password1234',
             'logged-in': false
-            
         }
 
         this.testUser = this.testUser.bind(this)
@@ -25,7 +24,7 @@ export default class Userlogin extends Component {
     componentDidMount(){
 
         var usr_token = localStorage.getItem('usr_token');
-        
+
         if (usr_token == null ){
             return
         }
@@ -34,7 +33,7 @@ export default class Userlogin extends Component {
             return
         }
 
-        fetch('/ajax/user/key', { // tests key 
+        fetch('/ajax/user/key', { // tests key
             'method': 'POST',
             'headers': {
                 'Content-Type': 'application/json'
@@ -59,7 +58,7 @@ export default class Userlogin extends Component {
 
     testUser(event){
         console.log('testUser');
-        
+
         fetch('/ajax/user', {
             'method': 'POST',
             'headers': {
@@ -85,7 +84,7 @@ export default class Userlogin extends Component {
 
     } // testUser
     mkUser(event){
-        
+
         fetch('/ajax/user', {
             'method': 'POST',
             'headers': {
@@ -109,9 +108,9 @@ export default class Userlogin extends Component {
             }else{
                 alert(json.err)
             }
-            
+
         })
-    } // mkUser 
+    } // mkUser
 
     logout(){
         localStorage.removeItem('usr_token');
@@ -129,7 +128,7 @@ export default class Userlogin extends Component {
                 </div>
                 <div className='pword' >
                     <label htmlFor='password' >password</label>
-                    <input name="password" type='text' value={this.state.pword} onChange={(event) => {this.setState({'pword': event.target.value})}} />   
+                    <input name="password" type='text' value={this.state.pword} onChange={(event) => {this.setState({'pword': event.target.value})}} />
                 </div>
                 <div className='btns' >
                     <button onClick={this.testUser} disabled={this.state["logged-in"]} >Sign In</button>

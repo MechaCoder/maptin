@@ -46,8 +46,22 @@ export default class MapSingle extends Component {
                 return;
             }
 
-            console.log(_data.data.tokens)
             this.setState({'tokens': _data.data.tokens})
+        })
+
+        this.socket.on('map:updated', (json) => {
+
+          if(!json.succ){
+            alert(json.err);
+            return;
+          }
+
+          if(json.data.map.hex != this.state.hex){
+              return;
+          }
+
+          this.setState({'map': json.data.map.map_background})
+
         })
 
 
@@ -101,7 +115,7 @@ export default class MapSingle extends Component {
                 alert(json.err)
                 return;
             }
-        });
+        });               
         document.title = this.state.title;
         this.setState({'changed': false})
 
@@ -172,7 +186,6 @@ export default class MapSingle extends Component {
                 <div className="maps">
                     <div className='fogOfWar' style={foggy}></div>
                     <img ref='image' src={this.state.map} style={{'width': this.state.width}} />
-
                 </div>
                 <div className="audio">
                     <Youtube url={this.state.soundtrack} />

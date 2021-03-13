@@ -139,15 +139,6 @@ class Map:
         obj = UserTokens().getIdByKey(userKey)
         if len(obj) != 1:
             return fail('key is invaild')
-
-        try:
-            mapData = self.data.readByHex(hex)
-        except DoseNotExist as err:
-            return fail(err)
-
-        if mapData[0]['owner_id'] != obj[0]:
-            return fail('owner id mismatch')
-
         
         if 'hex' not in json.keys():
             return fail('key hex not found')
