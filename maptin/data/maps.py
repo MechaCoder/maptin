@@ -1,6 +1,7 @@
 from os.path import isfile, join
 
 from peewee import Model
+from faker import Faker
 
 from .models import Map as MapModel
 from .users import User
@@ -32,7 +33,7 @@ class Map:
 
         hex_candate = ''
         while True:
-            hex_candate = makeUid(16)
+            hex_candate = Faker().slug()
             if self._hexExists(hex_candate) is False:
                 break
 

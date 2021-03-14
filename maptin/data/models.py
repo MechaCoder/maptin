@@ -26,7 +26,7 @@ class User(BaseModel):
 
 
 class Map(BaseModel):
-    hex= CharField(max_length=16, unique=True)
+    hex= CharField(max_length=128, unique=True)
     title = CharField(max_length=32, default='New Map')
     owner_id = IntegerField()
     map_background = CharField()
@@ -49,6 +49,6 @@ class UserToken(BaseModel):
 
 def createTables():
     print('tables created')
-    maptinDatabase_object.create_tables([User, Map, VirtualToken, UserToken])
+    maptinDatabase_object.create_tables([UserToken, User, Map, VirtualToken])
 
-# createTables()
+createTables()
