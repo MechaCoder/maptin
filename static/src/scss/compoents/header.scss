@@ -9,10 +9,8 @@ header {
 	color: white;
 	z-index: 1;
 	.links {
-		position: relative;
-		float: right;
-		position: relative;
-		float: right;
+		position: fixed;
+		right: 0;
 		div {
 			text-align: center;
 			margin: auto;
@@ -30,6 +28,15 @@ header {
 		}
 	}
 	.siteTitle {
-		width: 80%;
+		position: fixed;
+		top: -12px;
+		left: 10px;
+		a {
+			color: #fff;
+			text-decoration: none;
+			&:hover{
+				color: #2f4f4f;
+			}
+		}
 	}
 }

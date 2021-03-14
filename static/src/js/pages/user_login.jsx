@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+import {userIdExists} from './component/commons.jsx';
+
 export default class Userlogin extends Component {
     constructor() {
         super();
@@ -22,6 +24,11 @@ export default class Userlogin extends Component {
     }
 
     componentDidMount(){
+
+        if(userIdExists()){
+            // if the user key already set on the client then use it
+            window.location.href = '/dashboard/' 
+        }
 
         var usr_token = localStorage.getItem('usr_token');
 

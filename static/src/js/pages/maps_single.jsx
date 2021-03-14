@@ -132,6 +132,7 @@ export default class MapSingle extends Component {
 
             dms_els.push(
                 <div className="tools" key={1} >
+                    
                     <label htmlFor='mapTitle' >
                         <div>Title:</div> <input name='mapTitle' value={this.state.title} onChange={(event) => {this.setState({'title': event.target.value, 'changed': true});}}  />
                     </label>

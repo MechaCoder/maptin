@@ -24,7 +24,7 @@ export default class SiteHeader extends Component {
         return (
             <header>
                 <div className="siteTitle">
-                    <h1>Map Tin</h1>
+                    <a href="/"><h1>Map Tin</h1></a>
                 </div>
                 <div className="links">
                     {links}
