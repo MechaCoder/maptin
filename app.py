@@ -9,6 +9,7 @@ from flask import abort
 from flask_socketio import SocketIO, emit
 
 from maptin import *
+from maptin.utills.credentals import Credentials
 
 logging.basicConfig(
     filename=Credentials().read()['log'],

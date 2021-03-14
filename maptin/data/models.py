@@ -1,10 +1,8 @@
 from datetime import datetime
-from enum import unique
 from peewee import Model, SqliteDatabase
 from peewee import CharField, DateTimeField, IntegerField, BooleanField
-
-from maptin.utills.credentals import Credentials
 from maptin.data.commons import makeUid
+from maptin.utills.credentals import Credentials
 
 # TODO change to use MySQL
 maptinDatabase_object = SqliteDatabase(
@@ -53,4 +51,4 @@ def createTables():
     print('tables created')
     maptinDatabase_object.create_tables([User, Map, VirtualToken, UserToken])
 
-createTables()
+# createTables()

@@ -2,7 +2,7 @@
 
 from sys import version_info
 import sys
-from maptin.utills.credentals import Credentials
+# from maptin.utills.credentals import Credentials
 from maptin.http.trove import trove
 
 
@@ -13,6 +13,7 @@ if __name__ == '__main__':
         exit()
     
     if input('download assets') == 'y':
-        Credentials().write() # will wirte standeard creds
-
+        # Credentials().write() # will wirte standeard creds
+        pass
+    pass
     

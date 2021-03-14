@@ -8,7 +8,7 @@ from threading import Thread
 
 from requests.api import get
 from .base import getObject
-from maptin.data.commons import mkHex
+from maptin.data.commons import makeUid as mkHex
 
 
 def mkFname(dest: str, oldfname: str):
