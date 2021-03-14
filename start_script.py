@@ -12,6 +12,7 @@ if __name__ == '__main__':
         print('python 3.8 is required.')
         exit()
     
-    
+    if input('download assets') == 'y':
+        Credentials().write() # will wirte standeard creds
 
-    Credentials().write() # will wirte standeard creds
+    
