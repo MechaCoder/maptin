@@ -54,3 +54,6 @@ class User:
             return fail(str(error))
         except OperationalError as error:
             return fail(str(error))
+
+    def updatePassword(self, userId:int):
+        pass

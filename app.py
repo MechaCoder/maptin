@@ -102,6 +102,10 @@ def ajaxTokens():
 
     return dumps(obj)
 
+@app.route('/ajax/system/<action>', methods=['GET', 'PUT'])
+def ajaxSystem(action:str):
+    return dumps(System().main(request, action))
+
 @app.route('/')
 @app.route('/dashboard/')
 def index():
@@ -115,6 +119,9 @@ def map_page(hex):
         abort(404)
     return render_template('base.html', pageTitle='map')
 
+@app.route('/system/')
+def system():
+    return render_template('base.html')
 
 @socket_app.on('connect')
 def connect():
@@ -124,6 +131,7 @@ def connect():
 @socket_app.on('vtoken:conseal')
 def consoleupdate(_data={}):
     # updateConseal(_data['uhex'], _data['conseal'])
+    # TODO: update to use db
 
     if _data['conseal']:
         _data['conseal'] = False

@@ -29,3 +29,4 @@ python_version = "3.8"
 [scripts]
 test = "python test.py"
 start = "python app.py"
+emailTest = "sudo python -m smtpd -c DebuggingServer -n localhost:1025"

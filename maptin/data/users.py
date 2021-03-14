@@ -73,3 +73,24 @@ class User:
                     'joined': each.date_created
                 })
         return rList
+
+    def updatePassword(self, userId:int):
+        
+        newPassword = makeUid(6, complex=False)
+        readysalted = makeUid(128)
+        encriptPass = makePassword(
+            newPassword,
+            readysalted
+        )
+
+        with db.atomic():
+
+            qry = UserModel.update(
+                password_salt=readysalted,
+                password=encriptPass
+            ).where(
+                UserModel.id == userId
+            )
+            qry.execute()
+
+        return newPassword
