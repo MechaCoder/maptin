@@ -1,5 +1,6 @@
 from os.path import join, realpath, isfile
 from json import dumps, loads
+from maptin.data.commons import makeUid
 
 class Credentials:
     
@@ -30,7 +31,8 @@ class Credentials:
         d = {
             'ds': join(self.directory, 'ds.json'),
             'log': join(self.directory, 'log.log'),
-            'root': join(self.directory)
+            'root': join(self.directory),
+            'security_pin': makeUid()
         }
         fileObj = open(self.fPath, 'w')
         fileObj.write(
