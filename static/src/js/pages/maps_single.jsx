@@ -27,8 +27,6 @@ export default class MapSingle extends Component {
     }
 
     componentDidMount(){
-
-        // TODO websockets
         // keyboard shortcuts
 
         this.socket = io();

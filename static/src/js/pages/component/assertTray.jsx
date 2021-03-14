@@ -34,9 +34,10 @@ function imgEl(src, key){
         <span 
             key={key}
             className='asset'
-            style={{backgroundImage: 'url(/' + src + ')'}}
+            // style={{backgroundImage: 'url(/' + src + ')'}}
             onClick={eventHandler}
         >
+            <LazyLoadImage src={src} placeholderSrc='static/world-map.gif' effect="blur" width="100%" /> 
         </span>
     );
 }   
