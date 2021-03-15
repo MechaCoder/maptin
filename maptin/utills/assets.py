@@ -38,12 +38,12 @@ def getMapAssets():
         if map['map_background'] not in d.keys():
             d[map['map_background']] = 1
             continue
-        d[map['map_background']] = map['map_background'] + 1
+        d[map['map_background']] = d[map['map_background']] + 1
 
     d = {d: v for d, v in sorted(d.items(), key=lambda item: item[1])}
     e = []
     for each in list(d.keys()):
-        e.append( '/' + each )
+        e.append( each )
 
     obj = {
         'all': Assets().maps(),

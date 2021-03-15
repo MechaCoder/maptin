@@ -44,3 +44,16 @@ export function getMapHexFromURL(){
      l = l.split('/');
      return l[l.length - 1]
 }
+
+export function testPassword(password){
+     var pass=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+     if(password.match(pass)){
+          return true
+     }
+     return false
+}
+
+export function validateEmail(email) {
+     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+     return re.test(String(email).toLowerCase());
+ }
