@@ -27,6 +27,8 @@ export default class Userlogin extends Component {
 
     componentDidMount(){
 
+        document.title = 'Maptin | login'
+
         if(userIdExists()){
             // if the user key already set on the client then use it
             window.location.href = '/dashboard/' 
@@ -66,7 +68,25 @@ export default class Userlogin extends Component {
     }
 
     testUser(event){
-        console.log('testUser');
+        if(this.state.pword.length == 0){
+            alert('password is required!')
+            return;
+        }
+
+        if(testPassword(this.state.pword) == false){
+            alert('password needs to contain letters, numbers, and sysbals')
+            return;
+        }
+
+        if(this.state.uname.length == 0){
+            alert('a email is required')
+            return;
+        }
+
+        if(validateEmail(this.state.uname) == false){
+            alert('the email is addr needs to be in valid format.')
+            return;
+        }
 
         fetch('/ajax/user', {
             'method': 'POST',
