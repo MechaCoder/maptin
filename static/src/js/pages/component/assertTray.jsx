@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import { io } from "socket.io-client";
 
@@ -30,6 +31,8 @@ function imgEl(src, key){
         })
     }
 
+    src = '/'.concat(src);
+
     return(
         <span 
             key={key}
@@ -37,7 +40,7 @@ function imgEl(src, key){
             // style={{backgroundImage: 'url(/' + src + ')'}}
             onClick={eventHandler}
         >
-            <LazyLoadImage src={src} placeholderSrc='static/world-map.gif' effect="blur" width="100%" /> 
+            <LazyLoadImage src={src} placeholderSrc='/static/world-map.gif' effect="blur" width="100%" /> 
         </span>
     );
 }   

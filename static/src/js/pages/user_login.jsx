@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import {userIdExists} from './component/commons.jsx';
+import {userIdExists, testPassword, validateEmail} from './component/commons.jsx';
 
 export default class Userlogin extends Component {
     constructor() {
         super();
         this.state = {
-            'uname': 'test@testserver.com',
-            'pword': 'password1234',
-            'logged-in': false
+            'uname': '',
+            'pword': '',
+            'logged-in': false,
+            'hidePassword': true,
         }
 
         this.testUser = this.testUser.bind(this)
         this.mkUser = this.mkUser.bind(this)
         this.logout = this.logout.bind(this)
+        this.showHidePassword = this.showHidePassword.bind(this)
     }
 
     componentDidUpdate(){
@@ -24,6 +26,8 @@ export default class Userlogin extends Component {
     }
 
     componentDidMount(){
+
+        document.title = 'Maptin | login'
 
         if(userIdExists()){
             // if the user key already set on the client then use it
@@ -64,7 +68,25 @@ export default class Userlogin extends Component {
     }
 
     testUser(event){
-        console.log('testUser');
+        if(this.state.pword.length == 0){
+            alert('password is required!')
+            return;
+        }
+
+        if(testPassword(this.state.pword) == false){
+            alert('password needs to contain letters, numbers, and sysbals')
+            return;
+        }
+
+        if(this.state.uname.length == 0){
+            alert('a email is required')
+            return;
+        }
+
+        if(validateEmail(this.state.uname) == false){
+            alert('the email is addr needs to be in valid format.')
+            return;
+        }
 
         fetch('/ajax/user', {
             'method': 'POST',
@@ -91,6 +113,27 @@ export default class Userlogin extends Component {
 
     } // testUser
     mkUser(event){
+
+        if(this.state.pword.length == 0){
+            alert('password is required!')
+            return;
+        }
+
+        if(testPassword(this.state.pword) == false){
+            alert('password needs to contain letters, numbers, and sysbals')
+            return;
+        }
+
+        if(this.state.uname.length == 0){
+            alert('a email is required')
+            return;
+        }
+
+        if(validateEmail(this.state.uname) == false){
+            alert('the email is addr needs to be in valid format.')
+            return;
+        }
+
 
         fetch('/ajax/user', {
             'method': 'POST',
@@ -125,21 +168,36 @@ export default class Userlogin extends Component {
         this.forceUpdate()
     }
 
+    showHidePassword(event){
+        this.setState({'hidePassword': !this.state.hidePassword})
+    }
+
     render() {
+        var pwHide = 'hide';
+        var pwType = 'text'
+        if (this.state.hidePassword){
+            pwHide = 'show'
+            pwType = 'password'
+        }
+
+
 
         return (
             <div className="userlogin">
-                <div className='uname' >
-                    <label htmlFor='uname' >username</label>
-                    <input name="uname" type='text' value={this.state.uname} onChange={(event) => {this.setState({'uname': event.target.value})}} />
-                </div>
-                <div className='pword' >
-                    <label htmlFor='password' >password</label>
-                    <input name="password" type='text' value={this.state.pword} onChange={(event) => {this.setState({'pword': event.target.value})}} />
-                </div>
-                <div className='btns' >
-                    <button onClick={this.testUser} disabled={this.state["logged-in"]} >Sign In</button>
-                    <button onClick={this.mkUser} >Sign Up</button>
+                <div className='inner'>
+                    <div className='uname' >
+                        <label htmlFor='uname' >username</label>
+                        <input name="uname" required={true} type='text' data-error={validateEmail(this.state.uname)} value={this.state.uname} onChange={(event) => {this.setState({'uname': event.target.value})}} />
+                    </div>
+                    <div className='pword' >
+                        <label htmlFor='password' >password</label>
+                        <input name="password" required={true} data-error={testPassword(this.state.pword)}  type={pwType} value={this.state.pword} onChange={(event) => {this.setState({'pword': event.target.value})}} />
+                        <button onClick={this.showHidePassword}> {pwHide} </button>
+                    </div>
+                    <div className='btns' >
+                        <button onClick={this.testUser} disabled={this.state["logged-in"]} >Sign In</button>
+                        <button onClick={this.mkUser} >Sign Up</button>
+                    </div>
                 </div>
             </div>
         )

@@ -72,7 +72,7 @@ export default class MapSingle extends Component {
         .then(data=>data.json())
         .then((json) => {
             if(json.succ){
-                document.title = json.data.map.title;
+                document.title = "maptin | ".concat(json.data.map.title);
 
                 this.setState({
                     'hex': json.data.map.hex,
@@ -113,8 +113,9 @@ export default class MapSingle extends Component {
                 alert(json.err)
                 return;
             }
-        });               
-        document.title = this.state.title;
+        });
+        
+        document.title = "maptin | ".concat(this.state.title);
         this.setState({'changed': false})
 
     }

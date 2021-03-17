@@ -15,6 +15,7 @@ export default class MapsList extends Component {
     }
 
     componentDidMount(){
+        document.title = 'Maptin | Dashboard'
         this.getMaps();
     }
 

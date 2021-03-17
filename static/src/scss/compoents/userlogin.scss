@@ -1,33 +1,46 @@
 .userlogin {
-	margin-top: 100px;
-	margin-left: 350px;
-	width: 400px;
-	background-color: #b22222;
-	padding: 15px;
-	border-radius: 8px;
-	color: #fff;
-	label {
-		width: 100px;
-		display: inline-block;
-	}
-	input {
-		background-color: #000;
-		color: #f5deb3;
-	}
-	.pword {
-		input {
-			margin-top: 5px;
+
+	background-color: darkslateblue;
+	color: wheat;
+	position: relative;
+	top: 100px;
+	width: 60%;
+	left: 20%;
+
+	.inner {
+		padding: 15px;
+		.pword {
+			border-bottom: 1px solid slategrey
 		}
 	}
+
+	label {
+		display: inline-block;
+		width: 100px;
+	}
+	input {
+		background-color: slategrey;
+		border: darkslategray solid 1px;
+		color: wheat;
+		padding: 7px
+	}
+	input[data-error=true] {
+		background-color: #809070;
+		
+	}
 	.btns {
-		button {
-			width: 40%;
-			margin-top: 10px;
-			background-color: #2f4f4f;
-			color: #f5deb3;
-			&:first-child {
-				margin-right: 10px;
-			}
+		margin-top: 10px;
+	}
+
+	button {
+		margin: 5px;
+		background-color: slategray;
+		color: wheat;
+		border: none;
+		padding: 10px;
+		border: grey 1px solid;
+		&:hover{
+			background-color: darkslategray;
 		}
 	}
 }
