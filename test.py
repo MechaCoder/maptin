@@ -7,8 +7,7 @@ from datetime import datetime
 
 from test.usersTest import TestUser
 from test.mapsTest import TestMap
-
-TestGlobal = False
+from test.userkeysTest import TestUserkeys
 
 if __name__ == '__main__':
     main()

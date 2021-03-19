@@ -13,6 +13,7 @@ if __name__ == '__main__':
         exit()
     
     if input('download assets') == 'y':
+        trove()
         # Credentials().write() # will wirte standeard creds
         pass
     pass
