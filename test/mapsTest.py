@@ -1,5 +1,5 @@
 from unittest import TestCase
-from random import randint
+from random import choice, randint
 from faker import Faker
 
 from maptin.data.commons import Document
@@ -13,9 +13,20 @@ class TestMap(TestCase):
         return super().setUp()
 
     def test_create(self):
+
+        users = User().getAll()
+        if users == []:
+            User().create(
+                email=Faker().email(),
+                password=Faker().unique.name(),
+                commonName=Faker().name()
+            )
+            users = User().getAll()
+
+        doc = choice(users)
         
         obj = self.testObject.create(
-            1,
+            doc['id'],
             '/static/world-map.gif',
             'https://www.youtube.com/watch?v=_3r-A7hbbMw'
         )
@@ -74,8 +85,19 @@ class TestMap(TestCase):
 
     def test_readByHex(self):
 
+        users = User().getAll()
+        if users == []:
+            User().create(
+                email=Faker().email(),
+                password=Faker().unique.name(),
+                commonName=Faker().name()
+            )
+            users = User().getAll()
+
+        doc = choice(users)
+
         hex = self.testObject.create(#  create a new hex.
-            1,
+            doc['id'],
             '/static/world-map.gif',
             'https://www.youtube.com/watch?v=_3r-A7hbbMw'
         )

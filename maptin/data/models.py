@@ -6,7 +6,8 @@ from maptin.utills.credentals import Credentials
 
 # TODO change to use MySQL
 maptinDatabase_object = SqliteDatabase(
-    database=Credentials().getKey('ds')
+    database=Credentials().getKey('ds'),
+    timeout=3
 )
 
 class BaseModel(Model):

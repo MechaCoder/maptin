@@ -8,6 +8,7 @@ from datetime import datetime
 from test.usersTest import TestUser
 from test.mapsTest import TestMap
 from test.userkeysTest import TestUserkeys
+from test.virtualtokenTest import TestVirturaltoken
 
 if __name__ == '__main__':
     main()

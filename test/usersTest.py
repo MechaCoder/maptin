@@ -1,5 +1,5 @@
 from unittest import TestCase
-from random import randint
+from random import randint, choice
 from faker import Faker
 
 from maptin.data.commons import Document
