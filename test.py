@@ -5,6 +5,8 @@ from datetime import datetime
 # from test.map import TestMap
 from test.mapsTest import TestMap
 
+TestGlobal = False
+
 logging.basicConfig(
     filename='log.log',
     level=logging.NOTSET,
