@@ -6,7 +6,8 @@ from maptin.utills.credentals import Credentials
 
 # TODO change to use MySQL
 maptinDatabase_object = SqliteDatabase(
-    database=Credentials().getKey('ds')
+    database=Credentials().getKey('ds'),
+    timeout=3
 )
 
 class BaseModel(Model):
@@ -47,8 +48,6 @@ class UserToken(BaseModel):
     userId = IntegerField()
     key = CharField(max_length=256, unique=True)
 
-def createTables():
-    print('tables created')
-    maptinDatabase_object.create_tables([UserToken, User, Map, VirtualToken])
+#atempts to create tables if they don't exist
+maptinDatabase_object.create_tables([UserToken, User, Map, VirtualToken])
 
-createTables()

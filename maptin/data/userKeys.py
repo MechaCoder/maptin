@@ -1,5 +1,3 @@
-from os.path import expanduser
-
 from peewee import IntegrityError
 
 from .models import UserToken as UsertokenModel
