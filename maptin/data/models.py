@@ -47,8 +47,6 @@ class UserToken(BaseModel):
     userId = IntegerField()
     key = CharField(max_length=256, unique=True)
 
-def createTables():
-    print('tables created')
-    maptinDatabase_object.create_tables([UserToken, User, Map, VirtualToken])
+#atempts to create tables if they don't exist
+maptinDatabase_object.create_tables([UserToken, User, Map, VirtualToken])
 
-createTables()

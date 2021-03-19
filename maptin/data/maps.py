@@ -13,6 +13,10 @@ from .exceptions import DoseNotExist, DataInvaild
 
 class Map:
 
+    def __init__(self, test: bool = False):
+        self.test = test
+        
+
     def _makeDocument(self, row):
         return Document({
             'hex': row.hex,
@@ -124,7 +128,7 @@ class Map:
             ).where(MapModel.hex == hex)
             qry.execute()
 
-        return False
+        return True
 
     def deleteByHex(self, hex: str):
 

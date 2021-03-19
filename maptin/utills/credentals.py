@@ -4,9 +4,12 @@ from maptin.data.commons import makeUid
 
 class Credentials:
     
-    def __init__(self):
+    def __init__(self, test: bool = False):
         dirPath = realpath(__file__)
         fname = 'credentials.json'
+
+        if test:
+            fname = 'credentials.test.json'
 
         a = dirPath.split('/')[:-3]
 

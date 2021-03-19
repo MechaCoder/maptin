@@ -2,12 +2,8 @@ from unittest import main, TextTestRunner
 import logging
 from datetime import datetime
 
-from tin.tests__init__ import TestCommons
-from tin.data.tests_maps import TestMaps
-from tin.data.tests_settings import TestSettings
-from tin.data.tests_tokens import testTokens
-from tin.data.tests_users import testDataUser
-from tin.data.tests_vtokens import testvTokenData
+# from test.map import TestMap
+from test.mapsTest import TestMap
 
 logging.basicConfig(
     filename='log.log',
@@ -16,10 +12,11 @@ logging.basicConfig(
 
 if __name__ == '__main__':
 
-    logging.info(msg='Unit tests run')
+    # logging.info(msg='Unit tests run')
+    main()
 
-    with open('unittest.results.text', 'w') as f:
-        ts = "\n \n timestamp: " + str(datetime.now()) + "\n"
-        f.write(ts)
-        outputString = TextTestRunner(f)
-        main(testRunner=outputString)
+    # with open('unittest.results.text', 'w') as f:
+    #     ts = "\n \n timestamp: " + str(datetime.now()) + "\n"
+    #     f.write(ts)
+    #     outputString = TextTestRunner(f)
+    #     main(testRunner=outputString)
