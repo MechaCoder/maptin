@@ -104,6 +104,10 @@ class Map:
             return fail('key not found')
         if 'fogOfWar' not in json.keys():
             return fail('key fogOfWar not found')
+        if 'winX' not in json.keys():
+            return fail('key winX not found')
+        if 'winY' not in json.keys():
+            return fail('key winY not found')
 
         #check the userkey uid == onwer id
         obj = UserTokens().getIdByKey(userKey)
@@ -117,7 +121,7 @@ class Map:
 
         if mapData[0]['owner_id'] != obj[0]:
             return fail('owner id mismatch')
-
+            
         try:
             self.data.updateByHex(
                 json['hex'],
@@ -125,7 +129,9 @@ class Map:
                 json['map'],
                 json['soundtrack'],
                 json['width'],
-                json['fogOfWar']
+                json['fogOfWar'],
+                json['winX'],
+                json['winY']
             )
         except DoseNotExist as err:
             return fail('the map dose not exist')

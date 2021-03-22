@@ -21,21 +21,30 @@ export default class MapSingle extends Component {
             'width': 1000,
             'tokens': [],
             'foggyOfWar': true,
-            'changed': false
+            'changed': false,
+            'winX': 0,
+            'winY': 0
         }
         this.saveInfo = this.saveInfo.bind(this);
     }
 
+
     componentDidMount(){
         // keyboard shortcuts
+        window.onscroll = () => {
+            this.setState({
+                'winX': window.scrollX,
+                'winY': window.scrollY,
+                'changed': true
+            })
+
+            console.log( window.scrollX.toString() + ' x ' + window.scrollY.toString() )
+        }
 
         this.socket = io();
 
         this.socket.on('map:update:tokens', (_data) => {
-            // when the map tokens are updated then update them in the clients
-            // EVENTS
-                // create token
-            // this.setState({'tokens': _data.tokens})
+
             if(_data.succ == false){
                 return;
             }
@@ -74,6 +83,8 @@ export default class MapSingle extends Component {
             if(json.succ){
                 document.title = "maptin | ".concat(json.data.map.title);
 
+                
+
                 this.setState({
                     'hex': json.data.map.hex,
                     'title': json.data.map.title,
@@ -82,6 +93,14 @@ export default class MapSingle extends Component {
                     'width': json.data.map.map_width,
                     'foggyOfWar': json.data.map.map_fog,
                     'tokens': json.data.map.tokens
+                })
+                document.addEventListener('readystatechange', (event)=>{
+                    if(document.readyState === 'complete'){
+                        window.scroll(
+                            json.data.map.map_winX,
+                            json.data.map.map_winY
+                        )
+                    }
                 })
             }
         })
@@ -144,6 +163,7 @@ export default class MapSingle extends Component {
                     <label htmlFor="fogOfWar" >
                         <div>Fog of War</div> <input name="fogOfWar" type='checkbox' checked={this.state.foggyOfWar} onChange={(event)=>{this.setState({'foggyOfWar': !this.state.foggyOfWar, 'changed': true})}} />
                     </label>
+                    {/* <label> <div>{this.state.winX} x {this.state.winY}</div> </label> */}
                     <label><div></div> <button disabled={!this.state.changed} onClick={this.saveInfo}> Save </button></label>
                 </div>
 
@@ -151,7 +171,7 @@ export default class MapSingle extends Component {
             dms_els.push(
                 <MapList key={2} />
             )
-            foggy['opacity'] = '50%'
+            foggy['opacity'] = '50%';
         }
 
         dms_els.push(
@@ -161,7 +181,6 @@ export default class MapSingle extends Component {
         var el_draggable = []
 
         for(var i = 0; i < this.state.tokens.length; i++){
-            console.log(this.state.tokens[i]);
             el_draggable.push(
                 <Vtoken
                     key={i}

@@ -1,6 +1,9 @@
 from datetime import datetime
-from peewee import Model, SqliteDatabase
+from peewee import Model, OperationalError, SqliteDatabase
 from peewee import CharField, DateTimeField, IntegerField, BooleanField
+
+from playhouse.migrate import SqliteMigrator, migrate
+
 from maptin.data.commons import makeUid
 from maptin.utills.credentals import Credentials
 
@@ -34,6 +37,8 @@ class Map(BaseModel):
     map_soundtrack = CharField()
     map_width = IntegerField(default=3000)
     map_fog = BooleanField(default=False)
+    map_winx = IntegerField(default=0)
+    map_winy = IntegerField(default=0)
 
 
 class VirtualToken(BaseModel):
@@ -51,3 +56,15 @@ class UserToken(BaseModel):
 #atempts to create tables if they don't exist
 maptinDatabase_object.create_tables([UserToken, User, Map, VirtualToken])
 
+
+def databaseUpdateTables():
+    mig = SqliteMigrator(maptinDatabase_object)
+    print('updateing database ...')
+    try:
+        migrate(
+            mig.add_column('Map', 'map_winX', IntegerField(default=0)),
+            mig.add_column('Map', 'map_winY', IntegerField(default=0))
+        )
+    except OperationalError as err:
+        print('migrate has failed')
+        print(f'>>> {err}')

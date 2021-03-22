@@ -25,7 +25,9 @@ class Map:
             'map_background': row.map_background,
             'map_soundtrack': row.map_soundtrack,
             'map_width': row.map_width,
-            'map_fog': row.map_fog
+            'map_fog': row.map_fog,
+            'map_winX': row.map_winx,
+            'map_winY': row.map_winy,
         }, row.id)
 
     def _hexExists(self, hex: str):
@@ -94,7 +96,7 @@ class Map:
                 )
         return rList
 
-    def updateByHex(self, hex: str, title: str, map_background: str, map_soundtrack: str, map_width: int, map_fog: bool):
+    def updateByHex(self, hex: str, title: str, map_background: str, map_soundtrack: str, map_width: int, map_fog: bool, winx: int, winy: int):
 
         if self._hexExists(hex) is False:
             raise DoseNotExist('The passed hex dose not exist')
@@ -112,7 +114,9 @@ class Map:
                 map_background=map_background,
                 map_soundtrack=map_soundtrack,
                 map_width=map_width,
-                map_fog=map_fog
+                map_fog=map_fog,
+                map_winx=winx,
+                map_winy=winy
             ).where(MapModel.hex == hex).execute()
 
         return True
